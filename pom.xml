@@ -3,7 +3,6 @@
   <groupId>edu.msg.ro</groupId>
   <artifactId>jbugs-s1-a</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
   <name>JBugs Parent S1 A</name>
   <description>JBugs Parent project</description>
 </project>
