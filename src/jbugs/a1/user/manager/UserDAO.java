@@ -8,35 +8,35 @@ import java.sql.Statement;
 
 public class UserDAO {
 
-	public int createUser(User u, Connection conn) {
+	public boolean createUser(User u, Connection conn) {
 
 		PreparedStatement preparedStatement = null;
-		ResultSet result = null;
+		// ResultSet result = null;
 
 		try {
 
-			preparedStatement = conn.prepareStatement("insert into `user` (`iduser`, `firstName`, `lastName`, `phoneNumber`, `email`, `username`, `password`, `status` ) values(?, ?, ?, ?, ?, ?, ?, ?)",
+			preparedStatement = conn.prepareStatement(
+					"insert into `user` (`iduser`, `firstName`, `lastName`, `phoneNumber`,"
+							+ " `email`, `username`, `password`, `status` ) values(?, ?, ?, ?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
-			
-			preparedStatement.setInt(1, u.getId());
-			preparedStatement.execute();
-			
-			result = preparedStatement.getGeneratedKeys();
 
-			if (result.next() && result != null) {
-				return result.getInt(1);
-			} else {
-				return -1;
-			}
-			
+			preparedStatement.setInt(1, u.getId());
+			preparedStatement.setString(2, u.getFirstName());
+			preparedStatement.setString(3, u.getLastName());
+			preparedStatement.setString(4, u.getPhoneNumber());
+			preparedStatement.setString(5, u.getEmail());
+			preparedStatement.setString(6, u.getUsername());
+			preparedStatement.setString(7, u.getPassword());
+			preparedStatement.setBoolean(8, u.getStatus());
+
+			// preparedStatement.execute();
+			// result = preparedStatement.getGeneratedKeys();
+			preparedStatement.getGeneratedKeys();
+			return preparedStatement.executeUpdate() > 0;
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				result.close();
-			} catch (Exception rse) {
-				System.out.println(rse.getMessage());
-			}
 			try {
 				preparedStatement.close();
 			} catch (Exception sse) {
@@ -48,7 +48,71 @@ public class UserDAO {
 				System.out.println(cse.getMessage());
 			}
 		}
-		return -1;
+		return false;
 
+	}
+
+	public User readUser(int id, Connection conn) {
+
+		try {
+			User user = new User();
+			PreparedStatement preparedStatement = conn.prepareStatement("select * from `user` where `iduser` =?");
+			preparedStatement.setInt(1, id);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				user.setId(resultSet.getInt("iduser"));
+				user.setFirstName(resultSet.getString("firstName"));
+				user.setLastName(resultSet.getString("lastName"));
+				user.setPhoneNumber(resultSet.getString("phoneNumber"));
+				user.setEmail(resultSet.getString("email"));
+				user.setUsername(resultSet.getString("username"));
+				user.setPassword(resultSet.getString("password"));
+				user.setStatus(resultSet.getBoolean("status"));
+			}
+
+			System.out.println("user: id " + user.getId() + ", " + "firstName " + user.getFirstName() + ", "
+					+ "lastName " + user.getLastName());
+			return user;
+		} catch (Exception e) {
+			e.getStackTrace();
+			return null;
+		}
+	}
+
+	public boolean updateUser(User user, Connection conn) {
+
+		try {
+			PreparedStatement preparedStatement = conn
+					.prepareStatement("update  `user` set `firstName`=?, `lastName`=?, `phoneNumber`=?, "
+							+ "`email`=?, `username`=?, `password`=? where `iduser` =?");
+
+			preparedStatement.setString(1, user.getFirstName());
+			preparedStatement.setString(2, user.getLastName());
+			preparedStatement.setString(3, user.getPhoneNumber());
+			preparedStatement.setString(4, user.getEmail());
+			preparedStatement.setString(5, user.getUsername());
+			preparedStatement.setString(6, user.getPassword());
+			preparedStatement.setBoolean(7, user.getStatus());
+
+			return preparedStatement.executeUpdate() > 0;
+
+		} catch (Exception e) {
+			e.getStackTrace();
+			return false;
+		}
+
+	}
+
+	public boolean deleteUser(User user, Connection conn) {
+
+		try {
+			PreparedStatement preparedStatement = conn.prepareStatement("delete from `user` where `iduser`=?");
+			preparedStatement.setInt(1, user.getId());
+			return preparedStatement.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }
