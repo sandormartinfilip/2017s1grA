@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
-public class UserDAO {
+public class UserDAO implements UserDAOInterface{
 
 	public boolean createUser(User u, Connection conn) {
 
@@ -113,6 +115,37 @@ public class UserDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+
+	@Override
+	public List<User> readAll(Connection conn) {
+		
+		try {
+			List<User> userlist = new ArrayList<>();
+			PreparedStatement preparedStatement = conn.prepareStatement("select * from `user`");
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while (resultSet.next()) {
+				
+				User user = new User();
+
+				user.setId(resultSet.getInt("iduser"));
+				user.setFirstName(resultSet.getString("firstName"));
+				user.setLastName(resultSet.getString("lastName"));
+				user.setPhoneNumber(resultSet.getString("phoneNumber"));
+				user.setEmail(resultSet.getString("email"));
+				user.setUsername(resultSet.getString("username"));
+				user.setPassword(resultSet.getString("password"));
+				user.setStatus(resultSet.getBoolean("status"));
+
+				userlist.add(user);
+			}
+			return userlist;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 }
