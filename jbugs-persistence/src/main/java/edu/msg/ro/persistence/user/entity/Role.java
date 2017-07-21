@@ -18,14 +18,14 @@ public class Role {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false, unique = true, length = 50)
-	private String roleName;
+	@Column(nullable = false)
+	private RoleName roleName;
 
 	@ManyToMany(mappedBy = "roles")
 	private List<User> users;
 
 	@ManyToMany
-	@JoinTable(name = "ROLE_PERMISSION", joinColumns = @JoinColumn(name = "id_role", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_permission", referencedColumnName = "idPermission"))
+	@JoinTable(name = "ROLE_PERMISSION", joinColumns = @JoinColumn(name = "id_role", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_permission", referencedColumnName = "id"))
 	private List<Permission> permissions;
 
 	public Long getId() {
@@ -36,11 +36,11 @@ public class Role {
 		this.id = id;
 	}
 
-	public String getRoleName() {
+	public RoleName getRoleName() {
 		return roleName;
 	}
 
-	public void setRoleName(final String roleName) {
+	public void setRoleName(final RoleName roleName) {
 		this.roleName = roleName;
 	}
 

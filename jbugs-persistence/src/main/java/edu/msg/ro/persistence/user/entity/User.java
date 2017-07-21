@@ -49,8 +49,11 @@ public class User extends AbstractEntity {
 	private boolean active;
 
 	@ManyToMany
-	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "id_user", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_role", referencedColumnName = "idRole"))
+	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "id_user", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_role", referencedColumnName = "id"))
 	private List<Role> roles;
+
+	// @OneToMany(mappedBy = "assignedTo")
+	// private List<Bug> bugsAssigned;
 
 	@Override
 	public Long getId() {
@@ -120,6 +123,14 @@ public class User extends AbstractEntity {
 	public void setRoles(final List<Role> roles) {
 		this.roles = roles;
 	}
+
+	// public List<Bug> getBugsAssigned() {
+	// return bugsAssigned;
+	// }
+	//
+	// public void setBugsAssigned(final List<Bug> bugsAssigned) {
+	// this.bugsAssigned = bugsAssigned;
+	// }
 
 	@Override
 	public String toString() {
