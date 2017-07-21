@@ -23,6 +23,16 @@ public class SessionContextHandler {
 		return new User();
 	}
 
+	public User getAdministratorUser() {
+		// TODO
+		return new User();
+	}
+
+	public User getTestManager() {
+		// TODO
+		return new User();
+	}
+
 	public List<Role> getCurrentUserRoles() {
 		// TODO add concrete implementation when authentication is available
 		return new ArrayList<>();
