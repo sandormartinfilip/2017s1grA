@@ -14,14 +14,18 @@ public class UserDTOMapper {
 		userDTO.setFirstName(userEntity.getFirstName());
 		userDTO.setLastName(userEntity.getLastName());
 		userDTO.setActive(userEntity.isActive());
+		userDTO.setPhone(userEntity.getPhoneNumber());
+		userDTO.setEmail(userEntity.getEmail());
 
 		return userDTO;
 	}
 
 	public User mapToEntity(final UserDTO userDTO, final User userEntity) {
 		userEntity.setFirstName(userDTO.getFirstName());
-		userEntity.setLastName(userEntity.getLastName());
+		userEntity.setLastName(userDTO.getLastName());
 		userEntity.setActive(userDTO.isActive());
+		userEntity.setEmail(userDTO.getEmail());
+		userEntity.setPhoneNumber(userDTO.getPhone());
 
 		return userEntity;
 	}
