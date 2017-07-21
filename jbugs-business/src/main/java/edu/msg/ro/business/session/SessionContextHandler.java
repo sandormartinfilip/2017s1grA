@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
+import edu.msg.ro.business.exception.UserNotAuthorizedException;
 import edu.msg.ro.persistence.user.entity.Role;
 import edu.msg.ro.persistence.user.entity.User;
 
@@ -23,9 +24,13 @@ public class SessionContextHandler {
 		return new User();
 	}
 
-	public User getAdministratorUser() {
-		// TODO
-		return new User();
+	public User getAdministratorUser() throws UserNotAuthorizedException {
+		User getUserRole = getCurrentUser();
+		if (getUserRole.getRoles().contains("Admin"))
+			return getUserRole;
+		else
+			throw new UserNotAuthorizedException("User should be an Admin.");
+
 	}
 
 	public User getTestManager() {
