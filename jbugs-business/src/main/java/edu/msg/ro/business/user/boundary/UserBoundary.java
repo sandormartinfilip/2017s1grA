@@ -6,8 +6,8 @@ import javax.ejb.TransactionAttributeType;
 
 import edu.msg.ro.business.exception.JBugsBusinessException;
 import edu.msg.ro.business.notification.service.NotificationService;
-import edu.msg.ro.business.notification.type.NotificationType;
 import edu.msg.ro.business.user.service.UserService;
+import edu.msg.ro.persistence.user.entity.NotificationType;
 
 /**
  * Boundary for User Management.
