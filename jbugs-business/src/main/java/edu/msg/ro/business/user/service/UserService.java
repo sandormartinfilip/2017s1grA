@@ -47,6 +47,7 @@ public class UserService {
 	 *             if user with given id is not found
 	 */
 	public boolean deleteUser(final Long userId) throws JBugsBusinessException {
+
 		final User user = userDao.findById(userId);
 		if (user == null) {
 			// TODO: maybe is better to return only false value!?
