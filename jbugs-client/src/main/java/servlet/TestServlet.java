@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dto.UserDTO;
-import ejb.UserService;
+import edu.msg.ro.business.user.dto.UserDTO;
+import edu.msg.ro.business.user.service.UserService;
 
 @WebServlet(urlPatterns = { "/TestServlet" })
 public class TestServlet extends HttpServlet {
@@ -39,13 +39,8 @@ public class TestServlet extends HttpServlet {
 
 		final String firstName = "John_" + LocalDateTime.now();
 		userService.saveNewUser(firstName, "Doe");
-		//
-		// final String myUserName = "MariaDB";
-		// userService.saveNewUser(myUserName, "JOE");
 
 		final List<UserDTO> doeUsers = userService.getUserByLastName("Doe");
-
-		// final List<UserDTO> joeUsers = userService.getUserByLastName("JOE");
 
 		response.setContentType("text/html;charset=UTF-8");
 		try (PrintWriter out = response.getWriter()) {
@@ -55,14 +50,10 @@ public class TestServlet extends HttpServlet {
 			out.println("<title>Test EJB Bean New</title>");
 			out.println("</head>");
 			out.println("<body>");
-			out.println("User with lastname  'Doe' zz are:<br>");
+			out.println("User with lastname  'Doe' are:<br>");
 			for (final UserDTO user : doeUsers) {
 				out.println(user.toString() + "<br>");
 			}
-
-			// for (final UserDTO user : joeUsers) {
-			// out.println(user.toString() + "<br>");
-			// }
 
 			out.println("</body>");
 			out.println("</html>");
