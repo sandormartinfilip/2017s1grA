@@ -10,13 +10,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-@NamedQuery(name = User.FIND_USER_BY_LASTNAME, query = "SELECT u from User u WHERE u.lastName = :lastName")
+@NamedQueries({
+		@NamedQuery(name = User.FIND_USER_BY_LASTNAME, query = "SELECT u from User u WHERE u.lastName = :lastName"),
+		@NamedQuery(name = User.FIND_USER_BY_USERNAME, query = "SELECT u from User u WHERE u.username = :username"), })
+
 @Entity
 public class User extends AbstractEntity {
 
 	public static final String FIND_USER_BY_LASTNAME = "User.findUserByLastName";
+	public static final String FIND_USER_BY_USERNAME = "User.findUserByUserName";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

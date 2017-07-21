@@ -53,6 +53,7 @@ public class UserService {
 			// TODO: maybe is better to return only false value!?
 			throw new ObjectNotFoundException("User with id " + userId + " not found!");
 		}
+
 		// TODO
 		// validate business constraints (Nu se pot sterge utilizatorii care au
 		// asignate taskuri care nu sunt inca terminate / inchise) - in caz
