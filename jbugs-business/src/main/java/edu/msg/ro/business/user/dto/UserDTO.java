@@ -8,10 +8,21 @@ public class UserDTO extends AbstractoDTO {
 
 	private String lastName;
 
-	private boolean active;
-
-	private String phone;
 	private String email;
+
+	private String phoneNumber;
+
+	private String password;
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	private boolean active;
 
 	public String getEmail() {
 		return email;
@@ -21,12 +32,12 @@ public class UserDTO extends AbstractoDTO {
 		this.email = email;
 	}
 
-	public String getPhone() {
-		return phone;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setPhoneNumber(String phone) {
+		this.phoneNumber = phone;
 	}
 
 	public String getFirstName() {

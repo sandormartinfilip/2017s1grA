@@ -14,7 +14,7 @@ public class UserDTOMapper {
 		userDTO.setFirstName(userEntity.getFirstName());
 		userDTO.setLastName(userEntity.getLastName());
 		userDTO.setActive(userEntity.isActive());
-		userDTO.setPhone(userEntity.getPhoneNumber());
+		userDTO.setPhoneNumber(userEntity.getPhoneNumber());
 		userDTO.setEmail(userEntity.getEmail());
 
 		return userDTO;
@@ -25,7 +25,7 @@ public class UserDTOMapper {
 		userEntity.setLastName(userDTO.getLastName());
 		userEntity.setActive(userDTO.isActive());
 		userEntity.setEmail(userDTO.getEmail());
-		userEntity.setPhoneNumber(userDTO.getPhone());
+		userEntity.setPhoneNumber(userDTO.getPhoneNumber());
 
 		return userEntity;
 	}

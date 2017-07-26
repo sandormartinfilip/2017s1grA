@@ -64,4 +64,14 @@ public class UserService {
 		return true;
 	}
 
+	public void updateUser(UserDTO userDTO) {
+		User user = userDao.findById(userDTO.getId());
+		user.setFirstName(userDTO.getFirstName());
+		user.setLastName(userDTO.getLastName());
+		user.setEmail(userDTO.getEmail());
+		user.setPhoneNumber(userDTO.getPhoneNumber());
+		user.setPassword(userDTO.getPassword());
+		user.setActive(userDTO.isActive());
+	}
+
 }

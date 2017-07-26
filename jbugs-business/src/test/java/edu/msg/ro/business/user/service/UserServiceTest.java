@@ -51,6 +51,23 @@ public class UserServiceTest extends AbstractIntegrationTest {
 	}
 
 	@Test
+	@InSequence(3)
+	public void testUpdateUser() {
+		List<UserDTO> userList = sut.getUserByLastName("Doe");
+		UserDTO userDTO = userList.get(0);
+		userDTO.setActive(false);
+		userDTO.setEmail("a@a.com");
+		userDTO.setFirstName("JohnM");
+		userDTO.setLastName("DoeM");
+		userDTO.setPassword("pass");
+		userDTO.setPhoneNumber("0744000111");
+		sut.updateUser(userList.get(0));
+
+		User user = userDao.findById(userDTO.getId());
+		System.out.println(user.toString());
+	}
+
+	@Test
 	public void testDeleteUser() throws JBugsBusinessException {
 		// ARRANGE
 		final List<User> userList = userDao.getUserByLastName("Doe");
