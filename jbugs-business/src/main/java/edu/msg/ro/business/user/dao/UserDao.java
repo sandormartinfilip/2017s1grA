@@ -36,4 +36,8 @@ public class UserDao {
 		return this.em.find(User.class, id);
 	}
 
+	public List<User> getAll() {
+		final TypedQuery<User> query = em.createNamedQuery(User.FIND_ALL_USERS, User.class);
+		return query.getResultList();
+	}
 }

@@ -28,6 +28,8 @@ public class UserService {
 		newUser.setLastName(lastName);
 		newUser.setActive(true);
 
+		// aici ar trebui format usernameul si setat + verificat daca nu exista
+		// deja etc
 		userDao.persistUser(newUser);
 	}
 
@@ -35,6 +37,11 @@ public class UserService {
 		final List<User> users = userDao.getUserByLastName(lastName);
 
 		return users.stream().map(userEntity -> userMapper.mapToDTO(userEntity)).collect(Collectors.toList());
+	}
+
+	public List<UserDTO> getAllUsers() {
+		final List<User> allUsers = userDao.getAll();
+		return allUsers.stream().map(userEntity -> userMapper.mapToDTO(userEntity)).collect(Collectors.toList());
 	}
 
 	/**
