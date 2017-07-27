@@ -3,34 +3,22 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
-
-<h:head>
-	<title><h:outputText value="#{msg['login.title']}" /></title>
-</h:head>
+	xmlns:h="http://java.sun.com/jsf/html">
 <h:body>
 	<h:form id="loginForm">
-
-		<h:panelGrid id="loginPanel" columns="3" cellpadding="5"
-			cellspacing="5">
-
-			<h:outputLabel for="username" value="Username:" />
-			<h:inputText id="username" value="#{loginBean.user.userName}">
-				<!-- 				<f:validateLength minimum="3" maximum="10" /> -->
+		<h:panelGrid columns="3">
+			<h:outputLabel for="username" value="Username: " />
+			<h:inputText id="username" value="#{loginBean.user.username}">
+				<f:validateLength minimum="3"></f:validateLength>
 			</h:inputText>
 			<h:message for="username" />
 
-			<h:outputLabel for="password" value="Password:" />
-			<h:inputSecret id="password" value="#{loginBean.user.password}">
-				<!-- 				<f:validator validatorId="passwordValidator" /> -->
-			</h:inputSecret>
+			<h:outputLabel for="password" value="Password: " />
+			<h:inputSecret id="password" value="#{loginBean.user.password}" />
 			<h:message for="password" />
 
 			<h:commandButton action="#{loginBean.doLogin}" value="Login"></h:commandButton>
 		</h:panelGrid>
-
 	</h:form>
-
 </h:body>
 </html>

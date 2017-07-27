@@ -3,7 +3,7 @@ package edu.msg.ro.business.user.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.ejb.Stateless;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 
 import edu.msg.ro.business.exception.JBugsBusinessException;
@@ -13,7 +13,7 @@ import edu.msg.ro.business.user.dto.UserDTO;
 import edu.msg.ro.business.user.dto.mapper.UserDTOMapper;
 import edu.msg.ro.persistence.user.entity.User;
 
-@Stateless
+@Dependent
 public class UserService {
 
 	@Inject
@@ -37,6 +37,15 @@ public class UserService {
 		final List<User> users = userDao.getUserByLastName(lastName);
 
 		return users.stream().map(userEntity -> userMapper.mapToDTO(userEntity)).collect(Collectors.toList());
+	}
+
+	public UserDTO getUserByUsername(final String username) {
+		final User usersByUsername = userDao.getUserByUserName(username);
+		if (usersByUsername != null) {
+			return userMapper.mapToDTO(usersByUsername);
+		} else {
+			return null;
+		}
 	}
 
 	public List<UserDTO> getAllUsers() {
@@ -67,6 +76,15 @@ public class UserService {
 		user.setActive(false);
 
 		return true;
+	}
+
+	public boolean isValidUser(final UserDTO loginUser) {
+
+		final UserDTO savedUser = getUserByUsername(loginUser.getUsername());
+		if (savedUser != null && savedUser.getPassword() != null) {
+			return savedUser.getPassword().equals(loginUser.getPassword());
+		}
+		return false;
 	}
 
 }
