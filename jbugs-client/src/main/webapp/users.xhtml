@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<h:body>
+	<h:messages></h:messages>
+
+	<h:form id = "userForm">
+		<h:dataTable columns="3" value="#{userManagementBean.allUsers}"
+			var="user" id = "userTable">
+			<h:column>
+				<f:facet name="header">Username</f:facet>
+				<h:outputText value="#{user.username}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">FirstName</f:facet>
+				<h:outputText value="#{user.firstName}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">LastName</f:facet>
+				<h:outputText value="#{user.lastName}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header"> Status</f:facet>
+				<h:outputText value="active" rendered="#{user.active}"></h:outputText>
+				<h:outputText value="inactive" rendered="#{! user.active}"></h:outputText>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Activate/Deactivate</f:facet>
+				<h:commandLink value="activate"
+					action="#{userManagementBean.activateUser(user.id)}"
+					rendered="#{not user.active}" >
+					
+					<f:ajax execute = "this" render = "userForm:userTable"></f:ajax>
+					</h:commandLink>
+				<h:commandLink value="deactivate"
+					action="#{userManagementBean.deactivateUser(user.id)}"
+					rendered="#{user.active}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Awesome action</f:facet>
+				<h:commandLink value="delete"
+					action="#{userManagementBean.deleteUser(user.id)}"></h:commandLink>
+			</h:column>
+		</h:dataTable>
+	</h:form>
+</h:body>
+</html>

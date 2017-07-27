@@ -14,7 +14,6 @@ import edu.msg.ro.persistence.user.entity.User;
  * @author Andrei Floricel, msg systems ag
  *
  */
-
 @Stateless
 public class SessionContextHandler {
 

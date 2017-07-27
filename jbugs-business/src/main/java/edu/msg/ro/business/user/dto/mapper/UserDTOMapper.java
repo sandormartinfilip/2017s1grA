@@ -1,11 +1,11 @@
 package edu.msg.ro.business.user.dto.mapper;
 
-import javax.ejb.Stateless;
+import javax.enterprise.context.Dependent;
 
 import edu.msg.ro.business.user.dto.UserDTO;
 import edu.msg.ro.persistence.user.entity.User;
 
-@Stateless
+@Dependent
 public class UserDTOMapper {
 
 	public UserDTO mapToDTO(final User userEntity) {
@@ -14,18 +14,17 @@ public class UserDTOMapper {
 		userDTO.setFirstName(userEntity.getFirstName());
 		userDTO.setLastName(userEntity.getLastName());
 		userDTO.setActive(userEntity.isActive());
-		userDTO.setPhone(userEntity.getPhoneNumber());
-		userDTO.setEmail(userEntity.getEmail());
+		userDTO.setPassword(userEntity.getPassword());
+		userDTO.setUsername(userEntity.getUsername());
+		userDTO.setActive(userEntity.isActive());
 
 		return userDTO;
 	}
 
 	public User mapToEntity(final UserDTO userDTO, final User userEntity) {
 		userEntity.setFirstName(userDTO.getFirstName());
-		userEntity.setLastName(userDTO.getLastName());
+		userEntity.setLastName(userEntity.getLastName());
 		userEntity.setActive(userDTO.isActive());
-		userEntity.setEmail(userDTO.getEmail());
-		userEntity.setPhoneNumber(userDTO.getPhone());
 
 		return userEntity;
 	}

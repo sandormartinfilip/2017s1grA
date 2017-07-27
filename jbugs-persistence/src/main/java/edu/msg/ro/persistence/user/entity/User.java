@@ -15,13 +15,14 @@ import javax.persistence.NamedQuery;
 
 @NamedQueries({
 		@NamedQuery(name = User.FIND_USER_BY_LASTNAME, query = "SELECT u from User u WHERE u.lastName = :lastName"),
-		@NamedQuery(name = User.FIND_USER_BY_USERNAME, query = "SELECT u from User u WHERE u.username = :username"), })
-
+		@NamedQuery(name = User.FIND_USER_BY_USERNAME, query = "SELECT u from User u WHERE u.username = :username"),
+		@NamedQuery(name = User.FIND_ALL_USERS, query = "SELECT u from User u"), })
 @Entity
 public class User extends AbstractEntity {
 
 	public static final String FIND_USER_BY_LASTNAME = "User.findUserByLastName";
 	public static final String FIND_USER_BY_USERNAME = "User.findUserByUserName";
+	public static final String FIND_ALL_USERS = "User.findAllUsers";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,11 +50,8 @@ public class User extends AbstractEntity {
 	private boolean active;
 
 	@ManyToMany
-	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "id_user", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_role", referencedColumnName = "id"))
+	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "id_user", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_role", referencedColumnName = "idRole"))
 	private List<Role> roles;
-
-	// @OneToMany(mappedBy = "assignedTo")
-	// private List<Bug> bugsAssigned;
 
 	@Override
 	public Long getId() {
@@ -123,14 +121,6 @@ public class User extends AbstractEntity {
 	public void setRoles(final List<Role> roles) {
 		this.roles = roles;
 	}
-
-	// public List<Bug> getBugsAssigned() {
-	// return bugsAssigned;
-	// }
-	//
-	// public void setBugsAssigned(final List<Bug> bugsAssigned) {
-	// this.bugsAssigned = bugsAssigned;
-	// }
 
 	@Override
 	public String toString() {
