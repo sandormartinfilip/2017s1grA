@@ -1,6 +1,6 @@
 -- User test data
-INSERT INTO USER (FIRSTNAME, LASTNAME, Status) VALUES ('John', 'Doe', true);
-INSERT INTO USER (FIRSTNAME, LASTNAME) VALUES ('Max', 'Mustermann');
+INSERT INTO USER (FIRSTNAME, LASTNAME, USERNAME, PASSWORD, STATUS) VALUES ('John', 'Doe', 'johndoe', '1234', true);
+INSERT INTO USER (FIRSTNAME, LASTNAME, STATUS) VALUES ('Max', 'Mustermann', false);
 INSERT INTO USER (FIRSTNAME, LASTNAME) VALUES ('Mary', 'Jane');
 
 -- other tables TODO
