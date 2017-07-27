@@ -16,6 +16,10 @@ import edu.msg.ro.persistence.user.entity.User;
 @Stateless
 public class UserService {
 
+	final static String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "msggroup.com";
+	final static int LAST_NAME_INDEX = 5;
+	final static int FIRST_NAME_INDEX = 1;
+
 	@EJB
 	private UserDao userDao;
 
@@ -60,6 +64,74 @@ public class UserService {
 		user.setActive(false);
 
 		return true;
+	}
+
+	public void addUser(String firstName, String lastName, String phoneNumber, String email, String password) {
+
+		if (isEmailValid(email))
+			if (isPhoneNumberValid(phoneNumber)) {
+
+				String username = createUsername(firstName, lastName, LAST_NAME_INDEX, FIRST_NAME_INDEX);
+
+				boolean userInDB = true;
+
+				int indexLast = LAST_NAME_INDEX;
+				int indexFirst = FIRST_NAME_INDEX;
+
+				User user = new User();
+
+				int nrOfUsers = 0;
+				List<User> usersFromDB = userDao.getUserForUsername(username);
+
+				nrOfUsers = usersFromDB.size();
+				System.out.println("================ " + usersFromDB.size() + "================== AICICICICICICCI");
+				while (userInDB == true) {
+
+					if (nrOfUsers <= 0) {
+						user = new User();
+						user.setFirstName(firstName);
+						user.setLastName(lastName);
+						user.setPhoneNumber(phoneNumber);
+						user.setEmail(email);
+						user.setPassword(password);
+						user.setUsername(username);
+						user.setActive(true);
+						userDao.persistUser(user);
+
+						userInDB = false;
+					}
+					nrOfUsers--;
+					indexLast--;
+					indexFirst++;
+				}
+
+				username = createUsername(firstName, lastName, indexLast, indexFirst);
+
+			}
+	}
+
+	public String createUsername(String firstName, String lastName, int lastNameIndex, int endIndex) {
+
+		String username;
+		username = lastName.substring(0, Math.min(lastName.length(), lastNameIndex)) + firstName.substring(0, endIndex);
+		return username;
+	}
+
+	public boolean isEmailValid(String email) {
+
+		if (email.matches(EMAIL_REGEX))
+			return true;
+		return false;
+	}
+
+	public boolean isPhoneNumberValid(String phone) {
+
+		if (phone.startsWith("+40") && (phone.length() == 12))
+			return true;
+		if (phone.startsWith("+49") && (phone.length() >= 5 && phone.length() <= 14))
+			return true;
+		return false;
+
 	}
 
 }

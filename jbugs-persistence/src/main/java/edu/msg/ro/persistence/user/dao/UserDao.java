@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import edu.msg.ro.persistence.user.entity.User;
@@ -34,6 +35,13 @@ public class UserDao {
 
 	public User findById(final Long id) {
 		return this.em.find(User.class, id);
+	}
+
+	public List<User> getUserForUsername(String username) {
+		Query q = em.createQuery("select u from User u where u.username='" + username + "'", User.class);
+
+		return q.getResultList();
+
 	}
 
 }
