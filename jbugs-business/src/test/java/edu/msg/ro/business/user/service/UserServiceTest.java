@@ -59,7 +59,7 @@ public class UserServiceTest extends AbstractIntegrationTest {
 		Assert.assertTrue("The user should be active", userList.get(0).isActive());
 
 		// ACT
-		sut.deleteUser(userList.get(0).getId());
+		sut.changeUserStatus(userList.get(0).getId());
 
 		// ASSERT
 		final User deletedUser = userDao.findById(userList.get(0).getId());
@@ -75,7 +75,7 @@ public class UserServiceTest extends AbstractIntegrationTest {
 		Assert.assertNull("User should not exist", nonExistinguser);
 
 		// ACT
-		sut.deleteUser(3000L);
+		sut.changeUserStatus(3000L);
 
 		// ASSERT
 		// throws ObjectNotFoundException

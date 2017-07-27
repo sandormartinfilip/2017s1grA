@@ -3,7 +3,7 @@ package edu.msg.ro.business.user.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.enterprise.context.Dependent;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import edu.msg.ro.business.exception.JBugsBusinessException;
@@ -13,7 +13,7 @@ import edu.msg.ro.business.user.dto.UserDTO;
 import edu.msg.ro.business.user.dto.mapper.UserDTOMapper;
 import edu.msg.ro.persistence.user.entity.User;
 
-@Dependent
+@Stateless
 public class UserService {
 
 	@Inject
@@ -62,7 +62,7 @@ public class UserService {
 	 * @throws JBugsBusinessException
 	 *             if user with given id is not found
 	 */
-	public boolean deleteUser(final Long userId) throws JBugsBusinessException {
+	public boolean changeUserStatus(final Long userId) throws JBugsBusinessException {
 		final User user = userDao.findById(userId);
 		if (user == null) {
 			// TODO: maybe is better to return only false value!?
@@ -78,6 +78,29 @@ public class UserService {
 		return true;
 	}
 
+	public void activateUser(final Long userId) throws JBugsBusinessException {
+		final User user = userDao.findById(userId);
+		if (user == null) {
+			// TODO: maybe is better to return only false value!?
+			throw new ObjectNotFoundException("User with id " + userId + " not found!");
+		}
+		user.setActive(true);
+	}
+
+	public void deactivateUser(final Long userId) throws JBugsBusinessException {
+		final User user = userDao.findById(userId);
+		if (user == null) {
+			// TODO: maybe is better to return only false value!?
+			throw new ObjectNotFoundException("User with id " + userId + " not found!");
+		}
+		user.setActive(false);
+	}
+
+	public void deleteUserr(final Long id) {
+		userDao.deleteUser(id);
+
+	}
+
 	public boolean isValidUser(final UserDTO loginUser) {
 
 		final UserDTO savedUser = getUserByUsername(loginUser.getUsername());
@@ -85,6 +108,16 @@ public class UserService {
 			return savedUser.getPassword().equals(loginUser.getPassword());
 		}
 		return false;
+	}
+
+	public void updateUser(final UserDTO userDTO) {
+		final User user = userDao.findById(userDTO.getId());
+		user.setFirstName(userDTO.getFirstName());
+		user.setLastName(userDTO.getLastName());
+		user.setEmail(userDTO.getEmail());
+		user.setPhoneNumber(userDTO.getPhoneNumber());
+		user.setPassword(userDTO.getPassword());
+		user.setActive(userDTO.isActive());
 	}
 
 }

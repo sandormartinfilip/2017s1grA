@@ -40,6 +40,11 @@ public class UserDao {
 		return this.em.find(User.class, id);
 	}
 
+	public void deleteUser(final Long id) {
+		final User user = this.em.find(User.class, id);
+		em.remove(user);
+	}
+
 	public List<User> getAll() {
 		final TypedQuery<User> query = em.createNamedQuery(User.FIND_ALL_USERS, User.class);
 		return query.getResultList();

@@ -1,5 +1,7 @@
 package edu.msg.ro.bean;
 
+import java.util.Locale;
+
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
@@ -40,6 +42,7 @@ public class LoginBean {
 
 	public String doLogin() {
 
+		getFacesContext().getViewRoot().setLocale(Locale.ITALY);
 		// merge la baza de date si verifica daca e usenameul
 		if (userService.isValidUser(user)) {
 

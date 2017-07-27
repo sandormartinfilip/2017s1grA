@@ -6,6 +6,99 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <h:body>
-		users.xhtml
-	</h:body>
+	<h:messages></h:messages>
+
+	<h:form id="usersForm">
+
+		<h:dataTable value="#{userManagementBean.allUsers}" var="user"
+			id="userTable">
+
+			<h:column>
+				<f:facet name="header">Username</f:facet>
+				<h:outputText value="#{user.username}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">First Name</f:facet>
+				<h:outputText value="#{user.firstName}"
+					rendered="#{!user.id.equals(userManagementBean.editedUserId)}" />
+				<h:inputText value="#{user.firstName}"
+					rendered="#{user.id.equals(userManagementBean.editedUserId)}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Last name</f:facet>
+				<h:outputText value="#{user.lastName}"
+					rendered="#{!user.id.equals(userManagementBean.editedUserId)}" />
+				<h:inputText value="#{user.lastName}"
+					rendered="#{user.id.equals(userManagementBean.editedUserId)}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header"> Status</f:facet>
+				<h:outputText value="active" rendered="#{user.active}"></h:outputText>
+				<h:outputText value="inactive" rendered="#{!user.active}"></h:outputText>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Awesome action</f:facet>
+				<h:commandLink value="delete"
+					action="#{userManagementBean.deleteUser(user.id)}"></h:commandLink>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Activate/Deactivate</f:facet>
+				<h:commandLink value="activate"
+					action="#{userManagementBean.activateUser(user.id)}"
+					rendered="#{not user.active}" />
+				<!-- 				<f:ajax execute="this" render="usersForm:usersTable"></f:ajax> -->
+				<h:commandLink value="deactivate"
+					action="#{userManagementBean.deactivateUser(user.id)}"
+					rendered="#{user.active}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Edit</f:facet>
+				<h:commandLink
+					action="#{userManagementBean.enableEditMode(user.id)}" value="edit"
+					rendered="#{!user.id.equals(userManagementBean.editedUserId)}">
+				</h:commandLink>
+				<h:commandLink action="#{userManagementBean.disableEditMode()}"
+					value="cancel"
+					rendered="#{user.id.equals(userManagementBean.editedUserId)}">
+				</h:commandLink>
+			</h:column>
+
+			<h:column>
+				<h:commandButton action="#{userManagementBean.doSave}" value="Save"
+					rendered="#{user.id.equals(userManagementBean.editedUserId)}">
+					<f:setPropertyActionListener value="#{user}"
+						target="#{userManagementBean.editedUser}"></f:setPropertyActionListener>
+				</h:commandButton>
+			</h:column>
+
+
+
+		</h:dataTable>
+
+	</h:form>
+
+	<h:form id="newUsersForm">
+		<h:panelGrid columns="5">
+
+			<h:outputLabel for="firstName" value="First name:" />
+			<h:inputText id="firstName"
+				value="#{userManagementBean.userDTO.firstName}" />
+
+			<h:outputLabel for="lastName" value="Last name:" />
+			<h:inputText id="lastName"
+				value="#{userManagementBean.userDTO.lastName}" />
+
+			<h:commandButton action="#{userManagementBean.doCreateUser}"
+				value="CreateUser"></h:commandButton>
+		</h:panelGrid>
+	</h:form>
+
+
+</h:body>
 </html>

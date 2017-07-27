@@ -28,7 +28,7 @@ public class UserBoundary {
 
 	public boolean deleteUser(final Long userId) {
 		try {
-			final boolean deletionSuccessful = userService.deleteUser(userId);
+			final boolean deletionSuccessful = userService.changeUserStatus(userId);
 
 			if (deletionSuccessful) {
 				notificationService.createNotification(NotificationType.USER_DELETED);
