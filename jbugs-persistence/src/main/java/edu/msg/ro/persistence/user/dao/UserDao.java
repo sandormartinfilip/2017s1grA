@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -32,14 +33,23 @@ public class UserDao {
 		return query.getResultList();
 	}
 
-	public List<User> getUserByUserName(final String userName) {
+	public User getUserByUserName(final String userName) {
 		final TypedQuery<User> query = em.createNamedQuery(User.FIND_USER_BY_USERNAME, User.class);
 		query.setParameter("username", userName);
-		return query.getResultList();
+		try {
+			return query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
 	}
 
 	public User findById(final Long id) {
 		return this.em.find(User.class, id);
+	}
+
+	public List<User> getAll() {
+		final TypedQuery<User> query = em.createNamedQuery(User.FIND_ALL_USERS, User.class);
+		return query.getResultList();
 	}
 
 }

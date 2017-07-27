@@ -74,4 +74,25 @@ public class UserService {
 		user.setActive(userDTO.isActive());
 	}
 
+	public List<UserDTO> getAllUsers() {
+		final List<User> allUsers = userDao.getAll();
+		return allUsers.stream().map(userEntity -> userMapper.mapToDTO(userEntity)).collect(Collectors.toList());
+	}
+
+	public UserDTO getUserByUsername(String userName) {
+		User user = userDao.getUserByUserName(userName);
+		if (user != null) {
+			return userMapper.mapToDTO(user);
+		} else
+			return null;
+	}
+
+	public boolean isValidUser(UserDTO loginUser) {
+		UserDTO savedUser = getUserByUsername(loginUser.getUsername());
+		if (savedUser != null && savedUser.getPassword() != null) {
+			return savedUser.getPassword().equals(loginUser.getPassword());
+		}
+		return false;
+	}
+
 }

@@ -12,7 +12,19 @@ public class UserDTO extends AbstractoDTO {
 
 	private String phoneNumber;
 
+	private String username;
+
 	private String password;
+
+	private boolean active;
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	public String getPassword() {
 		return password;
@@ -21,8 +33,6 @@ public class UserDTO extends AbstractoDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	private boolean active;
 
 	public String getEmail() {
 		return email;

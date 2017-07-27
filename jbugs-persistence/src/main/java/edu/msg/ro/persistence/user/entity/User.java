@@ -15,13 +15,15 @@ import javax.persistence.NamedQuery;
 
 @NamedQueries({
 		@NamedQuery(name = User.FIND_USER_BY_LASTNAME, query = "SELECT u from User u WHERE u.lastName = :lastName"),
-		@NamedQuery(name = User.FIND_USER_BY_USERNAME, query = "SELECT u from User u WHERE u.username = :username"), })
+		@NamedQuery(name = User.FIND_USER_BY_USERNAME, query = "SELECT u from User u WHERE u.username = :username"),
+		@NamedQuery(name = User.FIND_ALL_USERS, query = "SELECT u from User u"), })
 
 @Entity
 public class User extends AbstractEntity {
 
 	public static final String FIND_USER_BY_LASTNAME = "User.findUserByLastName";
 	public static final String FIND_USER_BY_USERNAME = "User.findUserByUserName";
+	public static final String FIND_ALL_USERS = "User.findAllUsers";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
