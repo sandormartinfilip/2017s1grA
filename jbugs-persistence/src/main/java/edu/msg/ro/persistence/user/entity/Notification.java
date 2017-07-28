@@ -1,12 +1,17 @@
 package edu.msg.ro.persistence.user.entity;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
+@Entity
 public class Notification extends AbstractEntity {
 
 	@Id
@@ -17,7 +22,15 @@ public class Notification extends AbstractEntity {
 	private NotificationType notificationType;
 
 	@Column
-	private Timestamp creationDate;
+	private LocalDateTime creationDate;
+
+	@ManyToOne
+	@JoinColumn(name = "destinationUser", referencedColumnName = "id")
+	private User destinationUser;
+
+	@OneToOne
+	@JoinColumn(name = "bugId")
+	private Bug bugId;
 
 	@Override
 	public Long getId() {
@@ -32,11 +45,11 @@ public class Notification extends AbstractEntity {
 		this.notificationType = notificationType;
 	}
 
-	public Timestamp getCreationDate() {
+	public LocalDateTime getCreationDate() {
 		return creationDate;
 	}
 
-	public void setCreationDate(final Timestamp creationDate) {
+	public void setCreationDate(final LocalDateTime creationDate) {
 		this.creationDate = creationDate;
 	}
 

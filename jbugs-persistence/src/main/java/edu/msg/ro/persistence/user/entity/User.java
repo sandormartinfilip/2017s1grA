@@ -2,6 +2,7 @@ package edu.msg.ro.persistence.user.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,11 +13,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 @NamedQueries({
 		@NamedQuery(name = User.FIND_USER_BY_LASTNAME, query = "SELECT u from User u WHERE u.lastName = :lastName"),
 		@NamedQuery(name = User.FIND_USER_BY_USERNAME, query = "SELECT u from User u WHERE u.username = :username"),
 		@NamedQuery(name = User.FIND_ALL_USERS, query = "SELECT u from User u"), })
+
 @Entity
 public class User extends AbstractEntity {
 
@@ -52,6 +55,15 @@ public class User extends AbstractEntity {
 	@ManyToMany
 	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "id_user", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_role", referencedColumnName = "idRole"))
 	private List<Role> roles;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "assignedTo")
+	private List<Bug> bugsAssigned;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+	private List<Bug> bugsCreated;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+	private List<Comment> comments;
 
 	@Override
 	public Long getId() {
