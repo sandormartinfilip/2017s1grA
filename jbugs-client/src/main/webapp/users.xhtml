@@ -34,7 +34,7 @@
 			<h:column>
 				<f:facet name="header">First Name</f:facet>
 				<h:outputText value="#{user.firstName}"
-					rendered="#{!user.id.equals(userManagementBean.editedUserId)}" />
+					rendered="#{!(user.id.equals(userManagementBean.editedUserId))}" />
 				<h:inputText value="#{user.firstName}"
 					rendered="#{user.id.equals(userManagementBean.editedUserId)}" />
 			</h:column>
@@ -42,7 +42,7 @@
 			<h:column>
 				<f:facet name="header">Last name</f:facet>
 				<h:outputText value="#{user.lastName}"
-					rendered="#{!user.id.equals(userManagementBean.editedUserId)}" />
+					rendered="#{!(user.id.equals(userManagementBean.editedUserId))}" />
 				<h:inputText value="#{user.lastName}"
 					rendered="#{user.id.equals(userManagementBean.editedUserId)}" />
 			</h:column>
@@ -74,7 +74,7 @@
 				<f:facet name="header">Edit</f:facet>
 				<h:commandLink value="edit"
 					action="#{userManagementBean.enableEditMode(user.id)}"
-					rendered="#{!user.id.equals(userManagementBean.editedUserId)}">
+					rendered="#{!(user.id.equals(userManagementBean.editedUserId))}">
 
 				</h:commandLink>
 				<h:commandLink value="cancel"
