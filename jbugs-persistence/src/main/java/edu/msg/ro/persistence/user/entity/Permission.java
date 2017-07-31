@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Permission {
+public class Permission extends AbstractEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +24,7 @@ public class Permission {
 	@ManyToMany(mappedBy = "permissions")
 	private List<Role> roles;
 
+	@Override
 	public Long getId() {
 		return id;
 	}

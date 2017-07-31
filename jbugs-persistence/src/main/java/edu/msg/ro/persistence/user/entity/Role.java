@@ -12,14 +12,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class Role {
+public class Role extends AbstractEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false)
-	private RoleName roleName;
+	@Column(nullable = false, unique = true, length = 50)
+	private String roleName;
 
 	@ManyToMany(mappedBy = "roles")
 	private List<User> users;
@@ -28,6 +28,7 @@ public class Role {
 	@JoinTable(name = "ROLE_PERMISSION", joinColumns = @JoinColumn(name = "id_role", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_permission", referencedColumnName = "id"))
 	private List<Permission> permissions;
 
+	@Override
 	public Long getId() {
 		return id;
 	}
@@ -36,11 +37,11 @@ public class Role {
 		this.id = id;
 	}
 
-	public RoleName getRoleName() {
+	public String getRoleName() {
 		return roleName;
 	}
 
-	public void setRoleName(final RoleName roleName) {
+	public void setRoleName(final String roleName) {
 		this.roleName = roleName;
 	}
 

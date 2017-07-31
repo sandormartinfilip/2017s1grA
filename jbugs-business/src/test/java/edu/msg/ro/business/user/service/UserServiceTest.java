@@ -33,7 +33,10 @@ public class UserServiceTest extends AbstractIntegrationTest {
 		Assert.assertEquals("No user should exist!", userList.size(), 0);
 
 		// ACT
-		sut.saveNewUser("John", LASTNAME);
+		// sut.saveNewUser("John", LASTNAME);
+		sut.addUser("John", LASTNAME, "+40757778737", "email@msggroup.com", "password");
+		// sut.addUser("Johnathan", LASTNAME, "+40757778738",
+		// "email2@msggroup.com", "passwoasd");
 
 		// ASSERT
 		userList = sut.getUserByLastName(LASTNAME);
@@ -47,7 +50,16 @@ public class UserServiceTest extends AbstractIntegrationTest {
 
 		final List<UserDTO> userList = sut.getUserByLastName("Smith");
 
-		Assert.assertTrue("TODO: check Arquillian docu for create/recreate db strategies", true);
+		Assert.assertTrue("TODO: check Arquillian docu for create/recreate dbstrategies", true);
+	}
+
+	@Test
+	@InSequence(2)
+	public void testGetUserForUsername() {
+
+		List<User> userList = userDao.getUserForUsername("SmithJ");
+		Assert.assertEquals("ONE user should exist!", userList.size(), 1);
+
 	}
 
 	@Test
