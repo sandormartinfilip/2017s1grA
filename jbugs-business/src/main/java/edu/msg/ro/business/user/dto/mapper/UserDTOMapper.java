@@ -25,7 +25,9 @@ public class UserDTOMapper {
 		userEntity.setFirstName(userDTO.getFirstName());
 		userEntity.setLastName(userEntity.getLastName());
 		userEntity.setActive(userDTO.isActive());
-
+		userEntity.setPhoneNumber(userDTO.getPassword());
+		userEntity.setEmail(userDTO.getEmail());
+		userEntity.setPassword(userDTO.getPassword());
 		return userEntity;
 	}
 

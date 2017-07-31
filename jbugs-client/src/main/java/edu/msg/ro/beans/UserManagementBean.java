@@ -47,6 +47,10 @@ public class UserManagementBean implements Serializable {
 	public List<UserDTO> getAllUsers() {
 
 		List<UserDTO> users = userService.getAllUsers();
+
+		for (UserDTO u : users) {
+			u.toString();
+		}
 		return users;
 	}
 
@@ -86,7 +90,11 @@ public class UserManagementBean implements Serializable {
 	}
 
 	public String doCreateUser() {
-		userService.saveNewUser(newUser.getFirstName(), newUser.getLastName());
+		// userService.saveNewUser(newUser.getFirstName(),
+		// newUser.getLastName());
+
+		userService.addUser(newUser.getFirstName(), newUser.getLastName(), newUser.getPhoneNumber(),
+				newUser.getEmail());
 		return "users";
 	}
 

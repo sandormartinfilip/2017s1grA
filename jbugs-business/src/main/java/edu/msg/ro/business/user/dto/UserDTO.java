@@ -43,6 +43,7 @@ public class UserDTO extends AbstractoDTO {
 	}
 
 	public String getEmail() {
+		System.out.println(email + "  EMAIL EMAIL EMAIL");
 		return email;
 	}
 
@@ -76,7 +77,8 @@ public class UserDTO extends AbstractoDTO {
 
 	@Override
 	public String toString() {
-		return "UserDTO [getId()=" + getId() + "]";
+		return "UserDTO [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", phoneNumber="
+				+ phoneNumber + ", username=" + username + ", password=" + password + ", active=" + active + "]";
 	}
 
 }

@@ -6,20 +6,26 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <h:body>
+ 	<h3>Create New User</h3>
 	<h:form id="newUserForm">
 		<h:panelGrid columns="3">
 			<h:outputLabel for="firstName" value="First Name:" />
-			<h:outputLabel for="lastName" value="Last Name:" />
-			<h:commandButton value="Save User"
-				action="#{userManagementBean.doCreateUser}"/>
-			
 			<h:inputText id="firstName"
 				value="#{userManagementBean.newUser.firstName}" />
+			<br></br>
+			<h:outputLabel for="lastName" value="Last Name:" />
 			<h:inputText id="lastName"
 				value="#{userManagementBean.newUser.lastName}" />
-
-
-			
+			<br></br>
+			<h:outputLabel for="phoneNumber" value="Phone Number:" />
+			<h:inputText id="phoneNumber"
+				value="#{userManagementBean.newUser.phoneNumber}" />
+			<br></br>
+			<h:outputLabel for="email" value="Email:" />
+			<h:inputText id="email" value="#{userManagementBean.newUser.email}" />
+			<br></br>
+			<h:commandButton value="Save User"
+				action="#{userManagementBean.doCreateUser}" />
 		</h:panelGrid>
 
 
@@ -45,6 +51,21 @@
 					rendered="#{!user.id.equals(userManagementBean.editedUserId)}" />
 				<h:inputText value="#{user.lastName}"
 					rendered="#{user.id.equals(userManagementBean.editedUserId)}" />
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Phone Number</f:facet>
+				<h:outputText value="#{user.phoneNumber}"></h:outputText>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Email</f:facet>
+				<h:outputText value="#{user.email}"></h:outputText>
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Password</f:facet>
+				<h:outputText value="#{user.password}"></h:outputText>
 			</h:column>
 
 			<h:column>
@@ -84,9 +105,10 @@
 			<h:column>
 				<h:commandLink action="#{userManagementBean.doSave}"
 					value="Save User"
-					rendered="#{user.id.equals(userManagementBean.editedUserId)}" >
-					<f:setPropertyActionListener value="#{user}" target="#{userManagementBean.editedUser}" />
-					</h:commandLink>
+					rendered="#{user.id.equals(userManagementBean.editedUserId)}">
+					<f:setPropertyActionListener value="#{user}"
+						target="#{userManagementBean.editedUser}" />
+				</h:commandLink>
 			</h:column>
 		</h:dataTable>
 	</h:form>
