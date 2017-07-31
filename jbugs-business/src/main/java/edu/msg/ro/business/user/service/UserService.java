@@ -14,6 +14,7 @@ import edu.msg.ro.persistence.user.dao.UserDao;
 import edu.msg.ro.persistence.user.entity.User;
 
 @Stateless
+
 public class UserService {
 
 	final static String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "msggroup.com";
@@ -25,6 +26,15 @@ public class UserService {
 
 	@EJB
 	private UserDTOMapper userMapper;
+
+	public boolean isValidUser(UserDTO loginUser) {
+		UserDTO savedUser = getUserByUsername(loginUser.getUsername());
+		if (savedUser != null && savedUser.getPassword() != null) {
+
+			return savedUser.getPassword().equals(loginUser.getPassword());
+		}
+		return false;
+	};
 
 	public void saveNewUser(final String firstName, final String lastName) {
 		final User newUser = new User();
@@ -50,19 +60,47 @@ public class UserService {
 	 * @throws JBugsBusinessException
 	 *             if user with given id is not found
 	 */
-	public boolean deleteUser(final Long userId) throws JBugsBusinessException {
-		final User user = userDao.findById(userId);
+	// public boolean deleteUser(final Long userId) throws
+	// JBugsBusinessException {
+	// final User user = userDao.findById(userId);
+	// if (user == null) {
+	// // TODO: maybe is better to return only false value!?
+	// throw new ObjectNotFoundException("User with id " + userId + " not
+	// found!");
+	// }
+	// // TODO
+	// // validate business constraints (Nu se pot sterge utilizatorii care au
+	// // asignate taskuri care nu sunt inca terminate / inchise) - in caz
+	// // contrar aruncam BusinessValidationException
+	//
+	// user.setActive(false);
+	//
+	// return true;
+	// }
+
+	public boolean changeUserStatus(String username, boolean status) {
+		User user = userDao.getUserByUsername(username);
 		if (user == null) {
-			// TODO: maybe is better to return only false value!?
-			throw new ObjectNotFoundException("User with id " + userId + " not found!");
+			try {
+				throw new ObjectNotFoundException("User " + username + " not found!");
+			} catch (ObjectNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		// TODO
 		// validate business constraints (Nu se pot sterge utilizatorii care au
 		// asignate taskuri care nu sunt inca terminate / inchise) - in caz
 		// contrar aruncam BusinessValidationException
 
-		user.setActive(false);
+		user.setActive(status);
 
+		userDao.updateUser(user);
+		return true;
+	}
+
+	public boolean deleteUser(Long id) {
+		userDao.deleteUser(id);
 		return true;
 	}
 
@@ -134,4 +172,28 @@ public class UserService {
 
 	}
 
+	public UserDTO getUserByUsername(String userName) {
+		User user = userDao.getUserByUsername(userName);
+		if (user != null) {
+			return userMapper.mapToDTO(user);
+		} else
+			return null;
+	}
+
+	public List<UserDTO> getAllUsers() {
+		final List<User> allUsers = userDao.getAll();
+		return allUsers.stream().map(userEntity -> userMapper.mapToDTO(userEntity)).collect(Collectors.toList());
+	}
+
+	public void updateUser(UserDTO userDTO) {
+		User user = userDao.findById(userDTO.getId());
+		user.setFirstName(userDTO.getFirstName());
+		user.setLastName(userDTO.getLastName());
+		user.setEmail(userDTO.getEmail());
+		user.setPhoneNumber(userDTO.getPhoneNumber());
+		user.setPassword(userDTO.getPassword());
+		user.setActive(userDTO.isActive());
+
+		userDao.updateUser(user);
+	}
 }

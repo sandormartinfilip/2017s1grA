@@ -13,7 +13,10 @@ public class UserDTOMapper {
 		userDTO.setId(userEntity.getId());
 		userDTO.setFirstName(userEntity.getFirstName());
 		userDTO.setLastName(userEntity.getLastName());
+		userDTO.setEmail(userEntity.getLastName());
 		userDTO.setActive(userEntity.isActive());
+		userDTO.setPassword(userEntity.getPassword());
+		userDTO.setUsername(userEntity.getUsername());
 
 		return userDTO;
 	}

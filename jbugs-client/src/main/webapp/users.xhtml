@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<h:form id="newUserForm">
+		<h:panelGrid columns="3">
+			<h:outputLabel for="firstName" value="First Name:" />
+			<h:outputLabel for="lastName" value="Last Name:" />
+			<h:commandButton value="Save User"
+				action="#{userManagementBean.doCreateUser}"/>
+			
+			<h:inputText id="firstName"
+				value="#{userManagementBean.newUser.firstName}" />
+			<h:inputText id="lastName"
+				value="#{userManagementBean.newUser.lastName}" />
+
+
+			
+		</h:panelGrid>
+
+
+		<h:form value="usersForm"></h:form>
+		<h:dataTable value="#{userManagementBean.allUsers}" var="user"
+			id="usersTable">
+			<h:column>
+				<f:facet name="header"> Username</f:facet>
+				<h:outputText value="#{user.username}"></h:outputText>
+
+			</h:column>
+			<h:column>
+				<f:facet name="header">First Name</f:facet>
+				<h:outputText value="#{user.firstName}"
+					rendered="#{!user.id.equals(userManagementBean.editedUserId)}" />
+				<h:inputText value="#{user.firstName}"
+					rendered="#{user.id.equals(userManagementBean.editedUserId)}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Last name</f:facet>
+				<h:outputText value="#{user.lastName}"
+					rendered="#{!user.id.equals(userManagementBean.editedUserId)}" />
+				<h:inputText value="#{user.lastName}"
+					rendered="#{user.id.equals(userManagementBean.editedUserId)}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header"> Status</f:facet>
+				<h:outputText value="active" rendered="#{user.active}"></h:outputText>
+				<h:outputText value="inactive" rendered="#{not user.active}"></h:outputText>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Delete</f:facet>
+				<h:commandLink value="delete"
+					action="#{userManagementBean.deleteUser(user.id)}"></h:commandLink>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Activate/Deactivate</f:facet>
+				<h:commandLink value="activate"
+					action="#{userManagementBean.activateUser(user.username)}"
+					rendered="#{not user.active}">
+				</h:commandLink>
+				<h:commandLink value="deactivate"
+					action="#{userManagementBean.deactivateUser(user.username)}"
+					rendered="#{user.active}"></h:commandLink>
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Edit</f:facet>
+				<h:commandLink value="edit"
+					action="#{userManagementBean.enableEditMode(user.id)}"
+					rendered="#{!user.id.equals(userManagementBean.editedUserId)}">
+
+				</h:commandLink>
+				<h:commandLink value="cancel"
+					action="#{userManagementBean.disableEditMode()}"
+					rendered="#{user.id.equals(userManagementBean.editedUserId)}"></h:commandLink>
+			</h:column>
+			<h:column>
+				<h:commandLink action="#{userManagementBean.doSave}"
+					value="Save User"
+					rendered="#{user.id.equals(userManagementBean.editedUserId)}" >
+					<f:setPropertyActionListener value="#{user}" target="#{userManagementBean.editedUser}" />
+					</h:commandLink>
+			</h:column>
+		</h:dataTable>
+	</h:form>
+</h:body>
+</html>
