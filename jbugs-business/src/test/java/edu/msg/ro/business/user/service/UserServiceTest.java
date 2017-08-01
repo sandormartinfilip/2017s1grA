@@ -1,4 +1,4 @@
-package edu.msg.ro.business.user.service;
+/*package edu.msg.ro.business.user.service;
 
 import java.util.List;
 
@@ -93,3 +93,4 @@ public class UserServiceTest extends AbstractIntegrationTest {
 	}
 
 }
+*/

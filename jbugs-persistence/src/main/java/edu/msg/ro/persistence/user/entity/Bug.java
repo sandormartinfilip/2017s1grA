@@ -1,21 +1,34 @@
 package edu.msg.ro.persistence.user.entity;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+@NamedQueries({
+		@NamedQuery(name = Bug.FIND_BUG_BY_SEVERITY, query = "SELECT b from Bug b where b.severity = :severity"),
+		@NamedQuery(name = Bug.FIND_BUG_BY_STATUS, query = "SELECT b from Bug b where b.status = :status"),
+		@NamedQuery(name = Bug.FIND_ALL_BUGS, query = "SELECT b from Bug b"), })
+
 @Entity
 public class Bug extends AbstractEntity {
+
+	public static final String FIND_BUG_BY_SEVERITY = "Bug.findBugBySeverity";
+	public static final String FIND_BUG_BY_STATUS = "Bug.findBugByStatus";
+	public static final String FIND_ALL_BUGS = "Bug.findAllBugs";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,20 +40,22 @@ public class Bug extends AbstractEntity {
 	@Column(name = "description")
 	private String description;
 
-	@Column(name = "target_date")
-	private LocalDateTime targetDate;
+	@Column(name = "targetDate")
+	private Date targetDate;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "severity")
 	private BugSeverity severity;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
 	private BugStatus status;
 
 	@Column(name = "versionFound")
-	private String versionFound;
+	private Double versionFound;
 
 	@Column(name = "versionFixed")
-	private String versionFixed;
+	private Double versionFixed;
 
 	@ManyToOne
 	@JoinColumn(name = "createdBy", referencedColumnName = "id")
@@ -58,20 +73,6 @@ public class Bug extends AbstractEntity {
 
 	@OneToOne(mappedBy = "bugId")
 	private Notification notification;
-
-	public Bug() {
-
-	}
-
-	public Bug(final String title, final String description, final LocalDateTime targetDate, final BugSeverity severity,
-			final BugStatus status) {
-		super();
-		this.title = title;
-		this.description = description;
-		this.targetDate = targetDate;
-		this.severity = severity;
-		this.status = status;
-	}
 
 	@Override
 	public Long getId() {
@@ -98,11 +99,11 @@ public class Bug extends AbstractEntity {
 		this.description = description;
 	}
 
-	public LocalDateTime getTargetDate() {
+	public Date getTargetDate() {
 		return targetDate;
 	}
 
-	public void setTargetDate(final LocalDateTime targetDate) {
+	public void setTargetDate(final Date targetDate) {
 		this.targetDate = targetDate;
 	}
 
@@ -122,20 +123,36 @@ public class Bug extends AbstractEntity {
 		this.status = status;
 	}
 
-	public String getVersionFound() {
+	public Double getVersionFound() {
 		return versionFound;
 	}
 
-	public void setVersionFound(final String versionFound) {
+	public void setVersionFound(final Double versionFound) {
 		this.versionFound = versionFound;
 	}
 
-	public String getVersionFixed() {
+	public Double getVersionFixed() {
 		return versionFixed;
 	}
 
-	public void setVersionFixed(final String versionFixed) {
+	public void setVersionFixed(final Double versionFixed) {
 		this.versionFixed = versionFixed;
+	}
+
+	public User getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public User getAssignedTo() {
+		return assignedTo;
+	}
+
+	public void setAssignedTo(User assignedTo) {
+		this.assignedTo = assignedTo;
 	}
 
 }
