@@ -35,7 +35,7 @@ public class LoginBean extends JBugsBean {
 		this.captchaBean = captchaBean;
 	}
 
-	private String lang = "";
+	private String lang = "en";
 
 	public UserDTO getUser() {
 		return user;
@@ -69,7 +69,7 @@ public class LoginBean extends JBugsBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		if (userService.isActiveUser(user)) {
-			if (userService.isValidUser(user)) {
+			if (userService.isValidUser(user) && (userService.checkNoOfFails(user.getUsername()) < 5)) {
 
 				getFacesContext().addMessage(null, new FacesMessage("We logged in, yey"));
 
@@ -77,6 +77,8 @@ public class LoginBean extends JBugsBean {
 				session.setAttribute("lang", this.lang);
 
 				getFacesContext().getViewRoot().setLocale(new Locale(this.lang));
+
+				userService.tryToLogin(user.getUsername(), true);
 
 				return "users";
 			} else {
@@ -87,6 +89,15 @@ public class LoginBean extends JBugsBean {
 
 				context.addMessage(null, new FacesMessage("Select Captcha"));
 				context.addMessage("loginForm:username", new FacesMessage("Password or Username wrong!"));
+
+				userService.tryToLogin(user.getUsername(), false);
+
+				if (userService.checkNoOfFails(user.getUsername()) == 5) {
+					userService.changeUserStatus(user.getUsername(), false);
+					System.out.println("s-a schimbat statusul");
+				} else {
+					System.out.println("nu se schimba statusul");
+				}
 
 				return "login";
 			}
