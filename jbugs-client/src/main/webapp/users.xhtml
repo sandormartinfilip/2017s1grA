@@ -11,10 +11,6 @@
 	<h:form id="newUserForm">
 		<h:panelGrid columns="3">
 			<h:outputLabel for="firstName" value="First Name:" />
-			<h:outputLabel for="lastName" value="Last Name:" />
-			<h:commandButton value="Save User"
-				action="#{userManagementBean.doCreateUser}"/>
-			
 			<h:inputText id="firstName"
 				value="#{userManagementBean.newUser.firstName}" />
 			<br></br>
