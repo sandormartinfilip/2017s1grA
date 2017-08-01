@@ -1,6 +1,7 @@
 package edu.msg.ro.beans;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -9,17 +10,20 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import edu.msg.ro.business.exception.JBugsBusinessException;
 import edu.msg.ro.business.user.dto.UserDTO;
 import edu.msg.ro.business.user.service.UserService;
 
 @ManagedBean
 @RequestScoped
-public class LoginBean {
+public class LoginBean extends JBugsBean {
 
 	@EJB
 	private UserService userService;
 
 	private UserDTO user = new UserDTO();
+
+	private String lang = "";
 
 	public UserDTO getUser() {
 		return user;
@@ -29,21 +33,53 @@ public class LoginBean {
 		this.user = user;
 	}
 
+	/*
+	 * public String getLanguage() { if
+	 * (getFacesContext().getViewRoot().getLocale().equals(Locale.ENGLISH)) {
+	 * getFacesContext().getViewRoot().setLocale(Locale.ITALY); } if
+	 * (getFacesContext().getViewRoot().getLocale().equals(Locale.ITALY)) {
+	 * getFacesContext().getViewRoot().setLocale(Locale.ENGLISH); }
+	 * 
+	 * return "login"; }
+	 */
+	public String getLang() {
+		return lang;
+	}
+
+	public void setLang(String lang) {
+		this.lang = lang;
+	}
+
 	public String doLogin() {
 
-		getFacesContext().getViewRoot().setLocale(Locale.ITALY);
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 
-		if (userService.isValidUser(user)) {
+		FacesContext context = FacesContext.getCurrentInstance();
 
-			getFacesContext().addMessage(null, new FacesMessage("We logged in, yey"));
+		if (userService.isActiveUser(user)) {
+			if (userService.isValidUser(user)) {
 
-			HttpSession session = (HttpSession) getFacesContext().getExternalContext().getSession(false);
+				getFacesContext().addMessage(null, new FacesMessage("We logged in, yey"));
 
-			session.setAttribute("username", user.getUsername());
-			return "users";
+				session.setAttribute("username", user.getUsername());
+				session.setAttribute("lang", this.lang);
+
+				getFacesContext().getViewRoot().setLocale(new Locale(this.lang));
+
+				return "users";
+			} else {
+
+				ResourceBundle rb = ResourceBundle.getBundle("jbugs/messages");
+				this.handleException(
+						new JBugsBusinessException(rb.getString(JBugsBusinessException.JBUGS_LOGIN_WRONG_PASSWORD)));
+
+				context.addMessage(null, new FacesMessage("Select Captcha"));
+				context.addMessage("loginForm:username", new FacesMessage("Password or Username wrong!"));
+
+				return "login";
+			}
 		} else {
-			FacesContext.getCurrentInstance().addMessage("loginForm:username",
-					new FacesMessage("Password or Username wrong!"));
+			context.addMessage("loginForm:username", new FacesMessage("Your account is deactivated!"));
 			return "login";
 		}
 	}
@@ -51,7 +87,7 @@ public class LoginBean {
 	public String doLogout() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 		session.invalidate();
-		// facesContext.getExternalContext().invalidateSession();
+
 		return "login";
 	}
 

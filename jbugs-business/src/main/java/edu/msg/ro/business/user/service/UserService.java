@@ -37,6 +37,11 @@ public class UserService {
 		return false;
 	};
 
+	public boolean isActiveUser(UserDTO loginUser) {
+		UserDTO savedUser = getUserByUsername(loginUser.getUsername());
+		return savedUser.isActive();
+	}
+
 	public void saveNewUser(final String firstName, final String lastName) {
 		final User newUser = new User();
 		newUser.setFirstName(firstName);
