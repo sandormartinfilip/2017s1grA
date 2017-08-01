@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title><h:outputText value="#{msg['users.title']}" /></title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+<h:body>
+	<f:view>
+
+		<h:form id="usersForm">
+
+			<h:messages />
+
+			<p:dataTable value="#{usersBean.allUsers}" var="user" rows="5"
+				paginator="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15">
+				<p:column headerText="Username" sortBy="#{user.userName}">
+					<h:outputText value="#{user.userName}" rendered="#{not user.equals(usersBean.editedUser)}"/>
+					<h:inputText value="#{usersBean.editedUser.userName}" rendered="#{user.equals(usersBean.editedUser)}"/>
+				</p:column>
+				<p:column headerText="Password" sortBy="#{user.password}">
+					<h:outputText value="#{user.password}" rendered="#{not user.equals(usersBean.editedUser)}"/>
+					<h:inputText value="#{usersBean.editedUser.password}" rendered="#{user.equals(usersBean.editedUser)}"/>
+				</p:column>
+				<p:column headerText="Action">
+					<h:commandButton value="Edit" 
+									 action="#{usersBean.setEditedUser(user)}" 
+								     rendered="#{not user.equals(usersBean.editedUser)}"/>
+					<h:commandButton value="Save" 
+									 action="#{usersBean.doSaveEditedUser}" 
+								     rendered="#{user.equals(usersBean.editedUser)}"/>
+					<h:commandButton value="Edit" 
+									 action="#{usersBean.setEditedUser(null)}" 
+								     rendered="#{user.equals(usersBean.editedUser)}"/>
+				     
+				</p:column>
+			</p:dataTable>
+
+			<h:commandLink value="#{msg['general.logout']}"
+				action="#{loginBean.processLogout}" />
+
+			<h:link value="Send some params without managed bean"
+				outcome="nobean">
+				<f:param id="userName" name="userNameParam" value="John Smith" />
+				<f:param id="occupation" name="occupationParam" value="Secret Agent" />
+			</h:link>
+
+		
+		<p:growl id="message" showDetail="true" />
+
+		<p:commandButton value="Destroy the World"
+			actionListener="#{usersBean.destroyWorld}" update="message">
+			<p:confirm header="Confirmation" message="Are you sure?"
+				icon="ui-icon-alert" />
+		</p:commandButton>
+
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+			<p:commandButton value="Yes" type="button"
+				styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="No" type="button"
+				styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+		
+		</h:form>
+
+	</f:view>
+</h:body>
+</html>

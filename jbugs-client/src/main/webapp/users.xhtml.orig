@@ -3,12 +3,15 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:h="http://java.sun.com/jsf/html">
 <h:body>
+<<<<<<< HEAD
+ 	<h3>Create New User</h3>
+<h:messages></h:messages>
+=======
 <f:view>
 	<h3>Create New User</h3>
-<h:messages></h:messages>
+>>>>>>> Calin_proiect_31_7_2017
 	<h:form id="newUserForm">
 		<h:panelGrid columns="3">
 			<h:outputLabel for="firstName" value="First Name:" />
@@ -18,7 +21,6 @@
 			<h:outputLabel for="lastName" value="Last Name:" />
 			<h:inputText id="lastName"
 				value="#{userManagementBean.newUser.lastName}" />
-
 			<br></br>
 			<h:outputLabel for="phoneNumber" value="Phone Number:" />
 			<h:inputText id="phoneNumber"
@@ -29,7 +31,6 @@
 			<br></br>
 			<h:commandButton value="Save User"
 				action="#{userManagementBean.doCreateUser}" />
-
 		</h:panelGrid>
 	</h:form>
 
@@ -37,10 +38,28 @@
 		<h:dataTable value="#{userManagementBean.allUsers}" var="user"
 			id="usersTable">
 			<h:column>
-				<f:facet name="header">Username</f:facet>
+				<f:facet name="header"> Username</f:facet>
 				<h:outputText value="#{user.username}"></h:outputText>
 
 			</h:column>
+<<<<<<< HEAD
+			<h:column>
+				<f:facet name="header">First Name</f:facet>
+				<h:outputText value="#{user.firstName}"
+					rendered="#{!(user.id.equals(userManagementBean.editedUserId))}" />
+				<h:inputText value="#{user.firstName}"
+					rendered="#{user.id.equals(userManagementBean.editedUserId)}" />
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Last name</f:facet>
+				<h:outputText value="#{user.lastName}"
+					rendered="#{!(user.id.equals(userManagementBean.editedUserId))}" />
+				<h:inputText value="#{user.lastName}"
+					rendered="#{user.id.equals(userManagementBean.editedUserId)}" />
+			</h:column>
+			
+=======
             <h:column>
                 <f:facet name="header">First Name</f:facet>
                 <h:outputText value="#{user.firstName}"
@@ -60,6 +79,7 @@
                            />
             </h:column>
 
+>>>>>>> Calin_proiect_31_7_2017
 			<h:column>
 				<f:facet name="header">Phone Number</f:facet>
 				<h:outputText value="#{user.phoneNumber}"
@@ -98,7 +118,7 @@
 			<h:column>
 				<f:facet name="header">Activate/Deactivate</f:facet>
 				<h:commandLink value="activate"
-					action="#{userManagementBean.activateUser(user.username)}"
+					action="#{userManagementBean.setEditedUser(user)}"
 					rendered="#{not user.active}">
 				</h:commandLink>
 				<h:commandLink value="deactivate"
@@ -108,18 +128,42 @@
 
 			<h:column>
 				<f:facet name="header">Edit</f:facet>
+<<<<<<< HEAD
+				<h:commandLink value="edit"
+					action="#{userManagementBean.enableEditMode(user.id)}"
+					rendered="#{!(user.id.equals(userManagementBean.editedUserId))}">
+
+				</h:commandLink>
+				<h:commandLink value="cancel"
+					action="#{userManagementBean.disableEditMode()}"
+					rendered="#{user.id.equals(userManagementBean.editedUserId)}"></h:commandLink>
+			</h:column>
+			<h:column>
+				<h:commandLink action="#{userManagementBean.doSave}"
+					value="Save User"
+					rendered="#{user.id.equals(userManagementBean.editedUserId)}">
+					<f:setPropertyActionListener value="#{user}"
+						target="#{userManagementBean.editedUser}" />
+				</h:commandLink>
+=======
 				<h:commandButton value="Edit"
 								action="#{userManagementBean.setEditedUser(user)}"
 								rendered="#{not user.equals(userManagementBean.editedUser)}" />
 				<h:commandButton value="Save" 
 								 action="#{userManagementBean.doSaveEditedUser}"
 								 rendered="#{user.equals(userManagementBean.editedUser)}" />
+>>>>>>> Calin_proiect_31_7_2017
 			</h:column>
 			</h:dataTable>
 	</h:form>
-</f:view>
-<h:form>
+<<<<<<< HEAD
+	<h:form>
 		<h:commandButton action="#{loginBean.doLogout}" onClick="window.location.reload();"
 		value="#{msg['logout.buttonName']}"></h:commandButton>
-		</h:form></h:body>
+		</h:form>
+		
+=======
+</f:view>
+>>>>>>> Calin_proiect_31_7_2017
+</h:body>
 </html>
