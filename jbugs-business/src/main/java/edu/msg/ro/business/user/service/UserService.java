@@ -1,6 +1,5 @@
 package edu.msg.ro.business.user.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -115,14 +114,9 @@ public class UserService {
 
 	public List<UserDTO> getAllUsers() {
 		final List<User> allUsers = userDao.getAll();
-		List<UserDTO> allUsersDTO = new ArrayList<UserDTO>();
 
-		for (User u : allUsers) {
-			allUsersDTO.add(userMapper.mapToDTO(u));
-		}
-		// return allUsers.stream().map(userEntity ->
-		// userMapper.mapToDTO(userEntity)).collect(Collectors.toList());
-		return allUsersDTO;
+		return allUsers.stream().map(userEntity -> userMapper.mapToDTO(userEntity)).collect(Collectors.toList());
+
 	}
 
 	public void updateUser(UserDTO userDTO) {
