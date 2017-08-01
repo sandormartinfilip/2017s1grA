@@ -23,10 +23,7 @@
 		<session-timeout>30 </session-timeout>
 	</session-config>
 	
-	<context-param>
-		<param-name>primefaces.THEME</param-name>
-		<param-value>bluesky</param-value>
-	</context-param>
+	
 	
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
