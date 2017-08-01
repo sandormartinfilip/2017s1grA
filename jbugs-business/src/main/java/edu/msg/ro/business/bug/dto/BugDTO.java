@@ -2,12 +2,12 @@ package edu.msg.ro.business.bug.dto;
 
 import java.util.Date;
 
-import edu.msg.ro.business.dto.AbstractDTO;
+import edu.msg.ro.business.dto.AbstractoDTO;
 import edu.msg.ro.persistence.user.entity.BugSeverity;
 import edu.msg.ro.persistence.user.entity.BugStatus;
 import edu.msg.ro.persistence.user.entity.User;
 
-public class BugDTO extends AbstractDTO {
+public class BugDTO extends AbstractoDTO {
 
 	private String title;
 	private String description;
@@ -23,7 +23,7 @@ public class BugDTO extends AbstractDTO {
 		return createdBy;
 	}
 
-	public void setCreatedBy(final User createdBy) {
+	public void setCreatedBy(User createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -31,7 +31,7 @@ public class BugDTO extends AbstractDTO {
 		return assignedTo;
 	}
 
-	public void setAssignedTo(final User assignedTo) {
+	public void setAssignedTo(User assignedTo) {
 		this.assignedTo = assignedTo;
 	}
 
@@ -39,7 +39,7 @@ public class BugDTO extends AbstractDTO {
 		return title;
 	}
 
-	public void setTitle(final String title) {
+	public void setTitle(String title) {
 		this.title = title;
 	}
 
@@ -47,7 +47,7 @@ public class BugDTO extends AbstractDTO {
 		return description;
 	}
 
-	public void setDescription(final String description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -55,7 +55,7 @@ public class BugDTO extends AbstractDTO {
 		return targetDate;
 	}
 
-	public void setTargetDate(final Date targetDate) {
+	public void setTargetDate(Date targetDate) {
 		this.targetDate = targetDate;
 	}
 
@@ -63,7 +63,7 @@ public class BugDTO extends AbstractDTO {
 		return severity;
 	}
 
-	public void setSeverity(final BugSeverity severity) {
+	public void setSeverity(BugSeverity severity) {
 		this.severity = severity;
 	}
 
@@ -71,7 +71,7 @@ public class BugDTO extends AbstractDTO {
 		return status;
 	}
 
-	public void setStatus(final BugStatus status) {
+	public void setStatus(BugStatus status) {
 		this.status = status;
 	}
 
@@ -79,7 +79,7 @@ public class BugDTO extends AbstractDTO {
 		return versionFound;
 	}
 
-	public void setVersionFound(final Double versionFound) {
+	public void setVersionFound(Double versionFound) {
 		this.versionFound = versionFound;
 	}
 
@@ -87,7 +87,7 @@ public class BugDTO extends AbstractDTO {
 		return versionFixed;
 	}
 
-	public void setVersionFixed(final Double versionFixed) {
+	public void setVersionFixed(Double versionFixed) {
 		this.versionFixed = versionFixed;
 	}
 

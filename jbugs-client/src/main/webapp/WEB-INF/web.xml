@@ -18,11 +18,17 @@
 	<welcome-file-list>
 		<welcome-file>hello.xhtml</welcome-file>
 	</welcome-file-list>
+<<<<<<< HEAD
 
+=======
+	
 	<session-config>
 		<session-timeout>30 </session-timeout>
 	</session-config>
 	
+	
+	
+>>>>>>> 60cb30056e3898fcb3aa07c52cf7f7661a0c567f
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
