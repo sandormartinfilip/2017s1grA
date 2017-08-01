@@ -1,8 +1,8 @@
 package edu.msg.ro.business.user.dto;
 
-import edu.msg.ro.business.dto.AbstractoDTO;
+import edu.msg.ro.business.dto.AbstractDTO;
 
-public class UserDTO extends AbstractoDTO {
+public class UserDTO extends AbstractDTO {
 
 	private String firstName;
 

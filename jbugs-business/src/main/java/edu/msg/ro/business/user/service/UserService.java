@@ -14,7 +14,6 @@ import edu.msg.ro.persistence.user.dao.UserDao;
 import edu.msg.ro.persistence.user.entity.User;
 
 @Stateless
-
 public class UserService {
 
 	final static String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "msggroup.com";

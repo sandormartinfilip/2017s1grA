@@ -10,9 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+@NamedQueries({ @NamedQuery(name = Role.FIND_ALL_ROLES, query = "SELECT r from Role r"), })
 
 @Entity
 public class Role extends AbstractEntity {
+
+	public static final String FIND_ALL_ROLES = "Role.findAllRoles";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
