@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+	<f:view>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputText value="Select Language"></h:outputText>
+				<h:selectOneMenu id="dropdown" value="#{msg['languageDetails.locale']}">
+					<f:selectItem itemValue="en" itemLabel="English" />
+					<f:selectItem itemValue="ro" itemLabel="Romanian" />
+				</h:selectOneMenu>
+			</h:panelGrid>
+			<p>
+			
+				<h:commandButton id="change" action="#{localeBean.changeLanguage}"
+					value="#{msg['login.languageButton']}"></h:commandButton>
+			</p>
+
+
+		</h:form>
+	</f:view>
+
+	<p:editor></p:editor>
+</h:body>
+</html>

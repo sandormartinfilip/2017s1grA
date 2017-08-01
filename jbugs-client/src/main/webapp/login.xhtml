@@ -5,27 +5,36 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<script src='https://www.google.com/recaptcha/api.js'></script>
+</h:head>
 <h:body>
 	<h:messages></h:messages>
 	<h:form id="loginForm">
 		<h:panelGrid columns="3">
 			<h:outputLabel for="username" value="#{msg['login.username']}" />
-			<h:inputText id="username" value="#{loginBean.user.username}" >
+			<h:inputText id="username" value="#{loginBean.user.username}" required="true" requiredMessage="#{msg['login.required.username']}">
 				<f:validateLength minimum="3"></f:validateLength>
 			</h:inputText>
 			<h:message for="username" />
 
 			<h:outputLabel for="password" value="#{msg['login.password']}" />
-			<h:inputSecret id="password" value="#{loginBean.user.password}" />
+			<h:inputSecret id="password" value="#{loginBean.user.password}" required="true" requiredMessage="#{msg['login.required.password']}"/>
 			<h:message for="password" />
-			
-			<h:selectOneRadio value = "#{loginBean.lang}"> 
+
+<h:selectOneRadio value = "#{loginBean.lang}"> 
 			   <f:selectItem itemValue = "en" itemLabel = "en" /> 
 			   <f:selectItem itemValue = "ro" itemLabel = "ro" />
 			</h:selectOneRadio> 
-			
-			<h:commandButton action="#{loginBean.doLogin}" value="Login"></h:commandButton>
-		</h:panelGrid>
+
+			<div class="g-recaptcha" data-sitekey="6Ld3FysUAAAAADOI7AHQQkDNI-2LHLX4yVIC45kG"></div> 
+
+<h:commandButton action="#{loginBean.doLogin}"
+				value="#{msg['login.buttonName']}"></h:commandButton>
+					</h:panelGrid>
+		
+		
+
 	</h:form>
 	<p:editor></p:editor>
 </h:body>
