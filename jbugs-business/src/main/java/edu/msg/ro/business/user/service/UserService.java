@@ -10,7 +10,9 @@ import edu.msg.ro.business.exception.JBugsBusinessException;
 import edu.msg.ro.business.exception.ObjectNotFoundException;
 import edu.msg.ro.business.user.dto.UserDTO;
 import edu.msg.ro.business.user.dto.mapper.UserDTOMapper;
+import edu.msg.ro.persistence.user.dao.LoginHistoryDao;
 import edu.msg.ro.persistence.user.dao.UserDao;
+import edu.msg.ro.persistence.user.entity.LoginHistory;
 import edu.msg.ro.persistence.user.entity.User;
 
 @Stateless
@@ -24,6 +26,9 @@ public class UserService {
 	private UserDao userDao;
 
 	@EJB
+	private LoginHistoryDao loginHistoryDao;
+
+	@EJB
 	private UserDTOMapper userMapper;
 
 	public boolean isValidUser(UserDTO loginUser) {
@@ -34,6 +39,11 @@ public class UserService {
 		}
 		return false;
 	};
+
+	public boolean isActiveUser(UserDTO loginUser) {
+		UserDTO savedUser = getUserByUsername(loginUser.getUsername());
+		return savedUser.isActive();
+	}
 
 	public void saveNewUser(final String firstName, final String lastName) {
 		final User newUser = new User();
@@ -103,74 +113,6 @@ public class UserService {
 		return true;
 	}
 
-	public void addUser(String firstName, String lastName, String phoneNumber, String email, String password) {
-
-		if (isEmailValid(email))
-			if (isPhoneNumberValid(phoneNumber)) {
-
-				String username = createUsername(firstName, lastName, LAST_NAME_INDEX, FIRST_NAME_INDEX);
-
-				boolean userInDB = true;
-
-				int indexLast = LAST_NAME_INDEX;
-				int indexFirst = FIRST_NAME_INDEX;
-
-				User user = new User();
-
-				int nrOfUsers = 0;
-				List<User> usersFromDB = userDao.getUserForUsername(username);
-
-				nrOfUsers = usersFromDB.size();
-				System.out.println("================ " + usersFromDB.size() + "================== AICICICICICICCI");
-				while (userInDB == true) {
-
-					if (nrOfUsers <= 0) {
-						user = new User();
-						user.setFirstName(firstName);
-						user.setLastName(lastName);
-						user.setPhoneNumber(phoneNumber);
-						user.setEmail(email);
-						user.setPassword(password);
-						user.setUsername(username);
-						user.setActive(true);
-						userDao.persistUser(user);
-
-						userInDB = false;
-					}
-					nrOfUsers--;
-					indexLast--;
-					indexFirst++;
-				}
-
-				username = createUsername(firstName, lastName, indexLast, indexFirst);
-
-			}
-	}
-
-	public String createUsername(String firstName, String lastName, int lastNameIndex, int endIndex) {
-
-		String username;
-		username = lastName.substring(0, Math.min(lastName.length(), lastNameIndex)) + firstName.substring(0, endIndex);
-		return username;
-	}
-
-	public boolean isEmailValid(String email) {
-
-		if (email.matches(EMAIL_REGEX))
-			return true;
-		return false;
-	}
-
-	public boolean isPhoneNumberValid(String phone) {
-
-		if (phone.startsWith("+40") && (phone.length() == 12))
-			return true;
-		if (phone.startsWith("+49") && (phone.length() >= 5 && phone.length() <= 14))
-			return true;
-		return false;
-
-	}
-
 	public UserDTO getUserByUsername(String userName) {
 		User user = userDao.getUserByUsername(userName);
 		if (user != null) {
@@ -181,7 +123,9 @@ public class UserService {
 
 	public List<UserDTO> getAllUsers() {
 		final List<User> allUsers = userDao.getAll();
+
 		return allUsers.stream().map(userEntity -> userMapper.mapToDTO(userEntity)).collect(Collectors.toList());
+
 	}
 
 	public void updateUser(UserDTO userDTO) {
@@ -195,4 +139,106 @@ public class UserService {
 
 		userDao.updateUser(user);
 	}
+
+	public void addUser(String firstName, String lastName, String phoneNumber, String email) {
+
+		if (isEmailValid(email))
+			if (isPhoneNumberValid(phoneNumber)) {
+
+				String username = createUsername(firstName, lastName, LAST_NAME_INDEX, FIRST_NAME_INDEX);
+
+				boolean ok = true;
+				int nrOfUsers = 0;
+				int nrOfUserslimit = 6;
+				int numberInUsername = 1;
+				int indexLast = LAST_NAME_INDEX;
+				int indexFirst = FIRST_NAME_INDEX;
+
+				User user = new User();
+				User userFromDB = null;
+				while (ok) {
+					userFromDB = userDao.getUserByUsername(username);
+
+					// if no user in DB with current username
+					if (userFromDB == null) {
+						user = new User();
+						user.setFirstName(firstName);
+						user.setLastName(lastName);
+						user.setPhoneNumber(phoneNumber);
+						user.setEmail(email);
+						user.setUsername(username);
+						user.setActive(true);
+						user.setPassword(createPassword(username));
+						userDao.persistUser(user);
+						ok = false;
+					} else {
+						System.out.println(username + "=============");
+						nrOfUsers++;
+						indexLast--;
+						indexFirst++;
+						if (nrOfUsers < nrOfUserslimit) {
+							username = createUsername(firstName, lastName, indexLast, indexFirst);
+						} else {
+							username = createUsername(firstName, numberInUsername);
+							numberInUsername++;
+						}
+					}
+				}
+			}
+
+	}
+
+	private String createUsername(String firstName, String lastName, int lastNameIndex, int endIndex) {
+
+		String username;
+		username = lastName.substring(0, Math.min(lastName.length(), lastNameIndex)) + firstName.substring(0, endIndex);
+		return username;
+	}
+
+	private String createUsername(String firstName, int index) {
+		String username = firstName + index;
+		return username;
+	}
+
+	private boolean isEmailValid(String email) {
+
+		if (email.matches(EMAIL_REGEX))
+			return true;
+		return false;
+	}
+
+	private boolean isPhoneNumberValid(String phone) {
+		if (phone.substring(1).matches("[0-9]+") && phone.substring(0, 1).equals("+"))
+			if (phone.startsWith("+40") && (phone.length() == 12))
+				return true;
+		if (phone.startsWith("+49") && (phone.length() >= 5 && phone.length() <= 14))
+			return true;
+		return false;
+
+	}
+
+	private String createPassword(String username) {
+		String password = username + "Test123.";
+		return password;
+	}
+
+	public int checkNoOfFails(String userName) {
+		int failsNumber = 0;
+
+		List<LoginHistory> loginHistoryList = loginHistoryDao.getLoginHistoryByUsername(userName);
+
+		for (LoginHistory loginHistory : loginHistoryList) {
+			if (!loginHistory.isSucces()) {
+				failsNumber++;
+			}
+
+		}
+
+		return failsNumber;
+	}
+
+	public void tryToLogin(String userName, boolean succes) {
+		loginHistoryDao.tryToLogin(userName, succes);
+	}
+
 }

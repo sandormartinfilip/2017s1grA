@@ -1,8 +1,21 @@
 package edu.msg.ro.business.user.dto;
 
+<<<<<<< HEAD
 import edu.msg.ro.business.dto.AbstractDTO;
 
 public class UserDTO extends AbstractDTO {
+=======
+import java.io.Serializable;
+
+import edu.msg.ro.business.dto.AbstractoDTO;
+
+public class UserDTO extends AbstractoDTO implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1585770107482176758L;
+>>>>>>> 60cb30056e3898fcb3aa07c52cf7f7661a0c567f
 
 	private String firstName;
 
@@ -43,6 +56,7 @@ public class UserDTO extends AbstractDTO {
 	}
 
 	public String getEmail() {
+		System.out.println(email + "  EMAIL EMAIL EMAIL");
 		return email;
 	}
 
@@ -76,7 +90,66 @@ public class UserDTO extends AbstractDTO {
 
 	@Override
 	public String toString() {
-		return "UserDTO [getId()=" + getId() + "]";
+		return "UserDTO [firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", phoneNumber="
+				+ phoneNumber + ", username=" + username + ", password=" + password + ", active=" + active + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (active ? 1231 : 1237);
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserDTO other = (UserDTO) obj;
+		if (active != other.active)
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		} else if (!lastName.equals(other.lastName))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (phoneNumber == null) {
+			if (other.phoneNumber != null)
+				return false;
+		} else if (!phoneNumber.equals(other.phoneNumber))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
 	}
 
 }
