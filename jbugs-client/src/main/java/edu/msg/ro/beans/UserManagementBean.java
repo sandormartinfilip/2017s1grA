@@ -4,14 +4,14 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Named;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 import edu.msg.ro.business.user.dto.UserDTO;
 import edu.msg.ro.business.user.service.UserService;
 
-@Named
-@SessionScoped
+@ManagedBean
+@ViewScoped
 public class UserManagementBean implements Serializable {
 
 	/**
@@ -24,9 +24,7 @@ public class UserManagementBean implements Serializable {
 
 	private UserDTO newUser = new UserDTO();
 
-	private UserDTO editedUser = new UserDTO();
-
-	private Long editedUserId;
+	private UserDTO editedUser;
 
 	public UserDTO getNewUser() {
 		return newUser;
@@ -41,7 +39,15 @@ public class UserManagementBean implements Serializable {
 	}
 
 	public void setEditedUser(UserDTO editedUser) {
+		System.out.println("in setEditedUser() " + editedUser.getFirstName() + " + " + editedUser.getLastName());
 		this.editedUser = editedUser;
+	}
+
+	public String doSaveEditedUser() {
+		System.err.println("Editing the User " + editedUser.getFirstName() + " + " + editedUser.getLastName());
+		userService.updateUser(editedUser);
+		editedUser = null;
+		return "users";
 	}
 
 	public List<UserDTO> getAllUsers() {
@@ -66,20 +72,6 @@ public class UserManagementBean implements Serializable {
 
 	public String activateUser(String username) {
 		userService.changeUserStatus(username, true);
-		return "users";
-	}
-
-	public Long getEditedUserId() {
-		return editedUserId;
-	}
-
-	public String enableEditMode(Long id) {
-		editedUserId = id;
-		return "users";
-	}
-
-	public String disableEditMode() {
-		editedUserId = null;
 		return "users";
 	}
 
