@@ -1,7 +1,6 @@
 package edu.msg.ro.beans;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -18,6 +17,8 @@ import edu.msg.ro.business.user.service.UserService;
 @ManagedBean
 @RequestScoped
 public class LoginBean extends JBugsBean {
+
+	public static final String LOGIN_SUCCES = "login.success";
 
 	@EJB
 	private UserService userService;
@@ -71,7 +72,10 @@ public class LoginBean extends JBugsBean {
 		if (userService.isActiveUser(user)) {
 			if (userService.isValidUser(user) && (userService.checkNoOfFails(user.getUsername()) < 5)) {
 
-				getFacesContext().addMessage(null, new FacesMessage("We logged in, yey"));
+				// getFacesContext().addMessage(null, new FacesMessage("We
+				// logged in, yey"));
+
+				this.handleMessage(LOGIN_SUCCES);
 
 				session.setAttribute("username", user.getUsername());
 				session.setAttribute("lang", this.lang);
@@ -83,9 +87,8 @@ public class LoginBean extends JBugsBean {
 				return "users";
 			} else {
 
-				ResourceBundle rb = ResourceBundle.getBundle("jbugs/messages");
 				this.handleException(
-						new JBugsBusinessException(rb.getString(JBugsBusinessException.JBUGS_LOGIN_WRONG_PASSWORD)));
+						new JBugsBusinessException(JBugsBusinessException.JBUGS_LOGIN_WRONG_USERNAME_PASSWORD));
 
 				context.addMessage(null, new FacesMessage("Select Captcha"));
 				context.addMessage("loginForm:username", new FacesMessage("Password or Username wrong!"));
@@ -94,14 +97,17 @@ public class LoginBean extends JBugsBean {
 
 				if (userService.checkNoOfFails(user.getUsername()) == 5) {
 					userService.changeUserStatus(user.getUsername(), false);
-					System.out.println("s-a schimbat statusul");
+					// TODO Notificare admin
+
+					// System.out.println("s-a schimbat statusul");
 				} else {
-					System.out.println("nu se schimba statusul");
+					// System.out.println("nu se schimba statusul");
 				}
 
 				return "login";
 			}
 		} else {
+			this.handleException(new JBugsBusinessException(JBugsBusinessException.JBUGS_LOGIN_ACCOUNT_DEACTIVATED));
 			context.addMessage("loginForm:username", new FacesMessage("Your account is deactivated!"));
 			return "login";
 		}

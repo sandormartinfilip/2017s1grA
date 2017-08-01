@@ -4,19 +4,17 @@ public class JBugsException extends Exception {
 
 	private static final long serialVersionUID = 67783889987374141L;
 
-	private String errorMessage;
+	private String errorMessageKey;
 
 	public JBugsException(String message) {
-		this.errorMessage = message;
+		this.errorMessageKey = message;
 	}
 
 	public JBugsException(String message, Exception e) {
-		this.errorMessage = message;
+		this.errorMessageKey = message;
 	}
 
-	@Override
-	public String getMessage() {
-		return errorMessage;
+	public String getMessageKey() {
+		return this.errorMessageKey;
 	}
-
 }

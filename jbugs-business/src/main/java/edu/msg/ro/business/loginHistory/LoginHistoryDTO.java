@@ -8,6 +8,7 @@ import edu.msg.ro.business.dto.AbstractoDTO;
  * 
  * @author petred
  *
+ *         UNUSED CLASS
  */
 
 // AbstractoDTO should be AbstractDTO ( without o )

@@ -8,6 +8,7 @@ import edu.msg.ro.persistence.user.entity.LoginHistory;
  * 
  * @author petred
  *
+ *         UNUSED CLASS
  */
 @Stateless
 public class LoginHistoryDTOMapper {
