@@ -27,5 +27,15 @@
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
 	</context-param>
+	
+	<context-param>
+        <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+        <param-value>6Ld3FysUAAAAADOI7AHQQkDNI-2LHLX4yVIC45kG</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+        <param-value>6Ld3FysUAAAAAPEhwK_VnOv2QnNfvLFC8fxf9krZ</param-value>
+    </context-param>
 
 </web-app>
