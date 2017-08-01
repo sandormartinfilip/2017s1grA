@@ -1,6 +1,7 @@
 package edu.msg.ro.beans;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -48,58 +49,37 @@ public class LoginBean extends JBugsBean {
 	public void setLang(String lang) {
 		this.lang = lang;
 	}
+
 	public String doLogin() {
 
-		// getFacesContext().getViewRoot().setLocale(Locale.ITALY);
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
 
-		String gRecaptchaResponse = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
-				.get("g-recaptcha-response");
-		try {
-			boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
-			FacesContext context = FacesContext.getCurrentInstance();
+		FacesContext context = FacesContext.getCurrentInstance();
 
-			// trebuie adaugat si verify de la Captcha
-			if (userService.isActiveUser(user)) {
-				if (userService.isValidUser(user)) {
+		if (userService.isActiveUser(user)) {
+			if (userService.isValidUser(user)) {
 
-					getFacesContext().addMessage(null, new FacesMessage("We logged in, yey"));
+				getFacesContext().addMessage(null, new FacesMessage("We logged in, yey"));
 
-					session.setAttribute("username", user.getUsername());
-					return "users";
-				} else {
-					loginFailed++;
-					context.addMessage(null, new FacesMessage("Select Captcha"));
-					context.addMessage("loginForm:username", new FacesMessage("Password or Username wrong!"));
+				session.setAttribute("username", user.getUsername());
+				session.setAttribute("lang", this.lang);
 
-					if (loginFailed >= 4) {
-						System.out.println(loginFailed);
-						userService.changeUserStatus(user.getUsername(), false);
-					}
+				getFacesContext().getViewRoot().setLocale(new Locale(this.lang));
 
-					return "login";
-				}
+				return "users";
 			} else {
-				context.addMessage("loginForm:username", new FacesMessage("Your account is deactivated!"));
+
+				ResourceBundle rb = ResourceBundle.getBundle("jbugs/messages");
+				this.handleException(
+						new JBugsBusinessException(rb.getString(JBugsBusinessException.JBUGS_LOGIN_WRONG_PASSWORD)));
+
+				context.addMessage(null, new FacesMessage("Select Captcha"));
+				context.addMessage("loginForm:username", new FacesMessage("Password or Username wrong!"));
+
 				return "login";
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "login";
-		}
-
-			HttpSession session = (HttpSession) getFacesContext().getExternalContext().getSession(false);
-
-			session.setAttribute("username", user.getUsername());
-			session.setAttribute("lang", this.lang);
-			getFacesContext().getViewRoot().setLocale(new Locale(this.lang));
-			return "users";
 		} else {
-			ResourceBundle rb = ResourceBundle.getBundle("jbugs/messages");
-			this.handleException(
-					new JBugsBusinessException(rb.getString(JBugsBusinessException.JBUGS_LOGIN_WRONG_PASSWORD)));
-			FacesContext.getCurrentInstance().addMessage("loginForm:username",
-					new FacesMessage("Password or Username wrong!"));
+			context.addMessage("loginForm:username", new FacesMessage("Your account is deactivated!"));
 			return "login";
 		}
 	}
@@ -113,25 +93,6 @@ public class LoginBean extends JBugsBean {
 
 	public FacesContext getFacesContext() {
 		return FacesContext.getCurrentInstance();
-	}
-
-	// included in doLogin
-	public String submit_form() {
-		try {
-			String gRecaptchaResponse = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap()
-					.get("g-recaptcha-response");
-			boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
-			if (verify) {
-				return "Success";
-			} else {
-				FacesContext context = FacesContext.getCurrentInstance();
-				context.addMessage(null, new FacesMessage("Select Captcha"));
-				return null;
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return null;
 	}
 
 }
