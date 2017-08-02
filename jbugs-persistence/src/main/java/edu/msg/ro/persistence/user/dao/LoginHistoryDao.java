@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import edu.msg.ro.persistence.user.entity.LoginHistory;
+import edu.msg.ro.persistence.entity.LoginHistory;
 
 /**
  * 

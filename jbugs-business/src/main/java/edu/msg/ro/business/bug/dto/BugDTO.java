@@ -3,9 +3,9 @@ package edu.msg.ro.business.bug.dto;
 import java.util.Date;
 
 import edu.msg.ro.business.dto.AbstractDTO;
-import edu.msg.ro.persistence.user.entity.BugSeverity;
-import edu.msg.ro.persistence.user.entity.BugStatus;
-import edu.msg.ro.persistence.user.entity.User;
+import edu.msg.ro.persistence.entity.BugSeverity;
+import edu.msg.ro.persistence.entity.BugStatus;
+import edu.msg.ro.persistence.entity.User;
 
 public class BugDTO extends AbstractDTO {
 

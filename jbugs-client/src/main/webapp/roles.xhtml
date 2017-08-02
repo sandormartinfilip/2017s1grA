@@ -5,23 +5,39 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<script name="jquery/jquery.js" library="primefaces"></script>
+</h:head>
+
 <h:body>
+
+	<h2 align="center">Roles Page</h2>
+	<h:messages></h:messages>
 
 	<h:form id="newRolesForm">
 
+		<f:facet name="header">
+            Roles
+        </f:facet>
+
 		<h:panelGrid columns="3">
-			<h:outputLabel for="roleName" value="Role Name:" />
+		<h:outputLabel for="roleName" value="Role Name:" />
 
 			<h:selectOneMenu value="#{roleBean.roleDTO.roleName}"
 				onchange="submit()" id="onSelectId">
 				<f:selectItems value="#{roleBean.yourRoleNames}" />
-
 			</h:selectOneMenu>
 
-			<p:commandButton  value="Submit"
-				action="#{roleBean.getAllPermOfaRole(roleBean.roleDTO.roleName)}"></p:commandButton>
+			<p:commandButton value="Submit"
+				action="#{roleBean.getAllPermissionsOfARoleNoQuerry(roleBean.roleDTO.roleName)}"
+				></p:commandButton>
 
-			<h:outputText id = "permissionsID" value="#{roleBean.permissionsDTOList}"></h:outputText>
+			<h:outputText value = "#{roleBean.getAllPermissionsOfARoleNoQuerry(roleBean.roleDTO.roleName)}"></h:outputText> 
+			
+			<h:outputText id="permissionsID"
+				value="#{roleBean.permissionsDTOList}"
+				rendered="true"></h:outputText>
 
 		</h:panelGrid>
 	</h:form>

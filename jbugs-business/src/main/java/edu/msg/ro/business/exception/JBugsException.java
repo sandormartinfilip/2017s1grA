@@ -1,5 +1,10 @@
 package edu.msg.ro.business.exception;
 
+/**
+ * 
+ * @author nemesc
+ *
+ */
 public class JBugsException extends Exception {
 
 	private static final long serialVersionUID = 67783889987374141L;
@@ -11,10 +16,12 @@ public class JBugsException extends Exception {
 	}
 
 	public JBugsException(String message, Exception e) {
+		super(e);
 		this.errorMessageKey = message;
 	}
 
 	public String getMessageKey() {
 		return this.errorMessageKey;
 	}
+
 }

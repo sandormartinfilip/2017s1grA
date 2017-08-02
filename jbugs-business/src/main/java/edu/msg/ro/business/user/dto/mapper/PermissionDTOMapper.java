@@ -3,7 +3,7 @@ package edu.msg.ro.business.user.dto.mapper;
 import javax.ejb.Stateless;
 
 import edu.msg.ro.business.user.dto.PermissionDTO;
-import edu.msg.ro.persistence.user.entity.Permission;
+import edu.msg.ro.persistence.entity.Permission;
 
 @Stateless
 public class PermissionDTOMapper {

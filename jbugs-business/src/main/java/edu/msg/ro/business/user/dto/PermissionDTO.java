@@ -1,7 +1,7 @@
 package edu.msg.ro.business.user.dto;
 
 import edu.msg.ro.business.dto.AbstractDTO;
-import edu.msg.ro.persistence.user.entity.PermissionManagementType;
+import edu.msg.ro.persistence.entity.PermissionManagementType;
 
 public class PermissionDTO extends AbstractDTO {
 

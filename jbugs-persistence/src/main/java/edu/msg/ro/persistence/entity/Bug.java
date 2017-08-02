@@ -1,4 +1,4 @@
-package edu.msg.ro.persistence.user.entity;
+package edu.msg.ro.persistence.entity;
 
 import java.util.Date;
 import java.util.List;
@@ -71,7 +71,7 @@ public class Bug extends AbstractEntity {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "bugId")
 	private List<Attachment> attachments;
 
-	@OneToOne(mappedBy = "bugId")
+	@OneToOne(mappedBy = "bug")
 	private Notification notification;
 
 	@Override
@@ -153,6 +153,37 @@ public class Bug extends AbstractEntity {
 
 	public void setAssignedTo(User assignedTo) {
 		this.assignedTo = assignedTo;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Bug other = (Bug) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		return true;
 	}
 
 }

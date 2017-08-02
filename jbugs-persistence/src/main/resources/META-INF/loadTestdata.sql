@@ -20,7 +20,6 @@ INSERT INTO ROLE_PERMISSION (ID_ROLE, ID_PERMISSION) VALUES (1, 1);
 INSERT INTO ROLE_PERMISSION (ID_ROLE, ID_PERMISSION) VALUES (1, 2);
 INSERT INTO ROLE_PERMISSION (ID_ROLE, ID_PERMISSION) VALUES (2, 3);
 INSERT INTO ROLE_PERMISSION (ID_ROLE, ID_PERMISSION) VALUES (2, 2);
-=======
 
 -- Bug test data
 INSERT INTO BUG (description, title, severity, status, targetDate, versionFound, versionFixed, assignedTo, createdBy) VALUES ('Bug nasol', 'Tre rezolvat', 'CRITICAL', 'NEW', '2017-12-12', 1.0, 0.0, 1, 2);
@@ -30,4 +29,3 @@ INSERT INTO BUG (description, title, severity, status, targetDate, versionFound,
 INSERT INTO BUG (description, title, severity, status, targetDate, versionFound, versionFixed, assignedTo, createdBy) VALUES ('Bug nr. 5', 'Hello', 'HIGH', 'REJECTED', '2017-12-12', 2.3, 0.0, 2, 3);
 
 -- other tables TODO
->>>>>>> 60cb30056e3898fcb3aa07c52cf7f7661a0c567f

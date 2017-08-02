@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import edu.msg.ro.persistence.user.entity.User;
+import edu.msg.ro.persistence.entity.User;
 
 /**
  * 
