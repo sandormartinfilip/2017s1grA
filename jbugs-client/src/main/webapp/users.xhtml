@@ -5,121 +5,190 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<script name="jquery/jquery.js" library="primefaces"></script>
+</h:head>
 <h:body>
-<f:view>
-	<h3>Create New User</h3>
-<h:messages></h:messages>
-	<h:form id="newUserForm">
-		<h:panelGrid columns="3">
-			<h:outputLabel for="firstName" value="First Name:" />
-			<h:inputText id="firstName"
-				value="#{userManagementBean.newUser.firstName}" />
-			<br></br>
-			<h:outputLabel for="lastName" value="Last Name:" />
-			<h:inputText id="lastName"
-				value="#{userManagementBean.newUser.lastName}" />
+	<f:view>
+		<h3>Create New User</h3>
+		<h:messages></h:messages>
+		<h:form id="newUserForm">
+			<p:panelGrid columns="3">
+				<p:outputLabel for="firstName" value="First Name:" />
+				<p:inputText id="firstName"
+					value="#{userManagementBean.newUser.firstName}" />
+				<br></br>
+				<p:outputLabel for="lastName" value="Last Name:" />
+				<p:inputText id="lastName"
+					value="#{userManagementBean.newUser.lastName}" />
 
-			<br></br>
-			<h:outputLabel for="phoneNumber" value="Phone Number:" />
-			<h:inputText id="phoneNumber"
-				value="#{userManagementBean.newUser.phoneNumber}" />
-			<br></br>
-			<h:outputLabel for="email" value="Email:" />
-			<h:inputText id="email" value="#{userManagementBean.newUser.email}" />
-			<br></br>
-			<h:commandButton value="Save User"
-				action="#{userManagementBean.doCreateUser}" />
+				<br></br>
+				<p:outputLabel for="phoneNumber" value="Phone Number:" />
+				<p:inputText id="phoneNumber"
+					value="#{userManagementBean.newUser.phoneNumber}" />
+				<br></br>
+				<p:outputLabel for="email" value="Email:" />
+				<p:inputText id="email" value="#{userManagementBean.newUser.email}" />
+				<br></br>
+				<p:commandButton value="Save User"
+					action="#{userManagementBean.doCreateUser}" ajax='false' />
 
-		</h:panelGrid>
-	</h:form>
+			</p:panelGrid>
+		</h:form>
 
-	<h:form value="usersForm">
-		<h:dataTable value="#{userManagementBean.allUsers}" var="user"
-			id="usersTable">
-			<h:column>
-				<f:facet name="header">Username</f:facet>
-				<h:outputText value="#{user.username}"></h:outputText>
+		<h:form value="usersForm">
+			<h:dataTable value="#{userManagementBean.allUsers}" var="user"
+				id="usersTable">
+				<h:column>
+					<f:facet name="header">Username</f:facet>
+					<h:outputText value="#{user.username}"></h:outputText>
 
-			</h:column>
-            <h:column>
-                <f:facet name="header">First Name</f:facet>
-                <h:outputText value="#{user.firstName}"
-                              rendered="#{!user.equals(userManagementBean.editedUser)}"/>
-                <h:inputText value="#{userManagementBean.editedUser.firstName}"
-                             rendered="#{user.equals(userManagementBean.editedUser)}"
-                            />
+				</h:column>
+				<h:column>
+					<f:facet name="header">First Name</f:facet>
+					<h:outputText value="#{user.firstName}"
+						rendered="#{!user.equals(userManagementBean.editedUser)}" />
+					<h:inputText value="#{userManagementBean.editedUser.firstName}"
+						rendered="#{user.equals(userManagementBean.editedUser)}" />
 
-            </h:column>
+				</h:column>
 
-            <h:column>
-                <f:facet name="header">Last name</f:facet>
-                <h:outputText value="#{user.lastName}"
-                              rendered="#{!user.equals(userManagementBean.editedUser)}"/>
-                <h:inputText value="#{userManagementBean.editedUser.lastName}"
-                             rendered="#{user.equals(userManagementBean.editedUser)}"
-                           />
-            </h:column>
+				<h:column>
+					<f:facet name="header">Last name</f:facet>
+					<h:outputText value="#{user.lastName}"
+						rendered="#{!user.equals(userManagementBean.editedUser)}" />
+					<h:inputText value="#{userManagementBean.editedUser.lastName}"
+						rendered="#{user.equals(userManagementBean.editedUser)}" />
+				</h:column>
 
-			<h:column>
-				<f:facet name="header">Phone Number</f:facet>
-				<h:outputText value="#{user.phoneNumber}"
-                              rendered="#{!user.equals(userManagementBean.editedUser)}"/>
-                <h:inputText value="#{userManagementBean.editedUser.phoneNumber}"
-                             rendered="#{user.equals(userManagementBean.editedUser)}"
-                            />
-			</h:column>
+				<h:column>
+					<f:facet name="header">Phone Number</f:facet>
+					<h:outputText value="#{user.phoneNumber}"
+						rendered="#{!user.equals(userManagementBean.editedUser)}" />
+					<h:inputText value="#{userManagementBean.editedUser.phoneNumber}"
+						rendered="#{user.equals(userManagementBean.editedUser)}" />
+				</h:column>
 
-			<h:column>
-				<f:facet name="header">Email</f:facet>
-				<h:outputText value="#{user.email}"
-                              rendered="#{!user.equals(userManagementBean.editedUser)}"/>
-                <h:inputText value="#{userManagementBean.editedUser.email}"
-                             rendered="#{user.equals(userManagementBean.editedUser)}"
-                           />
-			</h:column>
+				<h:column>
+					<f:facet name="header">Email</f:facet>
+					<h:outputText value="#{user.email}"
+						rendered="#{!user.equals(userManagementBean.editedUser)}" />
+					<h:inputText value="#{userManagementBean.editedUser.email}"
+						rendered="#{user.equals(userManagementBean.editedUser)}" />
+				</h:column>
 
-			<h:column>
-				<f:facet name="header">Password</f:facet>
-				<h:outputText value="#{user.password}"></h:outputText>
-			</h:column>
+				<h:column>
+					<f:facet name="header">Password</f:facet>
+					<h:outputText value="#{user.password}"></h:outputText>
+				</h:column>
 
-			<h:column>
-				<f:facet name="header"> Status</f:facet>
-				<h:outputText value="active" rendered="#{user.active}"></h:outputText>
-				<h:outputText value="inactive" rendered="#{not user.active}"></h:outputText>
-			</h:column>
+				<h:column>
+					<f:facet name="header"> Status</f:facet>
+					<h:outputText value="active" rendered="#{user.active}"></h:outputText>
+					<h:outputText value="inactive" rendered="#{not user.active}"></h:outputText>
+				</h:column>
 
-			<h:column>
-				<f:facet name="header">Delete</f:facet>
-				<h:commandLink value="delete"
-					action="#{userManagementBean.deleteUser(user.id)}"></h:commandLink>
-			</h:column>
+				<h:column>
+					<f:facet name="header">Activate/Deactivate</f:facet>
+					<h:commandLink value="activate"
+						action="#{userManagementBean.activateUser(user.username)}"
+						rendered="#{not user.active}">
+					</h:commandLink>
+					<h:commandLink value="deactivate"
+						action="#{userManagementBean.deactivateUser(user.username)}"
+						rendered="#{user.active}"></h:commandLink>
+				</h:column>
 
-			<h:column>
-				<f:facet name="header">Activate/Deactivate</f:facet>
-				<h:commandLink value="activate"
-					action="#{userManagementBean.activateUser(user.username)}"
-					rendered="#{not user.active}">
-				</h:commandLink>
-				<h:commandLink value="deactivate"
-					action="#{userManagementBean.deactivateUser(user.username)}"
-					rendered="#{user.active}"></h:commandLink>
-			</h:column>
-
-			<h:column>
-				<f:facet name="header">Edit</f:facet>
-				<h:commandButton value="Edit"
-								action="#{userManagementBean.setEditedUser(user)}"
-								rendered="#{not user.equals(userManagementBean.editedUser)}" />
-				<h:commandButton value="Save" 
-								 action="#{userManagementBean.doSaveEditedUser}"
-								 rendered="#{user.equals(userManagementBean.editedUser)}" />
-			</h:column>
+				<h:column>
+					<f:facet name="header">Edit</f:facet>
+					<h:commandButton value="Edit"
+						action="#{userManagementBean.setEditedUser(user)}"
+						rendered="#{not user.equals(userManagementBean.editedUser)}">
+						<!-- 						<f:ajax event="click" render="@all" execute="@this" /> -->
+					</h:commandButton>
+					<h:commandButton value="Save"
+						action="#{userManagementBean.doSaveEditedUser}"
+						rendered="#{user.equals(userManagementBean.editedUser)}">
+						<!-- 				<f:ajax event="click" render="@all" execute="@this" /> -->
+					</h:commandButton>
+				</h:column>
 			</h:dataTable>
+		</h:form>
+	</f:view>
+
+	<h:panelGrid columns="1" cellpadding="5"
+		value="#{userManagementBean.allUsers}" var="user">
+		<p:inputText value="#{user.firstName}" />
+		<p:commandButton value="Basic" type="button"
+			onclick="PF('dlg1').show();" />
+
+		<p:commandButton value="Modal" type="button"
+			onclick="PF('dlg2').show();" />
+
+		<p:commandButton value="Effects" type="button"
+			onclick="PF('dlg3').show();" />
+	</h:panelGrid>
+
+	<p:dialog header="Basic Dialog" widgetVar="dlg1" minHeight="40">
+		<h:outputText value="Resistance to PrimeFaces is futile!" />
+	</p:dialog>
+
+	<p:dialog header="Modal Dialog" widgetVar="dlg2" modal="true"
+		height="100">
+		<h:outputText value="This is a Modal Dialog." />
+	</p:dialog>
+
+	<p:dialog header="Effects" widgetVar="dlg3" showEffect="explode"
+		hideEffect="bounce" height="100">
+		<h:outputText value="This dialog has nice effects." />
+	</p:dialog>
+	<h:form>
+		<h:commandButton action="#{loginBean.doLogout}"
+			onClick="window.location.reload();"
+			value="#{msg['logout.buttonName']}"></h:commandButton>
 	</h:form>
-</f:view>
-<h:form>
-		<h:commandButton action="#{loginBean.doLogout}" onClick="window.location.reload();"
-		value="#{msg['logout.buttonName']}"></h:commandButton>
-		</h:form></h:body>
+</h:body>
+
+
+<h:form id="formEditable">
+	<p:growl id="msgs" showDetail="true" />
+
+	<p:dataTable id="cars2" var="user"
+		value="#{userManagementBean.allUsers}" editable="true" editMode="cell"
+		widgetVar="cellCars">
+
+
+		<p:ajax event="cellEdit" listener="#{userManagementBean.onCellEdit}"
+			update=":formEditable:msgs" />
+
+
+
+		<p:column headerText="First Name">
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{user.firstName}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText value="#{user.firstName}" style="width:96%"
+						label="Year" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+
+		<p:column headerText="Last Name">
+			<p:cellEditor>
+				<f:facet name="output">
+					<h:outputText value="#{user.lastName}" />
+				</f:facet>
+				<f:facet name="input">
+					<p:inputText value="#{user.lastName}" style="width:96%"
+						label="Year" />
+				</f:facet>
+			</p:cellEditor>
+		</p:column>
+
+	</p:dataTable>
+
+
+</h:form>
 </html>

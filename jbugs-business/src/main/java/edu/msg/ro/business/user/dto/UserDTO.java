@@ -25,6 +25,16 @@ public class UserDTO extends AbstractoDTO implements Serializable {
 
 	private boolean active;
 
+	public boolean isEditable() {
+		return editable;
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
+	}
+
+	private boolean editable;
+
 	public String getFirstName() {
 		return firstName;
 	}
