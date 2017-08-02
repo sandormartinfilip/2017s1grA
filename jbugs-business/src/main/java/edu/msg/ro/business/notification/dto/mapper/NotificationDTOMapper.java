@@ -15,6 +15,7 @@ public class NotificationDTOMapper {
 		notificationDTO.setDestinationUser(notificationEntity.getDestinationUser());
 		notificationDTO.setId(notificationEntity.getId());
 		notificationDTO.setNotificationType(notificationEntity.getNotificationType());
+		notificationDTO.setText(notificationEntity.getText());
 		return notificationDTO;
 	}
 
@@ -25,6 +26,7 @@ public class NotificationDTOMapper {
 		notificationEntity.setDestinationUser(notificationDTO.getDestinationUser());
 		notificationEntity.setId(notificationDTO.getId());
 		notificationEntity.setNotificationType(notificationDTO.getNotificationType());
+		notificationEntity.setText(notificationDTO.getText());
 		return notificationEntity;
 	}
 

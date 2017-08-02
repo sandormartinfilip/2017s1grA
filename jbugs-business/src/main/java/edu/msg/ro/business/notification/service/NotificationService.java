@@ -1,13 +1,19 @@
 package edu.msg.ro.business.notification.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import edu.msg.ro.business.notification.dto.NotificationDTO;
+import edu.msg.ro.business.notification.dto.mapper.NotificationDTOMapper;
+import edu.msg.ro.persistence.entity.Notification;
 import edu.msg.ro.persistence.notification.dao.NotificationDao;
 
 /**
  * 
- * TODO: make CDI Interceptor/decorator?
+ * @author nemesc
  *
  */
 @Stateless
@@ -16,43 +22,21 @@ public class NotificationService {
 	@EJB
 	private NotificationDao notificationDao;
 
-	// @EJB
-	// private NotificationDTOMapper notificationMapper;
+	@EJB
+	private NotificationDTOMapper notificationMapper;
 
-	/**
-	 * TODO extend it
-	 */
-	// public Notification createNotification(final NotificationType
-	// notificationType) {
-	// return new Notification();
-	// }
-	//
-	//
-	// public void saveNewUser(final String firstName, final String lastName) {
-	// final User newUser = new User();
-	// newUser.setFirstName(firstName);
-	// newUser.setLastName(lastName);
-	// newUser.setActive(true);
-	//
-	// userDao.persistUser(newUser);
-	// }
-	//
-	// public boolean deleteUser(Long id) {
-	// userDao.deleteUser(id);
-	// return true;
-	// }
-	//
-	// public UserDTO getUserByUsername(String userName) {
-	// User user = userDao.getUserByUsername(userName);
-	// if (user != null) {
-	// return userMapper.mapToDTO(user);
-	// } else
-	// return null;
-	// }
-	//
-	// public void addUser(String firstName, String lastName, String
-	// phoneNumber, String email) {
-	//
-	// }
+	public void createNotification(NotificationDTO notificationDTO) {
+		Notification notification = notificationMapper.mapToEntity(notificationDTO);
+		notificationDao.persistNotification(notification);
+	}
+
+	public List<NotificationDTO> getNotificationsForUser(Long userId) {
+		List<Notification> list = notificationDao.getAllNotificationsForUser(userId);
+		return list.stream().map(entity -> notificationMapper.mapToDTO(entity)).collect(Collectors.toList());
+	}
+
+	public void deleteNotification(Long id) {
+		notificationDao.deleteNotification(id);
+	}
 
 }
