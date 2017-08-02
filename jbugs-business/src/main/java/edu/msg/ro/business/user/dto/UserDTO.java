@@ -1,21 +1,15 @@
 package edu.msg.ro.business.user.dto;
 
-<<<<<<< HEAD
-import edu.msg.ro.business.dto.AbstractDTO;
-
-public class UserDTO extends AbstractDTO {
-=======
 import java.io.Serializable;
 
-import edu.msg.ro.business.dto.AbstractoDTO;
+import edu.msg.ro.business.dto.AbstractDTO;
 
-public class UserDTO extends AbstractoDTO implements Serializable {
+public class UserDTO extends AbstractDTO implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1585770107482176758L;
->>>>>>> 60cb30056e3898fcb3aa07c52cf7f7661a0c567f
 
 	private String firstName;
 
@@ -60,7 +54,7 @@ public class UserDTO extends AbstractoDTO implements Serializable {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 		this.email = email;
 	}
 
@@ -68,7 +62,7 @@ public class UserDTO extends AbstractoDTO implements Serializable {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
+	public void setPhoneNumber(final String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 
@@ -76,7 +70,7 @@ public class UserDTO extends AbstractoDTO implements Serializable {
 		return username;
 	}
 
-	public void setUsername(String username) {
+	public void setUsername(final String username) {
 		this.username = username;
 	}
 
@@ -84,7 +78,7 @@ public class UserDTO extends AbstractoDTO implements Serializable {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(final String password) {
 		this.password = password;
 	}
 
@@ -109,14 +103,14 @@ public class UserDTO extends AbstractoDTO implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UserDTO other = (UserDTO) obj;
+		final UserDTO other = (UserDTO) obj;
 		if (active != other.active)
 			return false;
 		if (email == null) {
