@@ -13,12 +13,28 @@
 	<h2 align="center">Welcome to Bug Page</h2>
 
 	<h:messages></h:messages>
-	
+
 	<h:form>
 		<p:dataTable value="#{bugManagementBean.allBugs}" var="bug"
-			id="bugsTable" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			id="bugsTable"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
 			paginator="true" rows="25" rowsPerPageTemplate="25">
-			
+
+			<f:facet name="{Exporters}">
+				<h:commandLink>
+					<p:graphicImage name="/jbugs/excel.png" width="24" />
+					<p:outputLabel value="excel  " />
+					<p:dataExporter type="xls" target="bugsTable" fileName="bugs" />
+				</h:commandLink>
+
+				<h:commandLink>
+					<p:graphicImage name="resources/jbugs/pdf.png" />
+					<p:outputLabel value="pdf  " />
+					<p:dataExporter type="pdf" target="bugsTable" fileName="bugs" />
+				</h:commandLink>
+
+			</f:facet>
+
 			<f:facet name="header">
             Bug List
         </f:facet>
@@ -87,10 +103,10 @@
 					rendered="#{(!bug.id.equals(bugManagementBean.editedBugId))}">
 
 				</h:commandLink>
-				 <h:commandLink value="cancel"
+				<h:commandLink value="cancel"
 					action="#{bugManagementBean.disableEditMode()}"
 					rendered="#{bug.id.equals(bugManagementBean.editedBugId)}">
-					</h:commandLink>
+				</h:commandLink>
 			</p:column>
 
 			<p:column>
@@ -103,44 +119,62 @@
 
 		</p:dataTable>
 
+		<h3>Export Page Data Only</h3>
+		<h:commandLink>
+			<p:graphicImage name="jbugs\excel.png" />
+			<p:outputLabel value="excel " />
+			<p:dataExporter type="xls" target="bugsTable" fileName="bugs"
+				pageOnly="true" />
+		</h:commandLink>
+
+		<h:commandLink>
+			<p:graphicImage name="/resources/jbugs\pdf.png" />
+			<p:outputLabel value="pdf " />
+			<p:dataExporter type="pdf" target="bugsTable" fileName="bugs"
+				pageOnly="true" />
+		</h:commandLink>
+
+
 	</h:form>
 
 	<h1>Create New Bug</h1>
 	<h:form id="newBugForm">
 		<p:panelGrid>
-		
-		<p:outputLabel for="title" value="Title: "/>
-			<p:inputText id="title" value="#{bugManagementBean.newBug.title}" required="true">
-			<!--  <f:validateRegex pattern="[1-9]/[A-Z]-[1-9]-[1-9]-[1-9](-[1-9])?" /> -->
+
+			<p:outputLabel for="title" value="Title: " />
+			<p:inputText id="title" value="#{bugManagementBean.newBug.title}"
+				required="true">
+				<!--  <f:validateRegex pattern="[1-9]/[A-Z]-[1-9]-[1-9]-[1-9](-[1-9])?" /> -->
 			</p:inputText>
-		
+
 			<p:outputLabel for="description" value="Description: " />
 			<p:inputText id="description"
 				value="#{bugManagementBean.newBug.description}" required="true">
 				<!-- <f:validateRegex pattern="[1-9]/[A-Z]-[1-9]-[1-9]-[1-9](-[1-9])?" /> -->
 			</p:inputText>
-				
-			<p:outputLabel for="version" value="Version: "/>
+
+			<p:outputLabel for="version" value="Version: " />
 			<p:inputText id="version"
 				value="#{bugManagementBean.newBug.versionFound}" required="true">
-				<f:validateRegex pattern="^[a-zA-Z0-9_]*$"/>
+				<f:validateRegex pattern="^[a-zA-Z0-9_]*$" />
 			</p:inputText>
-			
+
 			<p:outputLabel for="targetDate" value="TargetDate: " />
 			<p:calendar id="targetDate"
-				value="#{bugManagementBean.newBug.targetDate}"/>
+				value="#{bugManagementBean.newBug.targetDate}" />
 
 			<p:outputLabel for="severity" value="Severity: " />
-			<p:selectOneMenu id="severity" value="#{bugManagementBean.newBug.severity}">
+			<p:selectOneMenu id="severity"
+				value="#{bugManagementBean.newBug.severity}">
 				<f:selectItem itemValue="LOW" itemLabel="LOW" />
 				<f:selectItem itemValue="MEDIUM" itemLabel="MEDIUM" />
 				<f:selectItem itemValue="HIGH" itemLabel="HIGH" />
 				<f:selectItem itemValue="CRITICAL" itemLabel="CRITICAL" />
 			</p:selectOneMenu>
 
-			<br/><br/>
-			<p:commandButton value="Save Bug"
-				ajax="false"
+			<br />
+			<br />
+			<p:commandButton value="Save Bug" ajax="false"
 				action="#{bugManagementBean.doCreateBug}" />
 		</p:panelGrid>
 	</h:form>
