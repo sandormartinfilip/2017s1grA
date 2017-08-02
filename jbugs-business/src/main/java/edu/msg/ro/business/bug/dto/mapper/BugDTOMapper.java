@@ -3,7 +3,7 @@ package edu.msg.ro.business.bug.dto.mapper;
 import javax.ejb.Stateless;
 
 import edu.msg.ro.business.bug.dto.BugDTO;
-import edu.msg.ro.persistence.user.entity.Bug;
+import edu.msg.ro.persistence.entity.Bug;
 
 @Stateless
 public class BugDTOMapper {

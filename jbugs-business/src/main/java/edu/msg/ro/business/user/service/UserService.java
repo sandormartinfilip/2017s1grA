@@ -12,8 +12,8 @@ import edu.msg.ro.business.user.dto.UserDTO;
 import edu.msg.ro.business.user.dto.mapper.UserDTOMapper;
 import edu.msg.ro.persistence.user.dao.LoginHistoryDao;
 import edu.msg.ro.persistence.user.dao.UserDao;
-import edu.msg.ro.persistence.user.entity.LoginHistory;
-import edu.msg.ro.persistence.user.entity.User;
+import edu.msg.ro.persistence.entity.LoginHistory;
+import edu.msg.ro.persistence.entity.User;
 
 @Stateless
 public class UserService {

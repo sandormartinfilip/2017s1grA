@@ -10,7 +10,7 @@ import org.junit.Test;
 import edu.msg.ro.business.AbstractIntegrationTest;
 import edu.msg.ro.business.exception.JBugsBusinessException;
 import edu.msg.ro.persistance.bug.dao.BugDao;
-import edu.msg.ro.persistence.user.entity.Bug;
+import edu.msg.ro.persistence.entity.Bug;
 
 public class BugServiceTest extends AbstractIntegrationTest {
 

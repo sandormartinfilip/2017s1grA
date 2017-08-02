@@ -3,7 +3,7 @@ package edu.msg.ro.business.user.dto.mapper;
 import javax.ejb.Stateless;
 
 import edu.msg.ro.business.user.dto.RoleDTO;
-import edu.msg.ro.persistence.user.entity.Role;
+import edu.msg.ro.persistence.entity.Role;
 
 @Stateless
 public class RoleDTOMapper {

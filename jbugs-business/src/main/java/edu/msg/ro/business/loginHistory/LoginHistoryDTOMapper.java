@@ -2,7 +2,7 @@ package edu.msg.ro.business.loginHistory;
 
 import javax.ejb.Stateless;
 
-import edu.msg.ro.persistence.user.entity.LoginHistory;
+import edu.msg.ro.persistence.entity.LoginHistory;
 
 /**
  * 

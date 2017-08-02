@@ -10,10 +10,10 @@ import edu.msg.ro.business.user.dto.PermissionDTO;
 import edu.msg.ro.business.user.dto.RoleDTO;
 import edu.msg.ro.business.user.dto.mapper.PermissionDTOMapper;
 import edu.msg.ro.business.user.dto.mapper.RoleDTOMapper;
+import edu.msg.ro.persistence.entity.Permission;
+import edu.msg.ro.persistence.entity.Role;
 import edu.msg.ro.persistence.user.dao.PermissionDao;
 import edu.msg.ro.persistence.user.dao.RoleDao;
-import edu.msg.ro.persistence.user.entity.Permission;
-import edu.msg.ro.persistence.user.entity.Role;
 
 @Stateless
 public class RoleService {
