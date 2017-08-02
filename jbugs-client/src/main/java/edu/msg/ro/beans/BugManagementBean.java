@@ -9,6 +9,7 @@ import javax.inject.Named;
 
 import edu.msg.ro.business.bug.dto.BugDTO;
 import edu.msg.ro.business.bug.service.BugService;
+import edu.msg.ro.persistence.user.entity.Bug;
 
 @Named
 @SessionScoped
@@ -26,6 +27,15 @@ public class BugManagementBean implements Serializable {
 	private BugDTO editedBug = new BugDTO();
 	private BugDTO newBug = new BugDTO();
 	private String severity;
+	private Bug selectedBug;
+
+	public Bug getSelectedBug() {
+		return selectedBug;
+	}
+
+	public void setSelectedBug(Bug selectedBug) {
+		this.selectedBug = selectedBug;
+	}
 
 	public String getSeverity() {
 		return severity;

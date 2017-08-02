@@ -16,13 +16,15 @@
 	
 	<h:form>
 		<p:dataTable value="#{bugManagementBean.allBugs}" var="bug"
+			rowKey="bug"
 			id="bugsTable" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			paginator="true" rows="25" rowsPerPageTemplate="25">
+			paginator="true" rows="25" rowsPerPageTemplate="25" selectionMode="single" selection="#{bugManagementBean.selectedBug}" lazy="true">
 			
 			<f:facet name="header">
             Bug List
         </f:facet>
-			<p:column>
+       <!--  <p:ajax event="rowSelect"></p:ajax> -->
+			<p:column sortBy="#{bug.id}" filterBy="#{bug.id}">
 				<f:facet name="header">Id</f:facet>
 				<h:outputText value="#{bug.id}"></h:outputText>
 			</p:column>
