@@ -1,6 +1,7 @@
 package edu.msg.ro.beans;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -80,13 +81,15 @@ public class LoginBean extends JBugsBean {
 				session.setAttribute("username", user.getUsername());
 				session.setAttribute("lang", this.lang);
 
-				getFacesContext().getViewRoot().setLocale(new Locale(this.lang));
+				// getFacesContext().getViewRoot().setLocale(new
+				// Locale(this.lang));
 
 				userService.tryToLogin(user.getUsername(), true);
 
 				return "users";
 			} else {
 
+				ResourceBundle rb = ResourceBundle.getBundle("jbugs/messages");
 				this.handleException(
 						new JBugsBusinessException(JBugsBusinessException.JBUGS_LOGIN_WRONG_USERNAME_PASSWORD));
 

@@ -14,8 +14,8 @@ public class BugDTO extends AbstractDTO {
 	private Date targetDate;
 	private BugSeverity severity;
 	private BugStatus status;
-	private Double versionFound;
-	private Double versionFixed;
+	private String versionFound;
+	private String versionFixed;
 	private User createdBy;
 	private User assignedTo;
 
@@ -75,19 +75,19 @@ public class BugDTO extends AbstractDTO {
 		this.status = status;
 	}
 
-	public Double getVersionFound() {
+	public String getVersionFound() {
 		return versionFound;
 	}
 
-	public void setVersionFound(final Double versionFound) {
+	public void setVersionFound(final String versionFound) {
 		this.versionFound = versionFound;
 	}
 
-	public Double getVersionFixed() {
+	public String getVersionFixed() {
 		return versionFixed;
 	}
 
-	public void setVersionFixed(final Double versionFixed) {
+	public void setVersionFixed(final String versionFixed) {
 		this.versionFixed = versionFixed;
 	}
 

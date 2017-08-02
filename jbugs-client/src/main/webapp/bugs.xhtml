@@ -5,72 +5,85 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<script name="jquery/jquery.js" library="primefaces"></script>
+</h:head>
 <h:body>
+
+	<h2 align="center">Welcome to Bug Page</h2>
+
+	<h:messages></h:messages>
+	
 	<h:form>
-		<h:dataTable value="#{bugManagementBean.allBugs}" var="bug"
-		id="bugsTable">
-			<h:column>
+		<p:dataTable value="#{bugManagementBean.allBugs}" var="bug"
+			id="bugsTable" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			paginator="true" rows="25" rowsPerPageTemplate="25">
+			
+			<f:facet name="header">
+            Bug List
+        </f:facet>
+			<p:column>
 				<f:facet name="header">Id</f:facet>
-		 		<h:outputText value="#{bug.id}"></h:outputText>
-			</h:column>
-			
-			
-			<h:column>
+				<h:outputText value="#{bug.id}"></h:outputText>
+			</p:column>
+
+
+			<p:column>
 				<f:facet name="header">Title</f:facet>
-		 		<h:outputText value="#{bug.title}"></h:outputText>
-			</h:column>
-			
-			<h:column>
+				<h:outputText value="#{bug.title}"></h:outputText>
+			</p:column>
+
+			<p:column>
 				<f:facet name="header">Description</f:facet>
-		 		<h:outputText value="#{bug.description}"></h:outputText>
-			</h:column>
-			
-			<h:column>
+				<h:outputText value="#{bug.description}"></h:outputText>
+			</p:column>
+
+			<p:column>
 				<f:facet name="header">VFound</f:facet>
-		 		<h:outputText value="#{bug.versionFound}"></h:outputText>
-			</h:column>
-			
-			<h:column>
+				<h:outputText value="#{bug.versionFound}"></h:outputText>
+			</p:column>
+
+			<p:column>
 				<f:facet name="header">VFixed</f:facet>
-		 		<h:outputText value="#{bug.versionFixed}"></h:outputText>
-			</h:column>
-			
-			<h:column>
+				<h:outputText value="#{bug.versionFixed}"></h:outputText>
+			</p:column>
+
+			<p:column>
 				<f:facet name="header">TargetDate</f:facet>
 				<h:outputText value="#{bug.targetDate}"></h:outputText>
-			</h:column>
-			
-			<h:column>
+			</p:column>
+
+			<p:column>
 				<f:facet name="header">Severity</f:facet>
 				<h:outputText value="#{bug.severity}"></h:outputText>
-			</h:column>
-			
-			 <h:column>
+			</p:column>
+
+			<p:column>
 				<f:facet name="header">Created By</f:facet>
 				<h:outputText value="#{bug.createdBy}"></h:outputText>
-			</h:column>
-			
-			<h:column>
+			</p:column>
+
+			<p:column>
 				<f:facet name="header">Status</f:facet>
 				<h:outputText value="#{bug.status}"></h:outputText>
-			</h:column>
-			
-			<h:column>
+			</p:column>
+
+			<p:column>
 				<f:facet name="header">Assigned To</f:facet>
-		 		<h:outputText value="#{bug.assignedTo}"></h:outputText>
-			</h:column>
-			
-			<h:column>
+				<h:outputText value="#{bug.assignedTo}"></h:outputText>
+			</p:column>
+
+			<p:column>
 				<f:facet name="header">Delete</f:facet>
-					<h:commandLink value="delete"
-						action="#{(bugManagementBean.deleteBug(bug.id))}">
-					</h:commandLink>
-			</h:column>
-			
-			<!-- <h:column>
+				<h:commandLink value="delete"
+					action="#{(bugManagementBean.deleteBug(bug.id))}">
+				</h:commandLink>
+			</p:column>
+
+			<p:column>
 				<f:facet name="header">Edit</f:facet>
 				<h:commandLink value="edit"
-					action="#{bugManagementBean.enableEditMode(bug.id)}"
+					action="#{(bugManagementBean.enableEditMode(bug.id))}"
 					rendered="#{(!bug.id.equals(bugManagementBean.editedBugId))}">
 
 				</h:commandLink>
@@ -78,31 +91,58 @@
 					action="#{bugManagementBean.disableEditMode()}"
 					rendered="#{bug.id.equals(bugManagementBean.editedBugId)}">
 					</h:commandLink>
-			</h:column> -->
-			
-			 <h:column>
-				<h:commandLink action="#{bugManagementBean.doSave}"
-					value="Save Bug"
-					rendered="#{bug.id.equals(bugManagementBean.editedBugId)}" >
-					<f:setPropertyActionListener value="#{bug}" target="#{bugManagementBean.editedBug}" />
-					</h:commandLink>
-			</h:column>
-			
-		</h:dataTable> 
+			</p:column>
+
+			<p:column>
+				<p:commandLink action="#{bugManagementBean.doSave}" value="Save Bug"
+					rendered="#{bug.id.equals(bugManagementBean.editedBugId)}">
+					<f:setPropertyActionListener value="#{bug}"
+						target="#{bugManagementBean.editedBug}" />
+				</p:commandLink>
+			</p:column>
+
+		</p:dataTable>
+
+	</h:form>
+
+	<h1>Create New Bug</h1>
+	<h:form id="newBugForm">
+		<p:panelGrid>
 		
-		<!-- <h:panelGrid>
-			<h:outputLabel for="title" value="title"></h:outputLabel>
-			<h:outputLabel for="description" value="description"></h:outputLabel>
-			<h:outputLabel for="assignedTo" value="assignedTo"></h:outputLabel>
-			<h:commandButton value="Save User"
-				action="#{bugManagement.doCreateBug}"/>
-				
-				<h:inputText id="title" value="#{bugManagementBean.newBug.title}"/>
-				<h:inputText id="title" value="#{bugManagementBean.newBug.description}"/>
-				<h:inputText id="title" value="#{bugManagementBean.newBug.assignedTo}"/>
-				
-		</h:panelGrid> -->
+		<p:outputLabel for="title" value="Title: "/>
+			<p:inputText id="title" value="#{bugManagementBean.newBug.title}" required="true">
+			<!--  <f:validateRegex pattern="[1-9]/[A-Z]-[1-9]-[1-9]-[1-9](-[1-9])?" /> -->
+			</p:inputText>
 		
+			<p:outputLabel for="description" value="Description: " />
+			<p:inputText id="description"
+				value="#{bugManagementBean.newBug.description}" required="true">
+				<!-- <f:validateRegex pattern="[1-9]/[A-Z]-[1-9]-[1-9]-[1-9](-[1-9])?" /> -->
+			</p:inputText>
+				
+			<p:outputLabel for="version" value="Version: "/>
+			<p:inputText id="version"
+				value="#{bugManagementBean.newBug.versionFound}" required="true">
+				<f:validateRegex pattern="^[a-zA-Z0-9_]*$"/>
+			</p:inputText>
+			
+			<p:outputLabel for="targetDate" value="TargetDate: " />
+			<p:calendar id="targetDate"
+				value="#{bugManagementBean.newBug.targetDate}"/>
+
+			<p:outputLabel for="severity" value="Severity: " />
+			<p:selectOneMenu id="severity" value="#{bugManagementBean.newBug.severity}">
+				<f:selectItem itemValue="LOW" itemLabel="LOW" />
+				<f:selectItem itemValue="MEDIUM" itemLabel="MEDIUM" />
+				<f:selectItem itemValue="HIGH" itemLabel="HIGH" />
+				<f:selectItem itemValue="CRITICAL" itemLabel="CRITICAL" />
+			</p:selectOneMenu>
+
+			<br/><br/>
+			<p:commandButton value="Save Bug"
+				ajax="false"
+				action="#{bugManagementBean.doCreateBug}" />
+		</p:panelGrid>
 	</h:form>
 
 </h:body>
