@@ -28,7 +28,7 @@ public abstract class AbstractDTO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		AbstractoDTO other = (AbstractoDTO) obj;
+		AbstractDTO other = (AbstractDTO) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

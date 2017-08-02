@@ -3,12 +3,12 @@ package edu.msg.ro.business.notification.dto;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import edu.msg.ro.business.dto.AbstractoDTO;
+import edu.msg.ro.business.dto.AbstractDTO;
 import edu.msg.ro.persistence.entity.Bug;
 import edu.msg.ro.persistence.entity.NotificationType;
 import edu.msg.ro.persistence.entity.User;
 
-public class NotificationDTO extends AbstractoDTO implements Serializable {
+public class NotificationDTO extends AbstractDTO implements Serializable {
 
 	private static final long serialVersionUID = 1585770107482176758L;
 
