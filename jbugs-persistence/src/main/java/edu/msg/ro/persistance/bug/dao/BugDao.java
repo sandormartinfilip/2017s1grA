@@ -45,4 +45,10 @@ public class BugDao {
 		return bug;
 	}
 
+	/*
+	 * public List<Bug> getBugsBySeverity(BugSeverity bugSeverity) {
+	 * 
+	 * }
+	 */
+
 }

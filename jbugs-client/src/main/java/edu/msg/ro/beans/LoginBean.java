@@ -1,6 +1,5 @@
 package edu.msg.ro.beans;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
@@ -64,7 +63,8 @@ public class LoginBean extends JBugsBean {
 				session.setAttribute("username", user.getUsername());
 				session.setAttribute("lang", this.lang);
 
-				getFacesContext().getViewRoot().setLocale(new Locale(this.lang));
+				// getFacesContext().getViewRoot().setLocale(new
+				// Locale(this.lang));
 
 				return "users";
 			} else {

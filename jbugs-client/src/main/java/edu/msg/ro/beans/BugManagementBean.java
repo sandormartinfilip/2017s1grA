@@ -25,6 +25,15 @@ public class BugManagementBean implements Serializable {
 	private Long editedBugId;
 	private BugDTO editedBug = new BugDTO();
 	private BugDTO newBug = new BugDTO();
+	private String severity;
+
+	public String getSeverity() {
+		return severity;
+	}
+
+	public void setSeverity(String severity) {
+		this.severity = severity;
+	}
 
 	public BugDTO getNewBug() {
 		return newBug;
@@ -72,10 +81,10 @@ public class BugManagementBean implements Serializable {
 		return "bugs";
 	}
 
-	// public String doCreateBug(){
-	// bugService.saveNewBug(newBug.getTitle(), newBug.getDescription(),
-	// newBug.getCreatedBy(), newBug.getSeverity(), newBug.getAssignedTo());
-	// return "bugs";
-	// }
+	public String doCreateBug() {
+		bugService.saveNewBug(newBug.getTitle(), newBug.getDescription(), newBug.getTargetDate(), newBug.getSeverity(),
+				newBug.getVersionFound());
+		return "bugs";
+	}
 
 }
