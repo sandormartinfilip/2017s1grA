@@ -8,6 +8,7 @@ import edu.msg.ro.persistence.entity.LoginHistory;
  * 
  * @author petred
  *
+ *         UNUSED CLASS
  */
 @Stateless
 public class LoginHistoryDTOMapper {
@@ -16,7 +17,7 @@ public class LoginHistoryDTOMapper {
 		final LoginHistoryDTO loginHistoryDTO = new LoginHistoryDTO();
 
 		loginHistoryDTO.setId(loginHistoryEntity.getId());
-		loginHistoryDTO.setLoginDate(loginHistoryEntity.getLoginDate());
+		// loginHistoryDTO.setLoginDate(loginHistoryEntity.getLoginDate());
 		loginHistoryDTO.setUsername(loginHistoryEntity.getUsername());
 		loginHistoryDTO.setSucces(loginHistoryEntity.isSucces());
 
@@ -24,7 +25,7 @@ public class LoginHistoryDTOMapper {
 	}
 
 	public LoginHistory mapToEntity(final LoginHistoryDTO loginHistoryDTO, final LoginHistory loginHistoryEntity) {
-		loginHistoryEntity.setLoginDate(loginHistoryDTO.getLoginDate());
+		// loginHistoryEntity.setLoginDate(loginHistoryDTO.getLoginDate());
 		loginHistoryEntity.setUsername(loginHistoryDTO.getUsername());
 		loginHistoryEntity.setSucces(loginHistoryDTO.isSucces());
 

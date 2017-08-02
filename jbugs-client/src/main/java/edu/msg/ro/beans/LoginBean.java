@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
@@ -18,12 +19,25 @@ import edu.msg.ro.business.user.service.UserService;
 @RequestScoped
 public class LoginBean extends JBugsBean {
 
+	public static final String LOGIN_SUCCES = "login.success";
+
 	@EJB
 	private UserService userService;
 
 	private UserDTO user = new UserDTO();
 
-	private String lang = "";
+	@ManagedProperty(value = "#{captcha}")
+	private CaptchaBean captchaBean;
+
+	public CaptchaBean getCaptchaBean() {
+		return captchaBean;
+	}
+
+	public void setCaptchaBean(CaptchaBean captchaBean) {
+		this.captchaBean = captchaBean;
+	}
+
+	private String lang = "en";
 
 	public UserDTO getUser() {
 		return user;
@@ -57,28 +71,46 @@ public class LoginBean extends JBugsBean {
 		FacesContext context = FacesContext.getCurrentInstance();
 
 		if (userService.isActiveUser(user)) {
-			if (userService.isValidUser(user)) {
+			if (userService.isValidUser(user) && (userService.checkNoOfFails(user.getUsername()) < 5)) {
 
-				getFacesContext().addMessage(null, new FacesMessage("We logged in, yey"));
+				// getFacesContext().addMessage(null, new FacesMessage("We
+				// logged in, yey"));
+
+				this.handleMessage(LOGIN_SUCCES);
 
 				session.setAttribute("username", user.getUsername());
 				session.setAttribute("lang", this.lang);
 
-				getFacesContext().getViewRoot().setLocale(new Locale(this.lang));
+				// getFacesContext().getViewRoot().setLocale(new
+				// Locale(this.lang));
+
+				userService.tryToLogin(user.getUsername(), true);
 
 				return "users";
 			} else {
 
 				ResourceBundle rb = ResourceBundle.getBundle("jbugs/messages");
 				this.handleException(
-						new JBugsBusinessException(rb.getString(JBugsBusinessException.JBUGS_LOGIN_WRONG_PASSWORD)));
+						new JBugsBusinessException(JBugsBusinessException.JBUGS_LOGIN_WRONG_USERNAME_PASSWORD));
 
 				context.addMessage(null, new FacesMessage("Select Captcha"));
 				context.addMessage("loginForm:username", new FacesMessage("Password or Username wrong!"));
 
+				userService.tryToLogin(user.getUsername(), false);
+
+				if (userService.checkNoOfFails(user.getUsername()) == 5) {
+					userService.changeUserStatus(user.getUsername(), false);
+					// TODO Notificare admin
+
+					// System.out.println("s-a schimbat statusul");
+				} else {
+					// System.out.println("nu se schimba statusul");
+				}
+
 				return "login";
 			}
 		} else {
+			this.handleException(new JBugsBusinessException(JBugsBusinessException.JBUGS_LOGIN_ACCOUNT_DEACTIVATED));
 			context.addMessage("loginForm:username", new FacesMessage("Your account is deactivated!"));
 			return "login";
 		}
@@ -93,6 +125,11 @@ public class LoginBean extends JBugsBean {
 
 	public FacesContext getFacesContext() {
 		return FacesContext.getCurrentInstance();
+	}
+
+	public String doLoginWithCaptcha() {
+		captchaBean.submit();
+		return doLogin();
 	}
 
 }

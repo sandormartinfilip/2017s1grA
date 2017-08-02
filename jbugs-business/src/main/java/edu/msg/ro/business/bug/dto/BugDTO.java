@@ -2,20 +2,20 @@ package edu.msg.ro.business.bug.dto;
 
 import java.util.Date;
 
-import edu.msg.ro.business.dto.AbstractoDTO;
+import edu.msg.ro.business.dto.AbstractDTO;
 import edu.msg.ro.persistence.entity.BugSeverity;
 import edu.msg.ro.persistence.entity.BugStatus;
 import edu.msg.ro.persistence.entity.User;
 
-public class BugDTO extends AbstractoDTO {
+public class BugDTO extends AbstractDTO {
 
 	private String title;
 	private String description;
 	private Date targetDate;
 	private BugSeverity severity;
 	private BugStatus status;
-	private Double versionFound;
-	private Double versionFixed;
+	private String versionFound;
+	private String versionFixed;
 	private User createdBy;
 	private User assignedTo;
 
@@ -23,7 +23,7 @@ public class BugDTO extends AbstractoDTO {
 		return createdBy;
 	}
 
-	public void setCreatedBy(User createdBy) {
+	public void setCreatedBy(final User createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -31,7 +31,7 @@ public class BugDTO extends AbstractoDTO {
 		return assignedTo;
 	}
 
-	public void setAssignedTo(User assignedTo) {
+	public void setAssignedTo(final User assignedTo) {
 		this.assignedTo = assignedTo;
 	}
 
@@ -39,7 +39,7 @@ public class BugDTO extends AbstractoDTO {
 		return title;
 	}
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 
@@ -47,7 +47,7 @@ public class BugDTO extends AbstractoDTO {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 
@@ -55,7 +55,7 @@ public class BugDTO extends AbstractoDTO {
 		return targetDate;
 	}
 
-	public void setTargetDate(Date targetDate) {
+	public void setTargetDate(final Date targetDate) {
 		this.targetDate = targetDate;
 	}
 
@@ -63,7 +63,7 @@ public class BugDTO extends AbstractoDTO {
 		return severity;
 	}
 
-	public void setSeverity(BugSeverity severity) {
+	public void setSeverity(final BugSeverity severity) {
 		this.severity = severity;
 	}
 
@@ -71,23 +71,23 @@ public class BugDTO extends AbstractoDTO {
 		return status;
 	}
 
-	public void setStatus(BugStatus status) {
+	public void setStatus(final BugStatus status) {
 		this.status = status;
 	}
 
-	public Double getVersionFound() {
+	public String getVersionFound() {
 		return versionFound;
 	}
 
-	public void setVersionFound(Double versionFound) {
+	public void setVersionFound(final String versionFound) {
 		this.versionFound = versionFound;
 	}
 
-	public Double getVersionFixed() {
+	public String getVersionFixed() {
 		return versionFixed;
 	}
 
-	public void setVersionFixed(Double versionFixed) {
+	public void setVersionFixed(final String versionFixed) {
 		this.versionFixed = versionFixed;
 	}
 

@@ -9,6 +9,7 @@ import edu.msg.ro.persistence.user.dao.LoginHistoryDao;
  * 
  * @author petred
  *
+ *         UNUSED CLASS
  */
 @Stateless
 public class LoginHistoryService {

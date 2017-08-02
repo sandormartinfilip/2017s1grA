@@ -2,16 +2,17 @@ package edu.msg.ro.business.loginHistory;
 
 import java.time.LocalDateTime;
 
-import edu.msg.ro.business.dto.AbstractoDTO;
+import edu.msg.ro.business.dto.AbstractDTO;
 
 /**
- * 
+ *
  * @author petred
  *
+ *         UNUSED CLASS
  */
 
 // AbstractoDTO should be AbstractDTO ( without o )
-public class LoginHistoryDTO extends AbstractoDTO {
+public class LoginHistoryDTO extends AbstractDTO {
 
 	private String username;
 
@@ -23,7 +24,7 @@ public class LoginHistoryDTO extends AbstractoDTO {
 		return username;
 	}
 
-	public void setUsername(String username) {
+	public void setUsername(final String username) {
 		this.username = username;
 	}
 
@@ -31,7 +32,7 @@ public class LoginHistoryDTO extends AbstractoDTO {
 		return loginDate;
 	}
 
-	public void setLoginDate(LocalDateTime loginDate) {
+	public void setLoginDate(final LocalDateTime loginDate) {
 		this.loginDate = loginDate;
 	}
 
@@ -39,7 +40,7 @@ public class LoginHistoryDTO extends AbstractoDTO {
 		return succes;
 	}
 
-	public void setSucces(boolean succes) {
+	public void setSucces(final boolean succes) {
 		this.succes = succes;
 	}
 

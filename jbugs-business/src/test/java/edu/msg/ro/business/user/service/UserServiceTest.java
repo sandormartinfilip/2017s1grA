@@ -1,4 +1,4 @@
-/*package edu.msg.ro.business.user.service;
+package edu.msg.ro.business.user.service;
 
 import java.util.List;
 
@@ -111,24 +111,29 @@ public class UserServiceTest extends AbstractIntegrationTest {
 	//
 	// }
 	//
-	// @Test
-	// public void testDeleteUser() throws JBugsBusinessException {
-	// // ARRANGE
-	// final List<User> userList = userDao.getUserByLastName("Doe");
-	// Assert.assertEquals("There should be a user with name 'Doe'!",
-	// userList.size(), 1);
-	// Assert.assertTrue("The user should be active",
-	// userList.get(0).isActive());
-	//
-	// // ACT
-	// sut.deleteUser(userList.get(0).getId());
-	//
-	// // ASSERT
-	// final User deletedUser = userDao.findById(userList.get(0).getId());
-	// Assert.assertNotNull("Deletion is only logical, not physical!",
-	// deletedUser);
-	// Assert.assertFalse("User should be deactivated", deletedUser.isActive());
-	// }
+	@Test
+	@InSequence(2)
+	public void testDeleteUser() {
+
+		final String FIRSTNAME = "Robert";
+		final String LASTNAME = "Sanchez";
+
+		// ARRANGE
+		sut.addUser(FIRSTNAME, LASTNAME, "+40757778737", "robert.sanchez@msggroup.com");
+
+		final List<UserDTO> userList = sut.getUserByLastName(LASTNAME);
+		Assert.assertEquals("There should be a user with name " + LASTNAME + "!", userList.size(), 1);
+		Assert.assertTrue("The user should be active", userList.get(0).isActive());
+
+		// ACT
+		// sut.deleteUser(userList.get(0).getId());
+		sut.changeUserStatus(userList.get(0).getUsername(), false);
+
+		// ASSERT
+		final UserDTO deletedUser = sut.getUserByUsername(userList.get(0).getUsername());
+		Assert.assertNotNull("Deletion is only logical, not physical!", deletedUser);
+		Assert.assertFalse("User should be deactivated", deletedUser.isActive());
+	}
 	//
 	// @Test(expected = ObjectNotFoundException.class)
 	// public void testDeleteUser_throwsObjectNotFoundException() throws
@@ -146,4 +151,3 @@ public class UserServiceTest extends AbstractIntegrationTest {
 	// }
 
 }
-*/

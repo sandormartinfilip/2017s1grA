@@ -1,5 +1,6 @@
 package edu.msg.ro.business.bug.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,6 +11,8 @@ import edu.msg.ro.business.bug.dto.BugDTO;
 import edu.msg.ro.business.bug.dto.mapper.BugDTOMapper;
 import edu.msg.ro.persistance.bug.dao.BugDao;
 import edu.msg.ro.persistence.entity.Bug;
+import edu.msg.ro.persistence.entity.BugSeverity;
+import edu.msg.ro.persistence.entity.BugStatus;
 
 @Stateless
 public class BugService {
@@ -40,6 +43,18 @@ public class BugService {
 		bug.setTargetDate(bugDTO.getTargetDate());
 
 		bugDao.updateBug(bug);
+	}
+
+	public void saveNewBug(String title, String description, Date targetDate, BugSeverity severity,
+			String versionFound) {
+		Bug bug = new Bug();
+		bug.setStatus(BugStatus.NEW);
+		bug.setTitle(title);
+		bug.setDescription(description);
+		bug.setTargetDate(targetDate);
+		bug.setSeverity(severity);
+		bug.setVersionFound(versionFound);
+		bugDao.persistBug(bug);
 	}
 
 }

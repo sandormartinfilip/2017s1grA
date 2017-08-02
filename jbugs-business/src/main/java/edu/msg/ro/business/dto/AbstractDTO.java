@@ -1,6 +1,6 @@
 package edu.msg.ro.business.dto;
 
-public abstract class AbstractoDTO {
+public abstract class AbstractDTO {
 
 	private Long id;
 

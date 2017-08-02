@@ -52,10 +52,10 @@ public class Bug extends AbstractEntity {
 	private BugStatus status;
 
 	@Column(name = "versionFound")
-	private Double versionFound;
+	private String versionFound;
 
 	@Column(name = "versionFixed")
-	private Double versionFixed;
+	private String versionFixed;
 
 	@ManyToOne
 	@JoinColumn(name = "createdBy", referencedColumnName = "id")
@@ -123,19 +123,19 @@ public class Bug extends AbstractEntity {
 		this.status = status;
 	}
 
-	public Double getVersionFound() {
+	public String getVersionFound() {
 		return versionFound;
 	}
 
-	public void setVersionFound(final Double versionFound) {
+	public void setVersionFound(final String versionFound) {
 		this.versionFound = versionFound;
 	}
 
-	public Double getVersionFixed() {
+	public String getVersionFixed() {
 		return versionFixed;
 	}
 
-	public void setVersionFixed(final Double versionFixed) {
+	public void setVersionFixed(final String versionFixed) {
 		this.versionFixed = versionFixed;
 	}
 

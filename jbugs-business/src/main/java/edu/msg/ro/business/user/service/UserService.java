@@ -10,11 +10,12 @@ import edu.msg.ro.business.exception.JBugsBusinessException;
 import edu.msg.ro.business.exception.ObjectNotFoundException;
 import edu.msg.ro.business.user.dto.UserDTO;
 import edu.msg.ro.business.user.dto.mapper.UserDTOMapper;
-import edu.msg.ro.persistence.entity.User;
+import edu.msg.ro.persistence.user.dao.LoginHistoryDao;
 import edu.msg.ro.persistence.user.dao.UserDao;
+import edu.msg.ro.persistence.entity.LoginHistory;
+import edu.msg.ro.persistence.entity.User;
 
 @Stateless
-
 public class UserService {
 
 	final static String EMAIL_REGEX = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "msggroup.com";
@@ -23,6 +24,9 @@ public class UserService {
 
 	@EJB
 	private UserDao userDao;
+
+	@EJB
+	private LoginHistoryDao loginHistoryDao;
 
 	@EJB
 	private UserDTOMapper userMapper;
@@ -217,4 +221,24 @@ public class UserService {
 		String password = username + "Test123.";
 		return password;
 	}
+
+	public int checkNoOfFails(String userName) {
+		int failsNumber = 0;
+
+		List<LoginHistory> loginHistoryList = loginHistoryDao.getLoginHistoryByUsername(userName);
+
+		for (LoginHistory loginHistory : loginHistoryList) {
+			if (!loginHistory.isSucces()) {
+				failsNumber++;
+			}
+
+		}
+
+		return failsNumber;
+	}
+
+	public void tryToLogin(String userName, boolean succes) {
+		loginHistoryDao.tryToLogin(userName, succes);
+	}
+
 }

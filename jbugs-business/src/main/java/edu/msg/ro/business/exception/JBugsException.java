@@ -20,9 +20,8 @@ public class JBugsException extends Exception {
 		this.errorMessageKey = message;
 	}
 
-	@Override
-	public String getMessage() {
-		return errorMessageKey;
+	public String getMessageKey() {
+		return this.errorMessageKey;
 	}
 
 }

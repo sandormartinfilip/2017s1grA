@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<script name="jquery/jquery.js" library="primefaces"></script>
+</h:head>
+
+<h:body>
+
+	<h2 align="center">Roles Page</h2>
+	<h:messages></h:messages>
+
+	<h:form id="newRolesForm">
+
+		<f:facet name="header">
+            Roles
+        </f:facet>
+
+		<h:panelGrid columns="3">
+		<h:outputLabel for="roleName" value="Role Name:" />
+
+			<h:selectOneMenu value="#{roleBean.roleDTO.roleName}"
+				onchange="submit()" id="onSelectId">
+				<f:selectItems value="#{roleBean.yourRoleNames}" />
+			</h:selectOneMenu>
+
+			<p:commandButton value="Submit"
+				action="#{roleBean.getAllPermOfaRole('ADM')}"
+				></p:commandButton>
+
+			<h:outputText value = "#{roleBean.getAllPermOfaRole('ADM')}"></h:outputText>
+			
+			<h:outputText id="permissionsID"
+				value="#{roleBean.permissionsDTOList}"
+				rendered="true"></h:outputText>
+
+		</h:panelGrid>
+	</h:form>
+
+</h:body>
+</html>
