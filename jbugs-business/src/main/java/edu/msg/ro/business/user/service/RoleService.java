@@ -37,8 +37,28 @@ public class RoleService {
 
 	public List<PermissionDTO> getAllPermissionsOfRole(final String roleName) {
 		final List<Permission> permissions = roleDao.getAllPermissionsOfARole(roleName);
+		for (final Permission permission : permissions) {
+			System.out.println("Permission: " + permission.toString());
+		}
 		return permissions.stream().map(permissionEntity -> permissionMapper.mapToDTO(permissionEntity))
 				.collect(Collectors.toList());
+	}
+
+	public List<PermissionDTO> getAllPermissionsOfARoleNoQuerryS(final String roleName) {
+
+		System.out.println("role name in get all permissions [RoleService]:" + roleName);
+		final Role role = roleDao.getRoleByRoleName(roleName);
+		System.out.println("role!!!!!:" + role.getRoleName());
+		System.out.println("does it have permissions?");
+		System.out.println("role has permissions: " + role.getPermissions());
+
+		// if (role.getPermissions() != null) {
+
+		// }
+		final List<Permission> permissions = role.getPermissions();
+		return permissions.stream().map(permissionEntity -> permissionMapper.mapToDTO(permissionEntity))
+				.collect(Collectors.toList());
+
 	}
 
 }
