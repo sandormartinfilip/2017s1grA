@@ -13,6 +13,7 @@ import edu.msg.ro.persistance.bug.dao.BugDao;
 import edu.msg.ro.persistence.entity.Bug;
 import edu.msg.ro.persistence.entity.BugSeverity;
 import edu.msg.ro.persistence.entity.BugStatus;
+import edu.msg.ro.persistence.entity.User;
 
 @Stateless
 public class BugService {
@@ -45,8 +46,8 @@ public class BugService {
 		bugDao.updateBug(bug);
 	}
 
-	public void saveNewBug(String title, String description, Date targetDate, BugSeverity severity,
-			String versionFound) {
+	public void saveNewBug(String title, String description, Date targetDate, BugSeverity severity, String versionFound,
+			User createdBy) {
 		Bug bug = new Bug();
 		bug.setStatus(BugStatus.NEW);
 		bug.setTitle(title);
@@ -54,6 +55,7 @@ public class BugService {
 		bug.setTargetDate(targetDate);
 		bug.setSeverity(severity);
 		bug.setVersionFound(versionFound);
+		bug.setCreatedBy(createdBy);
 		bugDao.persistBug(bug);
 	}
 

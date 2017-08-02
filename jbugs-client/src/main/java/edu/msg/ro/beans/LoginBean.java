@@ -1,6 +1,5 @@
 package edu.msg.ro.beans;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.ejb.EJB;
@@ -86,7 +85,7 @@ public class LoginBean extends JBugsBean {
 
 				userService.tryToLogin(user.getUsername(), true);
 
-				return "users";
+				return "bugs";
 			} else {
 
 				ResourceBundle rb = ResourceBundle.getBundle("jbugs/messages");
