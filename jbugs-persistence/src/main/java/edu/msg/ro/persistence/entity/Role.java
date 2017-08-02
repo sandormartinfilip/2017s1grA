@@ -13,12 +13,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-@NamedQueries({ @NamedQuery(name = Role.FIND_ALL_ROLES, query = "SELECT r from Role r"), })
+@NamedQueries({ @NamedQuery(name = Role.FIND_ALL_ROLES, query = "SELECT r from Role r"),
+		@NamedQuery(name = Role.FIND_ROLE_BY_ROLENAME, query = "SELECT r from Role r WHERE r.roleName=:roleName"), })
 
 @Entity
 public class Role extends AbstractEntity {
 
 	public static final String FIND_ALL_ROLES = "Role.findAllRoles";
+	public static final String FIND_ROLE_BY_ROLENAME = "Role.findRoleByRolename";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -30,10 +30,10 @@
 			</h:selectOneMenu>
 
 			<p:commandButton value="Submit"
-				action="#{roleBean.getAllPermOfaRole('ADM')}"
+				action="#{roleBean.getAllPermissionsOfARoleNoQuerry(roleBean.roleDTO.roleName)}"
 				></p:commandButton>
 
-			<h:outputText value = "#{roleBean.getAllPermOfaRole('ADM')}"></h:outputText>
+			<h:outputText value = "#{roleBean.getAllPermissionsOfARoleNoQuerry(roleBean.roleDTO.roleName)}"></h:outputText> 
 			
 			<h:outputText id="permissionsID"
 				value="#{roleBean.permissionsDTOList}"

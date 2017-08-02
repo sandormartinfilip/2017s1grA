@@ -53,7 +53,7 @@ public class UserService {
 	private RoleDTOMapper roleMapper;
 
 	public boolean isValidUser(UserDTO loginUser) {
-		UserDTO savedUser = getUserByUsername(loginUser.getUsername());
+		UserDTO savedUser = getUserDTOByUsername(loginUser.getUsername());
 		if (savedUser != null && savedUser.getPassword() != null) {
 
 			return savedUser.getPassword().equals(loginUser.getPassword());
@@ -62,7 +62,7 @@ public class UserService {
 	};
 
 	public boolean isActiveUser(UserDTO loginUser) {
-		UserDTO savedUser = getUserByUsername(loginUser.getUsername());
+		UserDTO savedUser = getUserDTOByUsername(loginUser.getUsername());
 		return savedUser.isActive();
 	}
 
@@ -137,12 +137,16 @@ public class UserService {
 		return true;
 	}
 
-	public UserDTO getUserByUsername(String userName) {
+	public UserDTO getUserDTOByUsername(String userName) {
 		User user = userDao.getUserByUsername(userName);
 		if (user != null) {
 			return userMapper.mapToDTO(user);
 		} else
 			return null;
+	}
+
+	public User getUserByUsername(String userName) {
+		return userDao.getUserByUsername(userName);
 	}
 
 	public List<UserDTO> getAllUsers() {

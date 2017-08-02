@@ -31,6 +31,9 @@ public class Notification extends AbstractEntity {
 	@Column
 	private LocalDateTime creationDate;
 
+	@Column
+	private String text;
+
 	@ManyToOne
 	@JoinColumn(name = "destinationUser", referencedColumnName = "id")
 	private User destinationUser;
@@ -78,6 +81,14 @@ public class Notification extends AbstractEntity {
 
 	public void setBug(Bug bug) {
 		this.bug = bug;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
 	}
 
 }
