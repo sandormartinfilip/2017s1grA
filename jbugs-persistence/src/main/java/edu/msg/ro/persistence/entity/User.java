@@ -53,7 +53,7 @@ public class User extends AbstractEntity {
 	private boolean active;
 
 	@ManyToMany
-	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "id_user", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_role", referencedColumnName = "idRole"))
+	@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "id_user", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "id_role", referencedColumnName = "id"))
 	private List<Role> roles;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "assignedTo")

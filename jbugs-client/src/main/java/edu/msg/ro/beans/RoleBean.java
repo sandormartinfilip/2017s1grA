@@ -96,8 +96,17 @@ public class RoleBean implements Serializable {
 		if (roleName != null) {
 			System.out.println("in if");
 			System.out.println("rolename: in role" + roleName);
+			System.out.println("permissionDTO, should be: " + roleService.getAllPermissionsOfRole(roleName)
+					+ "and rolename here: " + roleName);
+			System.out.println("permissions of dev: " + roleService.getAllPermissionsOfRole("DEV"));
+			final List<PermissionDTO> testPermissions = roleService.getAllPermissionsOfRole("DEV");
+			for (final PermissionDTO permissionDTO : testPermissions) {
+				System.out.println("permission DTO:" + permissionDTO.getPermissionName());
+			}
 			this.permissionsDTOList = roleService.getAllPermissionsOfRole(roleName);
-			System.out.println("permissionsDTOList" + permissionsDTOList.toString());
+			for (final PermissionDTO permissionDTO : permissionsDTOList) {
+				System.out.println("permissionDTO: " + permissionDTO.toString());
+			}
 			return "roles";
 		}
 		System.out.println("rolename: " + roleName);
@@ -105,4 +114,22 @@ public class RoleBean implements Serializable {
 		return "users";
 	}
 
+	public String getAllPermissionsOfARoleNoQuerry(final String roleName) {
+
+		System.out.println("IN get all perm role");
+		if (roleName != null && !roleName.isEmpty()) {
+			System.out.println("in if");
+			System.out.println("rolename: in role" + roleName);
+
+			this.permissionsDTOList = roleService.getAllPermissionsOfARoleNoQuerryS(roleName);
+
+			for (final PermissionDTO permissionDTO : permissionsDTOList) {
+				System.out.println("permissionDTO: " + permissionDTO.toString());
+			}
+			return "roles";
+		}
+		System.out.println("rolename: " + roleName);
+		System.out.println("before null");
+		return "users";
+	}
 }

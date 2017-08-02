@@ -1,5 +1,6 @@
 package edu.msg.ro.business.user.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,11 +9,15 @@ import javax.ejb.Stateless;
 
 import edu.msg.ro.business.exception.JBugsBusinessException;
 import edu.msg.ro.business.exception.ObjectNotFoundException;
+import edu.msg.ro.business.user.dto.RoleDTO;
 import edu.msg.ro.business.user.dto.UserDTO;
+import edu.msg.ro.business.user.dto.mapper.RoleDTOMapper;
 import edu.msg.ro.business.user.dto.mapper.UserDTOMapper;
 import edu.msg.ro.persistence.entity.LoginHistory;
+import edu.msg.ro.persistence.entity.Role;
 import edu.msg.ro.persistence.entity.User;
 import edu.msg.ro.persistence.user.dao.LoginHistoryDao;
+import edu.msg.ro.persistence.user.dao.RoleDao;
 import edu.msg.ro.persistence.user.dao.UserDao;
 
 @Stateless
@@ -26,10 +31,16 @@ public class UserService {
 	private UserDao userDao;
 
 	@EJB
+	private RoleDao roleDao;
+
+	@EJB
 	private LoginHistoryDao loginHistoryDao;
 
 	@EJB
 	private UserDTOMapper userMapper;
+
+	@EJB
+	private RoleDTOMapper roleMapper;
 
 	public boolean isValidUser(UserDTO loginUser) {
 		UserDTO savedUser = getUserDTOByUsername(loginUser.getUsername());
@@ -144,7 +155,7 @@ public class UserService {
 		userDao.updateUser(user);
 	}
 
-	public void addUser(String firstName, String lastName, String phoneNumber, String email) {
+	public void addUser(String firstName, String lastName, String phoneNumber, String email, List<RoleDTO> rolesDTO) {
 
 		if (isEmailValid(email))
 			if (isPhoneNumberValid(phoneNumber)) {
@@ -157,6 +168,9 @@ public class UserService {
 				int numberInUsername = 1;
 				int indexLast = LAST_NAME_INDEX;
 				int indexFirst = FIRST_NAME_INDEX;
+				List<Role> roles = new ArrayList<>();
+
+				roles = getRolesFromDB(rolesDTO);
 
 				User user = new User();
 				User userFromDB = null;
@@ -173,10 +187,10 @@ public class UserService {
 						user.setUsername(username);
 						user.setActive(true);
 						user.setPassword(createPassword(username));
+						user.setRoles(roles);
 						userDao.persistUser(user);
 						ok = false;
 					} else {
-						System.out.println(username + "=============");
 						nrOfUsers++;
 						indexLast--;
 						indexFirst++;
@@ -190,6 +204,17 @@ public class UserService {
 				}
 			}
 
+	}
+
+	private List<Role> getRolesFromDB(List<RoleDTO> rolesDTO) {
+
+		List<Role> roles = new ArrayList<>();
+		for (RoleDTO r : rolesDTO) {
+			Role role = roleDao.getRoleByRoleName(r.getRoleName());
+			roles.add(role);
+			System.out.println("Role Id: " + role.getId() + " Name: " + role.getRoleName());
+		}
+		return roles;
 	}
 
 	private String createUsername(String firstName, String lastName, int lastNameIndex, int endIndex) {

@@ -1,6 +1,8 @@
 package edu.msg.ro.business.user.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.msg.ro.business.dto.AbstractDTO;
 
@@ -24,6 +26,16 @@ public class UserDTO extends AbstractDTO implements Serializable {
 	private String password;
 
 	private boolean active;
+
+	private List<String> roles = new ArrayList<>();
+
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
 
 	public boolean isEditable() {
 		return editable;

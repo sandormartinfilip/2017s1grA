@@ -18,7 +18,23 @@ public class NotificationDTO extends AbstractDTO implements Serializable {
 
 	private User destinationUser;
 
+	private String text;
+
 	private Bug bug;
+
+	public NotificationDTO() {
+
+	}
+
+	public NotificationDTO(NotificationType notificationType, LocalDateTime creationDate, User destinationUser,
+			String text, Bug bug) {
+		super();
+		this.notificationType = notificationType;
+		this.creationDate = creationDate;
+		this.destinationUser = destinationUser;
+		this.text = text;
+		this.bug = bug;
+	}
 
 	public NotificationType getNotificationType() {
 		return notificationType;
@@ -50,6 +66,14 @@ public class NotificationDTO extends AbstractDTO implements Serializable {
 
 	public void setBug(Bug bug) {
 		this.bug = bug;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
 	}
 
 	@Override
