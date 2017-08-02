@@ -3,7 +3,6 @@ INSERT INTO USER (FIRSTNAME, LASTNAME, Status, password, username,email) VALUES 
 INSERT INTO USER (FIRSTNAME, LASTNAME, password, username,email) VALUES ('Max', 'Mustermann', 'pass','max.muster','max.muster@msggroup.com');
 INSERT INTO USER (FIRSTNAME, LASTNAME,email) VALUES ('Mary', 'Jane','mary.jones@msggroup.com');
 
-<<<<<<< HEAD
 -- other tables TODO
 
 INSERT INTO PERMISSION (DESCRIPTION, PERMISSIONNAME) VALUES ('some descript text', 'PERMISSION_MANAGEMENT');

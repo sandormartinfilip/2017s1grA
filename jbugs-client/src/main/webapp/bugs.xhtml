@@ -16,63 +16,60 @@
 	
 	<h:form>
 		<p:dataTable value="#{bugManagementBean.allBugs}" var="bug"
-			rowKey="bug"
+			rowKey="#{bug}" sortMode="multiple"
 			id="bugsTable" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			paginator="true" rows="25" rowsPerPageTemplate="25" selectionMode="single" selection="#{bugManagementBean.selectedBug}" lazy="true">
-			
+			paginator="true" rows="25" rowsPerPageTemplate="25" selectionMode="single" selection="#{bugManagementBean.selectedBug}">
+		
 			<f:facet name="header">
             Bug List
         </f:facet>
-       <!--  <p:ajax event="rowSelect"></p:ajax> -->
-			<p:column sortBy="#{bug.id}" filterBy="#{bug.id}">
-				<f:facet name="header">Id</f:facet>
-				<h:outputText value="#{bug.id}"></h:outputText>
+        
+			<p:column headerText="Id" sortBy="#{bug.id}">
+				<h:outputText value="#{bug.id}"/>
 			</p:column>
 
 
-			<p:column>
-				<f:facet name="header">Title</f:facet>
-				<h:outputText value="#{bug.title}"></h:outputText>
+			<p:column headerText="Title" sortBy="#{bug.title}" filterBy="#{bug.title}">
+				<h:outputText value="#{bug.title}"/>
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">Description</f:facet>
-				<h:outputText value="#{bug.description}"></h:outputText>
+				<h:outputText value="#{bug.description}"/>
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">VFound</f:facet>
-				<h:outputText value="#{bug.versionFound}"></h:outputText>
+				<h:outputText value="#{bug.versionFound}"/>
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">VFixed</f:facet>
-				<h:outputText value="#{bug.versionFixed}"></h:outputText>
+				<h:outputText value="#{bug.versionFixed}"/>
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">TargetDate</f:facet>
-				<h:outputText value="#{bug.targetDate}"></h:outputText>
+				<h:outputText value="#{bug.targetDate}"/>
 			</p:column>
 
-			<p:column>
-				<f:facet name="header">Severity</f:facet>
-				<h:outputText value="#{bug.severity}"></h:outputText>
+			<p:column headerText="Severity" >
+				<h:outputText value="#{bug.severity}"/>
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">Created By</f:facet>
-				<h:outputText value="#{bug.createdBy}"></h:outputText>
+				<h:outputText value="#{bug.createdBy}"/>
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">Status</f:facet>
-				<h:outputText value="#{bug.status}"></h:outputText>
+				<h:outputText value="#{bug.status}"/>
 			</p:column>
 
 			<p:column>
 				<f:facet name="header">Assigned To</f:facet>
-				<h:outputText value="#{bug.assignedTo}"></h:outputText>
+				<h:outputText value="#{bug.assignedTo}"/>
 			</p:column>
 
 			<p:column>
