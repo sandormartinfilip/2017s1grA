@@ -36,7 +36,6 @@ public class RoleService {
 	}
 
 	public List<PermissionDTO> getAllPermissionsOfRole(final String roleName) {
-
 		final List<Permission> permissions = roleDao.getAllPermissionsOfARole(roleName);
 		return permissions.stream().map(permissionEntity -> permissionMapper.mapToDTO(permissionEntity))
 				.collect(Collectors.toList());

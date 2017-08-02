@@ -3,7 +3,6 @@ INSERT INTO USER (FIRSTNAME, LASTNAME, Status, password, username) VALUES ('John
 INSERT INTO USER (FIRSTNAME, LASTNAME, password, username) VALUES ('Max', 'Mustermann', 'pass','max.muster');
 INSERT INTO USER (FIRSTNAME, LASTNAME) VALUES ('Mary', 'Jane');
 
-<<<<<<< HEAD
 -- other tables TODO
 
 INSERT INTO PERMISSION (DESCRIPTION, PERMISSIONNAME) VALUES ('some descript text', 'PERMISSION_MANAGEMENT');
@@ -31,4 +30,3 @@ INSERT INTO BUG (description, title, severity, status, targetDate, versionFound,
 INSERT INTO BUG (description, title, severity, status, targetDate, versionFound, versionFixed, assignedTo, createdBy) VALUES ('Bug nr. 5', 'Hello', 'HIGH', 'REJECTED', '2017-12-12', 2.3, 0.0, 2, 3);
 
 -- other tables TODO
->>>>>>> 60cb30056e3898fcb3aa07c52cf7f7661a0c567f

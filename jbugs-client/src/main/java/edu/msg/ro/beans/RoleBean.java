@@ -90,18 +90,19 @@ public class RoleBean implements Serializable {
 		this.permissionsDTOList = permissionsDTOList;
 	}
 
-	public void getAllPermOfaRole(final String roleName) {
+	public String getAllPermOfaRole(final String roleName) {
 
 		System.out.println("IN get all perm role");
 		if (roleName != null) {
+			System.out.println("in if");
+			System.out.println("rolename: in role" + roleName);
 			this.permissionsDTOList = roleService.getAllPermissionsOfRole(roleName);
-			// for (final PermissionDTO permissionDTO : permissions) {
-			// System.out.println("permissionName: " +
-			// permissionDTO.getPermissionName());
-			// return permissions;
-			// }
+			System.out.println("permissionsDTOList" + permissionsDTOList.toString());
+			return "roles";
 		}
+		System.out.println("rolename: " + roleName);
 		System.out.println("before null");
+		return "users";
 	}
 
 }
