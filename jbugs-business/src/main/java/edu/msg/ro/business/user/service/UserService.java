@@ -13,6 +13,8 @@ import edu.msg.ro.business.user.dto.RoleDTO;
 import edu.msg.ro.business.user.dto.UserDTO;
 import edu.msg.ro.business.user.dto.mapper.RoleDTOMapper;
 import edu.msg.ro.business.user.dto.mapper.UserDTOMapper;
+import edu.msg.ro.persistance.bug.dao.BugDao;
+import edu.msg.ro.persistence.entity.Bug;
 import edu.msg.ro.persistence.entity.LoginHistory;
 import edu.msg.ro.persistence.entity.Role;
 import edu.msg.ro.persistence.entity.User;
@@ -20,6 +22,11 @@ import edu.msg.ro.persistence.user.dao.LoginHistoryDao;
 import edu.msg.ro.persistence.user.dao.RoleDao;
 import edu.msg.ro.persistence.user.dao.UserDao;
 
+/**
+ * 
+ * @author cotete
+ *
+ */
 @Stateless
 public class UserService {
 
@@ -32,6 +39,9 @@ public class UserService {
 
 	@EJB
 	private RoleDao roleDao;
+
+	@EJB
+	private BugDao bugDao;
 
 	@EJB
 	private LoginHistoryDao loginHistoryDao;
@@ -108,12 +118,15 @@ public class UserService {
 				e.printStackTrace();
 			}
 		}
-		// TODO
-		// validate business constraints (Nu se pot sterge utilizatorii care au
-		// asignate taskuri care nu sunt inca terminate / inchise) - in caz
-		// contrar aruncam BusinessValidationException
+		List<Bug> assignedBugs = bugDao.getBugsByAssignedTo(user);
+		// TODO: A message that user cannot be updated if still has tasks
+		if (status == false) {
+			if (assignedBugs.size() == 0)
 
-		user.setActive(status);
+				user.setActive(status);
+		} else {
+			user.setActive(status);
+		}
 
 		userDao.updateUser(user);
 		return true;
@@ -233,11 +246,9 @@ public class UserService {
 	}
 
 	private boolean isPhoneNumberValid(String phone) {
-		if (phone.substring(1).matches("[0-9]+") && phone.substring(0, 1).equals("+"))
-			if (phone.startsWith("+40") && (phone.length() == 12))
+		if (phone.matches("[0-9]+"))
+			if ((phone.startsWith("40") || phone.startsWith("49")) && (phone.length() == 11))
 				return true;
-		if (phone.startsWith("+49") && (phone.length() >= 5 && phone.length() <= 14))
-			return true;
 		return false;
 
 	}

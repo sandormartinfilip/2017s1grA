@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import edu.msg.ro.persistence.entity.Bug;
+import edu.msg.ro.persistence.entity.User;
 
 /**
  * 
@@ -33,6 +35,18 @@ public class BugDao {
 		final TypedQuery<Bug> query = em.createNamedQuery(Bug.FIND_ALL_BUGS, Bug.class);
 		System.out.println(query.getResultList());
 		return query.getResultList();
+	}
+
+	public List<Bug> getBugsByAssignedTo(User user) {
+		final TypedQuery<Bug> query = em.createNamedQuery(Bug.FIND_BUGS_BY_ASSIGNED_TO, Bug.class);
+		query.setParameter("assignedTo", user);
+		try {
+			return query.getResultList();
+		} catch (NoResultException e) {
+			return null;
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	public void deleteBug(Long id) {
