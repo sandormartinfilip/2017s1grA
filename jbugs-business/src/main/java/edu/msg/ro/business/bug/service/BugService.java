@@ -9,7 +9,7 @@ import javax.ejb.Stateless;
 import edu.msg.ro.business.bug.dto.BugDTO;
 import edu.msg.ro.business.bug.dto.mapper.BugDTOMapper;
 import edu.msg.ro.persistance.bug.dao.BugDao;
-import edu.msg.ro.persistence.user.entity.Bug;
+import edu.msg.ro.persistence.entity.Bug;
 
 @Stateless
 public class BugService {

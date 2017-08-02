@@ -10,8 +10,8 @@ import edu.msg.ro.business.exception.JBugsBusinessException;
 import edu.msg.ro.business.exception.ObjectNotFoundException;
 import edu.msg.ro.business.user.dto.UserDTO;
 import edu.msg.ro.business.user.dto.mapper.UserDTOMapper;
+import edu.msg.ro.persistence.entity.User;
 import edu.msg.ro.persistence.user.dao.UserDao;
-import edu.msg.ro.persistence.user.entity.User;
 
 @Stateless
 

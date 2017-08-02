@@ -4,7 +4,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import edu.msg.ro.persistence.user.entity.LoginHistory;
+import edu.msg.ro.persistence.entity.LoginHistory;
 
 /**
  * 
