@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
-import edu.msg.ro.persistence.user.entity.Role;
-import edu.msg.ro.persistence.user.entity.User;
+import edu.msg.ro.persistence.entity.Role;
+import edu.msg.ro.persistence.entity.User;
 
 /**
  * TODO make CDI @SessionScoped/ @RequestScoped TODO add SecurityFilter

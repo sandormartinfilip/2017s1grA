@@ -1,6 +1,7 @@
 package edu.msg.ro.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -11,7 +12,9 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.event.CellEditEvent;
 
+import edu.msg.ro.business.user.dto.RoleDTO;
 import edu.msg.ro.business.user.dto.UserDTO;
+import edu.msg.ro.business.user.service.RoleService;
 import edu.msg.ro.business.user.service.UserService;
 
 @ManagedBean
@@ -26,9 +29,22 @@ public class UserManagementBean implements Serializable {
 	@EJB
 	private UserService userService;
 
+	@EJB
+	private RoleService roleService;
+
 	private UserDTO newUser = new UserDTO();
 
 	private UserDTO editedUser;
+
+	private List<RoleDTO> selectedRoles = new ArrayList<>();
+
+	public List<RoleDTO> getSelectedRoles() {
+		return selectedRoles;
+	}
+
+	public void setSelectedRoles(List<RoleDTO> rolesSelected) {
+		this.selectedRoles = rolesSelected;
+	}
 
 	public UserDTO getNewUser() {
 		return newUser;
@@ -58,10 +74,14 @@ public class UserManagementBean implements Serializable {
 
 		List<UserDTO> users = userService.getAllUsers();
 
-		for (UserDTO u : users) {
-			u.toString();
-		}
 		return users;
+	}
+
+	public List<RoleDTO> getAllRoles() {
+
+		List<RoleDTO> roles = roleService.getAllRoles();
+		return roles;
+
 	}
 
 	public String deactivateUser(String username) {
@@ -83,9 +103,11 @@ public class UserManagementBean implements Serializable {
 	public String doCreateUser() {
 		// userService.saveNewUser(newUser.getFirstName(),
 		// newUser.getLastName());
+		System.out.println(selectedRoles.toString());
 
-		userService.addUser(newUser.getFirstName(), newUser.getLastName(), newUser.getPhoneNumber(),
-				newUser.getEmail());
+		userService.addUser(newUser.getFirstName(), newUser.getLastName(), newUser.getPhoneNumber(), newUser.getEmail(),
+				selectedRoles);
+
 		return "users";
 	}
 

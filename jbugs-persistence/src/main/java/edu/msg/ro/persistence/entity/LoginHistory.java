@@ -1,4 +1,4 @@
-package edu.msg.ro.persistence.user.entity;
+package edu.msg.ro.persistence.entity;
 
 import java.sql.Timestamp;
 

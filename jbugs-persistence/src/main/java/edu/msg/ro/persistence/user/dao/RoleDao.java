@@ -9,8 +9,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import edu.msg.ro.persistence.user.entity.Permission;
-import edu.msg.ro.persistence.user.entity.Role;
+import edu.msg.ro.persistence.entity.Permission;
+import edu.msg.ro.persistence.entity.Role;
 
 /**
  *
@@ -52,6 +52,18 @@ public class RoleDao {
 		query.setParameter("roleName", roleName);
 
 		return query.getResultList();
+	}
+
+	public static void main(final String[] args) {
+
+		final String roleName = "DEV";
+		final RoleDao roleDao = new RoleDao();
+
+		System.out.println("IN MAIN");
+		final List<Permission> permissions = roleDao.getAllPermissionsOfARole(roleName);
+		for (final Permission permission : permissions) {
+			System.out.println(permission.getPermissionName());
+		}
 	}
 
 }

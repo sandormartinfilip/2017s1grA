@@ -9,10 +9,10 @@ import javax.ejb.Stateless;
 import edu.msg.ro.business.user.dto.PermissionDTO;
 import edu.msg.ro.business.user.dto.mapper.PermissionDTOMapper;
 import edu.msg.ro.business.user.dto.mapper.RoleDTOMapper;
+import edu.msg.ro.persistence.entity.Permission;
+import edu.msg.ro.persistence.entity.PermissionManagementType;
 import edu.msg.ro.persistence.user.dao.PermissionDao;
 import edu.msg.ro.persistence.user.dao.RoleDao;
-import edu.msg.ro.persistence.user.entity.Permission;
-import edu.msg.ro.persistence.user.entity.PermissionManagementType;
 
 @Stateless
 public class PermissionService {
