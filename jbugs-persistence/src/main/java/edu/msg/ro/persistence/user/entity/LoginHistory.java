@@ -1,6 +1,6 @@
 package edu.msg.ro.persistence.user.entity;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,12 +17,12 @@ import javax.persistence.NamedQuery;
  */
 
 @NamedQueries({
-		@NamedQuery(name = User.FIND_USER_BY_LASTNAME, query = "SELECT u from User u WHERE u.lastName = :lastName"),
-		@NamedQuery(name = User.FIND_USER_BY_USERNAME, query = "SELECT u from User u WHERE u.username = :username"),
-		@NamedQuery(name = User.FIND_ALL_USERS, query = "SELECT u from User u"), })
+		@NamedQuery(name = LoginHistory.FIND_LOGINHISTORY_BY_USERNAME, query = "SELECT l from LoginHistory l WHERE l.username = :userName ORDER BY l.loginDate DESC"), })
 
 @Entity
 public class LoginHistory {
+
+	public static final String FIND_LOGINHISTORY_BY_USERNAME = "LoginHistory.findLoginHistoryByUserName";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,15 @@ public class LoginHistory {
 	private String username;
 
 	@Column
-	private LocalDateTime loginDate;
+	private Timestamp loginDate;
+
+	public Timestamp getLoginDate() {
+		return loginDate;
+	}
+
+	public void setLoginDate(Timestamp loginDate) {
+		this.loginDate = loginDate;
+	}
 
 	@Column
 	private boolean succes;
@@ -51,14 +59,6 @@ public class LoginHistory {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public LocalDateTime getLoginDate() {
-		return loginDate;
-	}
-
-	public void setLoginDate(LocalDateTime loginDate) {
-		this.loginDate = loginDate;
 	}
 
 	public boolean isSucces() {

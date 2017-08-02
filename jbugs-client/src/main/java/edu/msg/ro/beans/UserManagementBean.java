@@ -4,8 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.event.CellEditEvent;
 
 import edu.msg.ro.business.user.dto.UserDTO;
 import edu.msg.ro.business.user.service.UserService;
@@ -60,11 +64,6 @@ public class UserManagementBean implements Serializable {
 		return users;
 	}
 
-	public String deleteUser(Long id) {
-		userService.deleteUser(id);
-		return "users";
-	}
-
 	public String deactivateUser(String username) {
 		userService.changeUserStatus(username, false);
 		return "users";
@@ -88,6 +87,21 @@ public class UserManagementBean implements Serializable {
 		userService.addUser(newUser.getFirstName(), newUser.getLastName(), newUser.getPhoneNumber(),
 				newUser.getEmail());
 		return "users";
+	}
+
+	public void onCellEdit(CellEditEvent event) {
+		System.out.println("On CELL EDIT");
+		Object oldValue = event.getOldValue();
+		Object newValue = event.getNewValue();
+		System.out.println(newValue.toString());
+
+		if (newValue != null && !newValue.equals(oldValue)) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed",
+					"Old: " + oldValue + ", New:" + newValue);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+
+			System.out.println("Cell changed: Old" + oldValue + " New: " + newValue);
+		}
 	}
 
 }

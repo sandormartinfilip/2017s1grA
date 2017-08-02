@@ -12,7 +12,6 @@ import javax.persistence.TypedQuery;
 import edu.msg.ro.persistence.user.entity.User;
 
 /**
- * TODO: add javadoc create AbtractDao (findById generic)
  * 
  * @author Andrei Floricel, msg systems ag
  *
@@ -40,7 +39,6 @@ public class UserDao {
 
 	public List<User> getUserForUsername(String username) {
 		Query q = em.createQuery("select u from User u where u.username='" + username + "'", User.class);
-
 		return q.getResultList();
 
 	}
@@ -52,11 +50,6 @@ public class UserDao {
 		} catch (NoResultException e) {
 			return null;
 		}
-	}
-
-	public List<User> getAllUsers() {
-		Query q = em.createQuery("select u from User u");
-		return q.getResultList();
 	}
 
 	public List<User> getAll() {

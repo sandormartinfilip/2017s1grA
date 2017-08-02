@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+		<script name="jquery/jquery.js" library="primefaces"></script>
+	</h:head>
+	
+<h:body>
+	<h:form id="usersForm">
+		<h:dataTable value="#{userManagementBean.allUsers}" var="user" id="usersTable">
+		
+			<h:column>
+				<f:facet name="header">Username</f:facet>
+				<h:outputText value="#{user.username}"/>
+			</h:column>
+
+            <h:column>
+                <f:facet name="header">First Name</f:facet>
+                <h:outputText value="#{user.firstName}"/>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Last name</f:facet>
+                <h:outputText value="#{user.lastName}"/>
+            </h:column>   
+            
+            <h:column>
+                <f:facet name="header">Mobile number</f:facet>
+                <h:outputText value="#{user.phoneNumber}"/>
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">E-mail</f:facet>
+                <h:outputText value="#{user.email}"/>
+            </h:column>
+
+
+
+            <h:column>
+                <f:facet name="header">Edit</f:facet>
+				<p:commandButton value="Edit" type="button" onclick="PF('dialog1').show();"
+								action="#{userManagementBean.setEditedUser(user)}"
+								update=":dlgForm:usersTableForModal"
+								ajax="false"/>
+			</h:column>
+		</h:dataTable>
+		
+		
+        <h:commandLink value="Logout"
+                       action="#{loginBean.doLogout}" />
+<!-- 	</h:form> -->
+	
+	<p:dialog header="EditUser" widgetVar="dialog1" modal="true" height="100" >
+<!-- 			<h:form id="dlgForm"> -->
+    		<h:outputText value="Please edit the user's fields" />
+    		<p:dataTable value="#{userManagementBean.allUsers}" var="user" id="usersTableForModal" editable="true">
+		
+<!--  			<p:column>  -->
+<!--  				<f:facet name="header">Username</f:facet>  -->
+<!--  				<h:outputText value="#{user.username}"/>  -->
+<!--  			</p:column>  -->
+
+            <p:column>
+                <f:facet name="header">First Name</f:facet>
+                <p:inputText id="firstName"
+                			 value="#{user.firstName}">
+                             <f:validateRequired/>
+                </p:inputText>
+            </p:column>
+
+            <p:column>
+                <f:facet name="header">Last name</f:facet>
+                <p:inputText if="lastName"
+                			 value="#{user.lastName}"
+                             required="true"> <f:validateRequired/>
+                </p:inputText>
+            </p:column>   
+            
+            <p:column>
+                <f:facet name="header">Mobile number</f:facet>
+                <p:inputText id="phoneNumber"
+                			 value="#{user.phoneNumber}">
+                             <f:validateRegex pattern="(40|49)\d{10}"></f:validateRegex>
+                </p:inputText>             
+            </p:column>
+            
+            <p:column>
+                <f:facet name="header">E-mail</f:facet>
+                <p:inputText id="email"
+                			 value="#{user.email}">
+                             <f:validateRegex pattern="^[a-zA-Z0-9._%+-]+@msggroup\.com"></f:validateRegex>
+                </p:inputText>
+            </p:column>
+            
+            <p:column>
+            	<p:commandButton value="Save" 
+								 action="#{userManagementBean.doSave}"
+								 ajax="false" >
+				</p:commandButton>
+			</p:column>
+            
+            </p:dataTable>
+<!--             </h:form> -->
+		</p:dialog> 
+	</h:form>
+</h:body>
+
+</html>
