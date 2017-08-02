@@ -10,13 +10,13 @@ public class RoleDTO extends AbstractDTO {
 		return roleName;
 	}
 
-	public void setRoleName(String roleName) {
+	public void setRoleName(final String roleName) {
 		this.roleName = roleName;
 	}
 
 	@Override
 	public String toString() {
-		return "RoleDTO [roleName=" + roleName + "]";
+		return roleName;
 	}
 
 }

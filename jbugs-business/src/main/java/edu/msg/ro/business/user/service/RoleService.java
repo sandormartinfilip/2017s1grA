@@ -44,17 +44,24 @@ public class RoleService {
 				.collect(Collectors.toList());
 	}
 
-	public List<PermissionDTO> getAllPermissionsOfARoleNoQuerryS(final String roleName) {
+	public RoleDTO getRoleByRoleName(final String roleName) {
 
-		System.out.println("role name in get all permissions [RoleService]:" + roleName);
 		final Role role = roleDao.getRoleByRoleName(roleName);
-		System.out.println("role!!!!!:" + role.getRoleName());
-		System.out.println("does it have permissions?");
-		System.out.println("role has permissions: " + role.getPermissions());
+		if (role != null) {
+			return roleMapper.mapToDTO(role);
+		} else
+			return null;
+	}
 
-		// if (role.getPermissions() != null) {
+	/**
+	 *
+	 * @param roleName
+	 * @return TODO: return type better be a RoleDTO!
+	 */
+	public List<PermissionDTO> getAllPermissionsOfARoleNoQuerry(final String roleName) {
 
-		// }
+		// final Role role = roleDao.getRoleByRoleName(roleDTO.getRoleName());
+		final Role role = roleDao.getRoleByRoleName(roleName);
 		final List<Permission> permissions = role.getPermissions();
 		return permissions.stream().map(permissionEntity -> permissionMapper.mapToDTO(permissionEntity))
 				.collect(Collectors.toList());

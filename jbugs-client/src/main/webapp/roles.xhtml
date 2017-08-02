@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
 	<script name="jquery/jquery.js" library="primefaces"></script>
@@ -22,7 +23,7 @@
         </f:facet>
 
 		<h:panelGrid columns="3">
-		<h:outputLabel for="roleName" value="Role Name:" />
+			<h:outputLabel for="roleName" value="Role Name:" />
 
 			<h:selectOneMenu value="#{roleBean.roleDTO.roleName}"
 				onchange="submit()" id="onSelectId">
@@ -30,16 +31,47 @@
 			</h:selectOneMenu>
 
 			<p:commandButton value="Submit"
-				action="#{roleBean.getAllPermissionsOfARoleNoQuerry(roleBean.roleDTO.roleName)}"
-				></p:commandButton>
+				action="#{roleBean.getAllPermissionsOfARoleNoQuerry(roleBean.roleDTO.roleName)}"></p:commandButton>
 
-			<h:outputText value = "#{roleBean.getAllPermissionsOfARoleNoQuerry(roleBean.roleDTO.roleName)}"></h:outputText> 
-			
+			<h:outputText
+				value="#{roleBean.getAllPermissionsOfARoleNoQuerry(roleBean.roleDTO.roleName)}"></h:outputText>
+
 			<h:outputText id="permissionsID"
-				value="#{roleBean.permissionsDTOList}"
-				rendered="true"></h:outputText>
+				value="#{roleBean.permissionsDTOList}" rendered="true"></h:outputText>
 
 		</h:panelGrid>
+	</h:form>
+
+	<h:form id="pickListForm">
+		<p:growl id="msg" showDetail="true" escape="false" />
+
+		<h3 style="margin-top: 0">Permissions PickList</h3>
+
+		<p:pickList id="pickList" value="#{roleBean.allPermissionsDual}"
+			var="permissions" itemLabel="#{roleBean.allPermissionsDual}"
+			itemValue="#{permissionBean.allPermissionNames}" />
+
+		<p:commandButton id="permissionSubmit" value="Save"
+			update="displayPermissions"
+			oncomplete="PF('permissionDialog').show()" style="margin-top:5px" />
+
+		<p:dialog modal="true" showEffect="fade" hideEffect="fade"
+			widgetVar="permissionDialog">
+
+			<h:panelGrid id="displayPermissions" columns="2" style="width: 100%">
+				<h:outputText value="Source: " style="font-weight:bold" />
+				<ui:repeat value="#{roleBean.allPermissionsDual.source}" var="item">
+					<h:outputText value="#{item}" style="margin-right:5px" />
+				</ui:repeat>
+
+				<h:outputText value="Target: " style="font-weight:bold" />
+				<ui:repeat value="#{roleBean.allPermissionsDual.target}" var="item">
+					<h:outputText value="#{item}" style="margin-right:5px" />
+				</ui:repeat>
+			</h:panelGrid>
+		</p:dialog>
+
+
 	</h:form>
 
 </h:body>

@@ -22,7 +22,7 @@ import edu.msg.ro.business.user.service.UserService;
 public class UserManagementBean implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -8770276369676943814L;
 
@@ -42,7 +42,7 @@ public class UserManagementBean implements Serializable {
 		return selectedRoles;
 	}
 
-	public void setSelectedRoles(List<RoleDTO> rolesSelected) {
+	public void setSelectedRoles(final List<RoleDTO> rolesSelected) {
 		this.selectedRoles = rolesSelected;
 	}
 
@@ -50,7 +50,7 @@ public class UserManagementBean implements Serializable {
 		return newUser;
 	}
 
-	public void setNewUser(UserDTO newUser) {
+	public void setNewUser(final UserDTO newUser) {
 		this.newUser = newUser;
 	}
 
@@ -58,7 +58,7 @@ public class UserManagementBean implements Serializable {
 		return editedUser;
 	}
 
-	public void setEditedUser(UserDTO editedUser) {
+	public void setEditedUser(final UserDTO editedUser) {
 		System.out.println("in setEditedUser() " + editedUser.getFirstName() + " + " + editedUser.getLastName());
 		this.editedUser = editedUser;
 	}
@@ -72,24 +72,23 @@ public class UserManagementBean implements Serializable {
 
 	public List<UserDTO> getAllUsers() {
 
-		List<UserDTO> users = userService.getAllUsers();
-
+		final List<UserDTO> users = userService.getAllUsers();
 		return users;
 	}
 
 	public List<RoleDTO> getAllRoles() {
 
-		List<RoleDTO> roles = roleService.getAllRoles();
+		final List<RoleDTO> roles = roleService.getAllRoles();
 		return roles;
 
 	}
 
-	public String deactivateUser(String username) {
+	public String deactivateUser(final String username) {
 		userService.changeUserStatus(username, false);
 		return "users";
 	}
 
-	public String activateUser(String username) {
+	public String activateUser(final String username) {
 		userService.changeUserStatus(username, true);
 		return "users";
 	}
@@ -111,14 +110,14 @@ public class UserManagementBean implements Serializable {
 		return "users";
 	}
 
-	public void onCellEdit(CellEditEvent event) {
+	public void onCellEdit(final CellEditEvent event) {
 		System.out.println("On CELL EDIT");
-		Object oldValue = event.getOldValue();
-		Object newValue = event.getNewValue();
+		final Object oldValue = event.getOldValue();
+		final Object newValue = event.getNewValue();
 		System.out.println(newValue.toString());
 
 		if (newValue != null && !newValue.equals(oldValue)) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed",
+			final FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed",
 					"Old: " + oldValue + ", New:" + newValue);
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 

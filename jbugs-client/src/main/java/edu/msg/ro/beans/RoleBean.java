@@ -11,6 +11,8 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+import org.primefaces.model.DualListModel;
+
 import edu.msg.ro.business.user.dto.PermissionDTO;
 import edu.msg.ro.business.user.dto.RoleDTO;
 import edu.msg.ro.business.user.service.PermissionService;
@@ -44,10 +46,25 @@ public class RoleBean implements Serializable {
 
 	private Map<String, RoleDTO> myRoles;
 
+	private DualListModel<PermissionDTO> allPermissions;
+
 	@PostConstruct
 	public void init() {
 		myRoles = new HashMap<String, RoleDTO>();
 
+		final List<PermissionDTO> allPermissionsSource = getAllPermissions();
+		final List<PermissionDTO> allPermissionsTarget = new ArrayList<PermissionDTO>();
+
+		allPermissions = new DualListModel<PermissionDTO>(allPermissionsSource, allPermissionsTarget);
+
+	}
+
+	public DualListModel<PermissionDTO> getAllPermissionsDual() {
+		return allPermissions;
+	}
+
+	public void setAllPermissions(final DualListModel<PermissionDTO> allPermissions) {
+		this.allPermissions = allPermissions;
 	}
 
 	public RoleDTO getRoleDTO() {
@@ -71,6 +88,11 @@ public class RoleBean implements Serializable {
 		return roles;
 	}
 
+	public List<PermissionDTO> getAllPermissions() {
+		final List<PermissionDTO> permissions = permissionService.getAllPermisions();
+		return permissions;
+	}
+
 	public Map<String, RoleDTO> getYourRoleNames() {
 
 		final List<RoleDTO> roleNames = roleService.getAllRoles();
@@ -90,30 +112,30 @@ public class RoleBean implements Serializable {
 		this.permissionsDTOList = permissionsDTOList;
 	}
 
-	public String getAllPermOfaRole(final String roleName) {
+	/**
+	 *
+	 * @param roleName
+	 * @return roles page if success, users page otherwise
+	 *
+	 *         Currently not used because there's a chance the query for getting
+	 *         all the permissions of a role is not correct
+	 *
+	 */
+	public String getAllPermissionsOfARoleUsingQuery(final String roleName) {
 
-		System.out.println("IN get all perm role");
 		if (roleName != null) {
-			System.out.println("in if");
-			System.out.println("rolename: in role" + roleName);
-			System.out.println("permissionDTO, should be: " + roleService.getAllPermissionsOfRole(roleName)
-					+ "and rolename here: " + roleName);
-			System.out.println("permissions of dev: " + roleService.getAllPermissionsOfRole("DEV"));
-			final List<PermissionDTO> testPermissions = roleService.getAllPermissionsOfRole("DEV");
-			for (final PermissionDTO permissionDTO : testPermissions) {
-				System.out.println("permission DTO:" + permissionDTO.getPermissionName());
-			}
 			this.permissionsDTOList = roleService.getAllPermissionsOfRole(roleName);
-			for (final PermissionDTO permissionDTO : permissionsDTOList) {
-				System.out.println("permissionDTO: " + permissionDTO.toString());
-			}
 			return "roles";
 		}
-		System.out.println("rolename: " + roleName);
-		System.out.println("before null");
+
 		return "users";
 	}
 
+	/**
+	 *
+	 * @param roleName
+	 * @return
+	 */
 	public String getAllPermissionsOfARoleNoQuerry(final String roleName) {
 
 		System.out.println("IN get all perm role");
@@ -121,7 +143,7 @@ public class RoleBean implements Serializable {
 			System.out.println("in if");
 			System.out.println("rolename: in role" + roleName);
 
-			this.permissionsDTOList = roleService.getAllPermissionsOfARoleNoQuerryS(roleName);
+			this.permissionsDTOList = roleService.getAllPermissionsOfARoleNoQuerry(roleName);
 
 			for (final PermissionDTO permissionDTO : permissionsDTOList) {
 				System.out.println("permissionDTO: " + permissionDTO.toString());
@@ -132,4 +154,5 @@ public class RoleBean implements Serializable {
 		System.out.println("before null");
 		return "users";
 	}
+
 }

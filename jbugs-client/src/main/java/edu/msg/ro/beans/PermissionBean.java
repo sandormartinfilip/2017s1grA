@@ -65,14 +65,9 @@ public class PermissionBean implements Serializable {
 		return permissionNames;
 	}
 
-	public List<PermissionDTO> getAllPermissionTypes() {
-		final List<PermissionDTO> permissionNames = permissionService.getAllPermissionTypes();
-		return permissionNames;
-	}
-
 	public Map<String, PermissionDTO> getYourPermissionNames() {
 
-		final List<PermissionDTO> permissionNames = permissionService.getAllPermissionTypes();
+		final List<PermissionDTO> permissionNames = permissionService.getAllPermissionNames();
 
 		System.out.println("size of permission type list: " + permissionNames.size());
 		for (final PermissionDTO permissionDTO : permissionNames) {
