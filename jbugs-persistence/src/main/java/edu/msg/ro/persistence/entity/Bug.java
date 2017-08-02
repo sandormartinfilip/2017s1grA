@@ -21,7 +21,8 @@ import javax.persistence.OneToOne;
 @NamedQueries({
 		@NamedQuery(name = Bug.FIND_BUG_BY_SEVERITY, query = "SELECT b from Bug b where b.severity = :severity"),
 		@NamedQuery(name = Bug.FIND_BUG_BY_STATUS, query = "SELECT b from Bug b where b.status = :status"),
-		@NamedQuery(name = Bug.FIND_ALL_BUGS, query = "SELECT b from Bug b"), })
+		@NamedQuery(name = Bug.FIND_ALL_BUGS, query = "SELECT b from Bug b"),
+		@NamedQuery(name = Bug.FIND_BUGS_BY_ASSIGNED_TO, query = "SELECT b from Bug b where b.assignedTo = :assignedTo") })
 
 @Entity
 public class Bug extends AbstractEntity {
@@ -29,6 +30,7 @@ public class Bug extends AbstractEntity {
 	public static final String FIND_BUG_BY_SEVERITY = "Bug.findBugBySeverity";
 	public static final String FIND_BUG_BY_STATUS = "Bug.findBugByStatus";
 	public static final String FIND_ALL_BUGS = "Bug.findAllBugs";
+	public static final String FIND_BUGS_BY_ASSIGNED_TO = "Bug.findByAssignedTo";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
