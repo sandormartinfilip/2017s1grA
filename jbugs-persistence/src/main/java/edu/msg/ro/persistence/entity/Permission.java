@@ -16,7 +16,7 @@ import javax.persistence.NamedQuery;
 		// @NamedQuery(name = Permission.FIND_ALL_PERMISSIONS_OF_ROLE, query =
 		// "SELECT p.permissionName FROM Permission p, role_permission rp, Role
 		// r WHERE p.id=:rp.id_permission and rp.id_role=:r.ID;"),
-		@NamedQuery(name = Permission.FIND_ALL_PERMISSION_TYPES, query = "SELECT p from Permission p WHERE p.permissionType = :permissionType"), })
+		@NamedQuery(name = Permission.FIND_ALL_PERMISSION_TYPES, query = "SELECT p from Permission p WHERE p.permissionType = :permissionType") })
 /**
  *
  * @author Alexa G, msg systems
