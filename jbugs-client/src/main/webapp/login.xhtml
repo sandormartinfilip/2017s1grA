@@ -5,21 +5,34 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
+<style>
+.panelGridCenter {
+      margin: 0 auto;
+      vertical-align:middle;
+		display: table;
+}
+</style>
 <h:head>
-	<script src='https://www.google.com/recaptcha/api.js'></script>
-</h:head>
+		<script name="jquery/jquery.js" library="primefaces"></script>
+	</h:head>
+
 <h:body>
+<h2 align="center">JBugger Application</h2>
 	<h:messages></h:messages>
-	<h:form id="loginForm">
-		<h:panelGrid columns="3">
+	
+	
+	<h:form id="loginForm" class="panelGridCenter">
+		<p:panelGrid columns="1" class="panelGridCenter" border = "1" cellpadding = "10" cellspacing = "1">
 			<h:outputLabel for="username" value="#{msg['login.username']}" />
-			<h:inputText id="username" value="#{loginBean.user.username}" required="true" requiredMessage="#{msg['login.required.username']}">
+			<h:inputText id="username" value="#{loginBean.user.username}"
+				required="true" requiredMessage="#{msg['login.required.username']}">
 				<f:validateLength minimum="3"></f:validateLength>
 			</h:inputText>
 			<h:message for="username" />
 
 			<h:outputLabel for="password" value="#{msg['login.password']}" />
-			<h:inputSecret id="password" value="#{loginBean.user.password}" required="true" requiredMessage="#{msg['login.required.password']}"/>
+			<h:inputSecret id="password" value="#{loginBean.user.password}"
+				required="true" requiredMessage="#{msg['login.required.password']}" />
 			<h:message for="password" />
 
 <h:selectOneRadio value = "#{loginBean.lang}"> 
@@ -37,24 +50,5 @@
 
 	</h:form>
 	<p:editor></p:editor>
-	<h:panelGrid columns="1" cellpadding="5">
-    <p:commandButton value="Basic" type="button" onclick="PF('dlg1').show();" />
- 
-    <p:commandButton value="Modal" type="button" onclick="PF('dlg2').show();" />
- 
-    <p:commandButton value="Effects" type="button" onclick="PF('dlg3').show();" /> 
-</h:panelGrid>
- 
-<p:dialog header="Basic Dialog" widgetVar="dlg1" minHeight="40">
-    <h:outputText value="Resistance to PrimeFaces is futile!" />
-</p:dialog>
- 
-<p:dialog header="Modal Dialog" widgetVar="dlg2" modal="true" height="100">
-    <h:outputText value="This is a Modal Dialog." />
-</p:dialog>   
- 
-<p:dialog header="Effects" widgetVar="dlg3" showEffect="explode" hideEffect="bounce" height="100">
-    <h:outputText value="This dialog has nice effects." />
-</p:dialog>
 </h:body>
 </html>

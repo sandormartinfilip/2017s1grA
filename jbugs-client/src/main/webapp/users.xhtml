@@ -43,39 +43,43 @@
 					<f:facet name="header">Username</f:facet>
 					<h:outputText value="#{user.username}"></h:outputText>
 
-				</h:column>
-				<h:column>
-					<f:facet name="header">First Name</f:facet>
-					<h:outputText value="#{user.firstName}"
-						rendered="#{!user.equals(userManagementBean.editedUser)}" />
-					<h:inputText value="#{userManagementBean.editedUser.firstName}"
-						rendered="#{user.equals(userManagementBean.editedUser)}" />
+			</h:column>
+            <h:column>
+                <f:facet name="header">First Name</f:facet>
+                <h:outputText value="#{user.firstName}"
+                              rendered="#{!(user.equals(userManagementBean.editedUser))}"/>
+                <h:inputText value="#{userManagementBean.editedUser.firstName}"
+                             rendered="#{user.equals(userManagementBean.editedUser)}"
+                            />
 
 				</h:column>
 
-				<h:column>
-					<f:facet name="header">Last name</f:facet>
-					<h:outputText value="#{user.lastName}"
-						rendered="#{!user.equals(userManagementBean.editedUser)}" />
-					<h:inputText value="#{userManagementBean.editedUser.lastName}"
-						rendered="#{user.equals(userManagementBean.editedUser)}" />
-				</h:column>
+            <h:column>
+                <f:facet name="header">Last name</f:facet>
+                <h:outputText value="#{user.lastName}"
+                              rendered="#{!(user.equals(userManagementBean.editedUser))}"/>
+                <h:inputText value="#{userManagementBean.editedUser.lastName}"
+                             rendered="#{user.equals(userManagementBean.editedUser)}"
+                           />
+            </h:column>
 
-				<h:column>
-					<f:facet name="header">Phone Number</f:facet>
-					<h:outputText value="#{user.phoneNumber}"
-						rendered="#{!user.equals(userManagementBean.editedUser)}" />
-					<h:inputText value="#{userManagementBean.editedUser.phoneNumber}"
-						rendered="#{user.equals(userManagementBean.editedUser)}" />
-				</h:column>
+			<h:column>
+				<f:facet name="header">Phone Number</f:facet>
+				<h:outputText value="#{user.phoneNumber}"
+                              rendered="#{!(user.equals(userManagementBean.editedUser))}"/>
+                <h:inputText value="#{userManagementBean.editedUser.phoneNumber}"
+                             rendered="#{user.equals(userManagementBean.editedUser)}"
+                            />
+			</h:column>
 
-				<h:column>
-					<f:facet name="header">Email</f:facet>
-					<h:outputText value="#{user.email}"
-						rendered="#{!user.equals(userManagementBean.editedUser)}" />
-					<h:inputText value="#{userManagementBean.editedUser.email}"
-						rendered="#{user.equals(userManagementBean.editedUser)}" />
-				</h:column>
+			<h:column>
+				<f:facet name="header">Email</f:facet>
+				<h:outputText value="#{user.email}"
+                              rendered="#{!(user.equals(userManagementBean.editedUser))}"/>
+                <h:inputText value="#{userManagementBean.editedUser.email}"
+                             rendered="#{user.equals(userManagementBean.editedUser)}"
+                           />
+			</h:column>
 
 				<h:column>
 					<f:facet name="header">Password</f:facet>
@@ -99,19 +103,15 @@
 						rendered="#{user.active}"></h:commandLink>
 				</h:column>
 
-				<h:column>
-					<f:facet name="header">Edit</f:facet>
-					<h:commandButton value="Edit"
-						action="#{userManagementBean.setEditedUser(user)}"
-						rendered="#{not user.equals(userManagementBean.editedUser)}">
-						<!-- 						<f:ajax event="click" render="@all" execute="@this" /> -->
-					</h:commandButton>
-					<h:commandButton value="Save"
-						action="#{userManagementBean.doSaveEditedUser}"
-						rendered="#{user.equals(userManagementBean.editedUser)}">
-						<!-- 				<f:ajax event="click" render="@all" execute="@this" /> -->
-					</h:commandButton>
-				</h:column>
+			<h:column>
+				<f:facet name="header">Edit</f:facet>
+				<h:commandButton value="Edit"
+								action="#{userManagementBean.setEditedUser(user)}"
+								rendered="#{not (user.equals(userManagementBean.editedUser))}" />
+				<h:commandButton value="Save" 
+								 action="#{userManagementBean.doSaveEditedUser}"
+								 rendered="#{user.equals(userManagementBean.editedUser)}" />
+			</h:column>
 			</h:dataTable>
 		</h:form>
 	</f:view>
