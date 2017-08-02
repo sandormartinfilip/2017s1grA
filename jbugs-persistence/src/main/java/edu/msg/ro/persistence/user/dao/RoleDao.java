@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import edu.msg.ro.persistence.entity.Permission;
@@ -44,6 +46,16 @@ public class RoleDao {
 		query.setParameter("roleName", roleName);
 
 		return query.getResultList();
+	}
+
+	public Role getRoleByRoleName(final String roleName) {
+
+		final Query q = em.createQuery("select r from Role r where r.roleName='" + roleName + "'", Role.class);
+		try {
+			return (Role) q.getSingleResult();
+		} catch (final NoResultException e) {
+			return null;
+		}
 	}
 
 	public static void main(final String[] args) {
