@@ -5,10 +5,15 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import edu.msg.ro.business.bug.dto.BugDTO;
 import edu.msg.ro.business.bug.service.BugService;
+import edu.msg.ro.business.user.dto.mapper.UserDTOMapper;
+import edu.msg.ro.business.user.service.UserService;
+import edu.msg.ro.persistence.entity.User;
 
 @Named
 @SessionScoped
@@ -21,6 +26,12 @@ public class BugManagementBean implements Serializable {
 
 	@EJB
 	private BugService bugService;
+
+	@EJB
+	private UserService userService;
+
+	@EJB
+	private UserDTOMapper userMapper;
 
 	private Long editedBugId;
 	private BugDTO editedBug = new BugDTO();
@@ -82,8 +93,16 @@ public class BugManagementBean implements Serializable {
 	}
 
 	public String doCreateBug() {
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+
+		String usernameOfLoggedUser = (String) session.getAttribute("username");
+
+		System.out.println(usernameOfLoggedUser);
+
+		User user = userService.getUserByUsername(usernameOfLoggedUser);
+
 		bugService.saveNewBug(newBug.getTitle(), newBug.getDescription(), newBug.getTargetDate(), newBug.getSeverity(),
-				newBug.getVersionFound());
+				newBug.getVersionFound(), user);
 		return "bugs";
 	}
 

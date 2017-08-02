@@ -121,14 +121,14 @@
 
 		<h3>Export Page Data Only</h3>
 		<h:commandLink>
-			<p:graphicImage name="jbugs\excel.png" />
+			<p:graphicImage name= "src/main/resources/jbugs/csv.png"/>
 			<p:outputLabel value="excel " />
 			<p:dataExporter type="xls" target="bugsTable" fileName="bugs"
 				pageOnly="true" />
 		</h:commandLink>
 
 		<h:commandLink>
-			<p:graphicImage name="/resources/jbugs\pdf.png" />
+			<p:graphicImage name="src/main/resources/jbugs/pdf.png"/>
 			<p:outputLabel value="pdf " />
 			<p:dataExporter type="pdf" target="bugsTable" fileName="bugs"
 				pageOnly="true" />

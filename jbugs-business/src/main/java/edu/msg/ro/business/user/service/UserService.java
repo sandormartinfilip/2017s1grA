@@ -10,10 +10,10 @@ import edu.msg.ro.business.exception.JBugsBusinessException;
 import edu.msg.ro.business.exception.ObjectNotFoundException;
 import edu.msg.ro.business.user.dto.UserDTO;
 import edu.msg.ro.business.user.dto.mapper.UserDTOMapper;
-import edu.msg.ro.persistence.user.dao.LoginHistoryDao;
-import edu.msg.ro.persistence.user.dao.UserDao;
 import edu.msg.ro.persistence.entity.LoginHistory;
 import edu.msg.ro.persistence.entity.User;
+import edu.msg.ro.persistence.user.dao.LoginHistoryDao;
+import edu.msg.ro.persistence.user.dao.UserDao;
 
 @Stateless
 public class UserService {
@@ -32,7 +32,7 @@ public class UserService {
 	private UserDTOMapper userMapper;
 
 	public boolean isValidUser(UserDTO loginUser) {
-		UserDTO savedUser = getUserByUsername(loginUser.getUsername());
+		UserDTO savedUser = getUserDTOByUsername(loginUser.getUsername());
 		if (savedUser != null && savedUser.getPassword() != null) {
 
 			return savedUser.getPassword().equals(loginUser.getPassword());
@@ -41,7 +41,7 @@ public class UserService {
 	};
 
 	public boolean isActiveUser(UserDTO loginUser) {
-		UserDTO savedUser = getUserByUsername(loginUser.getUsername());
+		UserDTO savedUser = getUserDTOByUsername(loginUser.getUsername());
 		return savedUser.isActive();
 	}
 
@@ -113,12 +113,16 @@ public class UserService {
 		return true;
 	}
 
-	public UserDTO getUserByUsername(String userName) {
+	public UserDTO getUserDTOByUsername(String userName) {
 		User user = userDao.getUserByUsername(userName);
 		if (user != null) {
 			return userMapper.mapToDTO(user);
 		} else
 			return null;
+	}
+
+	public User getUserByUsername(String userName) {
+		return userDao.getUserByUsername(userName);
 	}
 
 	public List<UserDTO> getAllUsers() {

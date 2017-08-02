@@ -130,7 +130,7 @@ public class UserServiceTest extends AbstractIntegrationTest {
 		sut.changeUserStatus(userList.get(0).getUsername(), false);
 
 		// ASSERT
-		final UserDTO deletedUser = sut.getUserByUsername(userList.get(0).getUsername());
+		final UserDTO deletedUser = sut.getUserDTOByUsername(userList.get(0).getUsername());
 		Assert.assertNotNull("Deletion is only logical, not physical!", deletedUser);
 		Assert.assertFalse("User should be deactivated", deletedUser.isActive());
 	}
