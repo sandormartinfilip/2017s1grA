@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+	<h:form id="newPermissionForm">
+
+		<h:panelGrid columns="3">
+			<h:outputLabel for="permissionName" value="Permission Name:" />
+			<h:outputLabel for="description" value="Description:" />
+			<h:commandButton value="Save Permission"
+				action="#{permissionBean.doAddPermission}" />
+
+			<h:selectOneMenu value="#{permissionBean.permissionDTO.permissionType}">
+				<f:selectItems value="#{permissionBean.allPermissionTypes}"></f:selectItems>
+<!-- 				<f:ajax listener = "#{permissionBean.doAddPermission}" render="@form"></f:ajax> -->
+			</h:selectOneMenu>
+			
+			<h:inputText id="description"
+				value="#{permissionBean.permissionDTO.description}" />
+
+
+
+		</h:panelGrid>
+	</h:form>
+
+</h:body>
+</html>
